@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "mysql": "^2.18.1",
     "source-map-support": "^0.5.19",
     "ts-node": "^10.1.0"
   }
