@@ -21,5 +21,3 @@ export class User extends BaseEntity{
     }
 
 }
-//string: varchar(255)
-//default: nullable:false
