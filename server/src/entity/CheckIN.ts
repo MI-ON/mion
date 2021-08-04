@@ -1,7 +1,7 @@
-import { Entity,PrimaryColumn,PrimaryGeneratedColumn,Column,CreateDateColumn } from "typeorm";
+import { Entity,PrimaryColumn,PrimaryGeneratedColumn,Column,CreateDateColumn, BaseEntity } from "typeorm";
 
 @Entity()
-export class CheckIN{
+export class CheckIN extends BaseEntity{
 
     @PrimaryGeneratedColumn()
     idx: number;
