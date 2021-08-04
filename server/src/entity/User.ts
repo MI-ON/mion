@@ -1,8 +1,8 @@
 import { Blob } from "buffer";
-import {Entity, PrimaryColumn, Column} from "typeorm";
+import {Entity, PrimaryColumn, Column, BaseEntity} from "typeorm";
 
 @Entity()
-export class User {
+export class User extends BaseEntity{
 
     @PrimaryColumn()
     user_email: string;
@@ -15,6 +15,10 @@ export class User {
 
     @Column('blob',{ nullable: true })
     image: Blob;
+
+    static saveUser(user: User){
+        return
+    }
 
 }
 //string: varchar(255)

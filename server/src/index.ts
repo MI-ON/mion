@@ -13,13 +13,13 @@ createConnection().then(async connection => {
     console.log("Server listening on port 3000");
   });
 
- 
+
+  //save
   // const user = new User();
-  // user.firstName = "Kim";
-  // user.lastName = "Nayoon";
-  // user.age = 19;
+  // user.user_email = "Mia@gmail.com";
+  // user.nickname = "Mia";
+  // user.image = null;
   // await connection.manager.save(user);
-  // console.log("Saved a new user with id: " + user.id);
 
   console.log("connect 🚀");
 
