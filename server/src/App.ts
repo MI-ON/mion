@@ -1,22 +1,16 @@
 import express from "express";
 
 class App {
-  public app: express.Application;
+  public application: express.Application;
 
-  /**
-   * @ class App
-   * @ method bootstrap
-   * @ static
-   * 
-   */
-  public static bootstrap (): App {
-    return new App();
+  constructor() {
+    this.application = express();
+    this.router();
   }
 
-  constructor () {
-    this.app = express();
-    this.app.get("/", (req: express.Request, res: express.Response, next: express.NextFunction) => {
-      res.send("Hello world");
+  private router(): void {
+    this.application.get("/", (req: express.Request, res: express.Response) => {
+      res.send("hello!");
     });
   }
 }
