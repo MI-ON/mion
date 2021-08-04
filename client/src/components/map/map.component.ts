@@ -23,11 +23,11 @@ export default class MapComponent extends Vue {
   selectedMarker: string | any = null;
 
   mounted() {
-    this.openKakakoMap()
+    this.openMap()
   }
   
-  public openKakakoMap() {
-    console.log( "openKakakoMap()")
+  public openMap() {
+    console.log( "openMap()")
 
     // 마커를 클릭하면 장소명을 표출할 인포윈도우
     this.infowindow = new window.kakao.maps.InfoWindow({zIndex: 1});
