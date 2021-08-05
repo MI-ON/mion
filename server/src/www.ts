@@ -2,7 +2,7 @@ import 'source-map-support/register'; // source-map을 사용하기 위해 추�
 import App from './App';
 import * as express from "express";
 import { GraphQLServer } from "graphql-yoga";
-import {resolvers} from "../graphql/resolvers";
+import resolvers from "../grphaql/resolvers";
 
 const port: number = Number(process.env.PORT) || 3000;
 const app: express.Application = new App().app;
