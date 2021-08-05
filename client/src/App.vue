@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
-    This is vue project template.
+  <div id="app" style="position: relative">
+    <Map />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Map from "./components/map/map.component.vue";
 
 @Component({
   components: {
+    Map
   },
 })
 export default class App extends Vue {}

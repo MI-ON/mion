@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "load-script-once": "^2.0.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
+    "vue-daum-map": "^1.1.0",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.2",
     "vuex": "^3.4.0"
