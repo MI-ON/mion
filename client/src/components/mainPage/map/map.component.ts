@@ -31,8 +31,8 @@ export default class MapComponent extends Vue {
   imageSrc: string = "";
   selectedMarker: string | any = null;
 
-  mapMarker = require('../../assets/default-marker.png');
-  clickMapMarker = require('../../assets/click-marker.png');
+  mapMarker = require('../../../assets/mainPage/default-marker.png');
+  clickMapMarker = require('../../../assets/mainPage/click-marker.png');
 
   mounted() {
     this.openMap()
@@ -188,18 +188,18 @@ export default class MapComponent extends Vue {
   // 검색결과 항목을 Element로 반환하는 함수입니다
   public getListItem(index: number, places: string | any) {
     this.el = document.createElement('li');
-    let itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+    let itemStr = `<span class="markerbg marker_${(index+1)}"></span>`+
                 '<div class="info">' +
-                '   <spen class="title">' + places.place_name + '</spen>';
+                `<spen class="title">${places.place_name}</spen>`;
 
     if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
+        itemStr += `<span>${places.road_address_name}</span>` +
+                    `<span class="gray">${places.address_name}</span>`;
     } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>'; 
+        itemStr += `<span>${places.address_name}</span>`; 
     }
                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+      itemStr += `<span class="tel">${places.phone}</span>`+
                 '</div>';           
 
     this.el.innerHTML = itemStr;
@@ -210,7 +210,7 @@ export default class MapComponent extends Vue {
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
   public addMarker(position: string) {
-      const mapMarker = require('../../assets/default-marker.png'),  // default 마커 이미지    
+      const mapMarker = require('../../../assets/mainPage/default-marker.png'),  // default 마커 이미지    
       imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기
       imageOption = {offset: new window.kakao.maps.Point(27, 69)}; // 마커이미지의 옵션 - 마커의 좌표와 일치시킬 이미지 안에서의 좌표 설정
 
@@ -275,7 +275,7 @@ export default class MapComponent extends Vue {
       removable : iwRemoveable
     });
 
-    const content = '<div style="padding:25px 10px 10px 10px;font-size:12px;z-index:1;">' + title + '</div>';
+    const content = `<div style="padding:25px 10px 10px 10px;font-size:12px;z-index:1;">${title}</div>`;
 
     this.infowindow.setContent(content);
     this.infowindow.open(this.map, marker);
