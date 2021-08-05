@@ -1,7 +1,7 @@
 
 type Store{
     address_name:String!
-    category_group_code:String!gi
+    category_group_code:String!
     category_group_name:String!
     category_name:String!
     id: String!
@@ -24,22 +24,26 @@ type User{
 
 type Post{
     id: Int!
-    UserToken: String!
+    userToken: String!
     text: String!
 }
 
 
+scalar Date
+
 type Food_List{
-    
-    scalar date
 
     id: Int! 
+    date: Date!
     store_name: [Store]!
-    Members: [User]!
+    members: [User]!
     reviews:[Post]!
 }
 
 type Query{
     stores:[Store]!
+    users:[User]!
+    posts:[Post]!
+    food_list:[Food_List]!
     
 }

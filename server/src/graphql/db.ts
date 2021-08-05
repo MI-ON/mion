@@ -1,3 +1,5 @@
+import { GraphQLScalarType, Kind } from "graphql";
+
 export let stores = [
     {
         id: 1,
@@ -29,4 +31,56 @@ export let stores = [
     }
 ]
 
+export let users = [
+    {
+        id:1,
+        full_name:"Belle",
+        image_url:"https/abc.test",
+        email:"nayoon030303@gamil.com",
+        toke:"abcde.test",
+        token_exp:"edcba.test"
+    }
+]
+
+export let posts = [
+    {
+        id:1,
+        userToken:"abcde.test",
+        text:"Good"
+    }
+]
+
+export let food_lists = [
+    {
+        id:1,
+        date:"2017-01-26",
+        store_name: stores,
+        members: users,
+        reviews: posts
+    }
+]
+
+export const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Date custom scalar type',
+  serialize(value) {
+    console.log(value+"serialize입니다");
+    return value; // date->json
+  },
+  parseValue(value) {
+    console.log(value+"parseValue입니다");
+    return new Date(value); // Convert incoming integer to Date
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to Date
+    }
+    return null; // Invalid hard-coded value (not an integer)
+  },
+});
+
+
 export const getStores = () =>stores;
+export const getUsers = () =>users;
+export const getPosts = () =>posts;
+export const getFoodList = () =>food_lists;
