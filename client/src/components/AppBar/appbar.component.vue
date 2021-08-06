@@ -6,6 +6,9 @@
       width="50"
       height="50"
     />
+    <button class="logout-btn" type="button" v-on:click="this.onSignOut">
+      Logout
+    </button>
   </div>
 </template>
 
