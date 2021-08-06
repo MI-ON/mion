@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import InfoWindowContent from "./section/info-window";
+import InfoWindowContent from "./section/info-window-content";
 
 declare global {
   interface Window {
@@ -149,6 +149,11 @@ export default class MapComponent extends Vue {
       this.infowindow.setContent(content);
       this.infowindow.setPosition(marker1.getPosition());
       this.infowindow.setMap(this.map);
+
+      // 마커 한번 더 클릭시 인포윈도우 닫음
+      window.kakao.maps.event.addListener(marker1, "click", () => {
+        this.infowindow.setMap(null);
+      });
     });
   }
 }
