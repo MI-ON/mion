@@ -136,24 +136,12 @@ export default class MapComponent extends Vue {
       // 클릭된 마커를 현재 클릭된 마커 객체로 설정
       this.selectedMarker = marker1;
 
-      // 인포윈도우 안 내용 설정 (최상위 컨테이너, content)
-      const content = document.createElement("div");
-      content.style.cssText =
-        "background: white; border-radius:8px; padding:10px;";
-
-      // content에 반환한 내용 부착 (실질적인 내용)
-      this.infowindowContent = InfoWindowContent.makeInfoWindowContent(data);
-      content.innerHTML = this.infowindowContent;
-
       // 마커를 클릭시, 장소명이 인포윈도우 표출
-      this.infowindow.setContent(content);
+      this.infowindowContent = InfoWindowContent.makeInfoWindowContent(data);
+      this.infowindow.setContent(this.infowindowContent);
       this.infowindow.setPosition(marker1.getPosition());
-      this.infowindow.setMap(this.map);
 
-      // 마커 한번 더 클릭시 인포윈도우 닫음
-      window.kakao.maps.event.addListener(marker1, "click", () => {
-        this.infowindow.setMap(null);
-      });
+      this.infowindow.setMap(this.map);
     });
   }
 }
