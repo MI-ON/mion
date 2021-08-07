@@ -66,16 +66,18 @@ export default class MapComponent extends Vue {
 
   // 키워드 검색을 요청하는 함수입니다
   public searchPlaces() {
+    console.log("searchplaces클릭")
     this.keyword = (<HTMLInputElement>document.getElementById('keyword')).value;
 
     if (!this.keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
         return false;
     }
-
+  
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     console.log(this.keyword)
     this.ps.keywordSearch( this.keyword, this.placesSearchCB); 
+  
   }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
