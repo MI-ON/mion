@@ -1,18 +1,20 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 
+import persistedstate from "vuex-persistedstate";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store(<StoreOptions<any>>{
   state: {
-    userEmail: null,
+    user: {},
   },
   getters: {},
-  mutations: {
-    SET_USER_EMAIL(state, userEmail) {
-      state.userEmail = userEmail;
-      localStorage.setItem("userEmail", userEmail);
-    },
-  },
+  mutations: {},
   actions: {},
+  plugins: [
+    persistedstate({
+      paths: ["user"],
+    }),
+  ],
 });
