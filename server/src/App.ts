@@ -18,19 +18,20 @@ class App {
 
   private router(): void {
     this.application.post(
-      "/api/login",
+      "/api/user/login",
       (req: express.Request, res: express.Response) => {
         User.findOne({ user_email: req.body.userEmail }).then((user) => {
-          if (!user) {
+          if (user) {
+            // TODO: get user image and transform image url
+            const imageUrl = user.image ?? null;
+            res.json({ imageUrl: imageUrl });
+          } else {
             const newUser = new User();
             newUser.user_email = req.body.userEmail;
-            newUser.nickname = "";
+            newUser.nickname = req.body.userName;
             newUser.image = null;
             newUser.save();
           }
-          res.json({
-            loginSuccess: true,
-          });
         });
       }
     );
