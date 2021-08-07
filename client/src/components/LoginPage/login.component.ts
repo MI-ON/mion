@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Component, Vue } from "vue-property-decorator";
 
 declare global {
@@ -22,15 +23,20 @@ export default class LoginComponent extends Vue {
 
   onSuccess(googleUser: any): void {
     const profile = googleUser.getBasicProfile();
-    console.log(profile);
+    const userEmail: string = profile.getEmail();
+
+    axios.post("/api/user/login", { userEmail: userEmail }).then((res) => {
+      const imageUrl = res.data.imageUrl ?? profile.getImageUrl();
+      const user = {
+        userEmail: userEmail,
+        userImageUrl: imageUrl,
+      };
+      this.$store.commit("SET_USER", user);
+      this.$router.push("/");
+    });
   }
 
   onFailure(err: string): void {
     console.log(err);
-  }
-
-  onSignOut(): void {
-    console.log("logout");
-    window.gapi.auth2.getAuthInstance().disconnect();
   }
 }
