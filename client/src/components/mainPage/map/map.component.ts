@@ -66,7 +66,7 @@ export default class MapComponent extends Vue {
 
   // 키워드 검색을 요청하는 함수입니다
   public searchPlaces() {
-    console.log("searchplaces클릭")
+    
     this.keyword = (<HTMLInputElement>document.getElementById('keyword')).value;
 
     if (!this.keyword.replace(/^\s+|\s+$/g, '')) {
@@ -219,6 +219,7 @@ export default class MapComponent extends Vue {
       const markerImage = new window.kakao.maps.MarkerImage(mapMarker, imageSize, imageOption),
           marker = new window.kakao.maps.Marker({
           position: position, // 마커의 위치
+          range:1000,
           image: markerImage 
       });
 
