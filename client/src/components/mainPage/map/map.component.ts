@@ -10,26 +10,26 @@ declare global {
 @Component({})
 export default class MapComponent extends Vue {
   markers: any = [];
-  listEl: string | any = "";
-  menuEl: string | any = "";
+  listEl: any = "";
+  menuEl: any = "";
   fragment: any = "";
   listStr: string = "";
-  paginationEl: string | any = "";
-  el: string | any = "";
+  paginationEl: any = "";
+  el: any = "";
   keyword: string = "";
 
-  infowindow:string | any = "";
-  mapContainer:string | any =  "";
-  map:string | any = "";
-  ps:string | any = "";
-  mapOption:string | any = "";
-  zoomControl:string | any = "";
-  marker:string | any = "";
-  place:string | any = "";
-  bounds:string | any = "";
-  search:string | any = "";
+  infowindow: any = "";
+  mapContainer: any =  "";
+  map: any = "";
+  ps: any = "";
+  mapOption: any = "";
+  zoomControl: any = "";
+  marker: any = "";
+  place: any = "";
+  bounds: any = "";
+  search: any = "";
   imageSrc: string = "";
-  selectedMarker: string | any = null;
+  selectedMarker: any = null;
 
   mapMarker = require('../../../assets/mainPage/default-marker.png');
   clickMapMarker = require('../../../assets/mainPage/click-marker.png');
