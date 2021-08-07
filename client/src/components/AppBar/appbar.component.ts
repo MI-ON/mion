@@ -10,7 +10,7 @@ export default class AppBarComponent extends Vue {
 
   onSignOut(): void {
     window.gapi.auth2.getAuthInstance().disconnect();
-    localStorage.removeItem("userEmail");
+    this.$store.commit("LOGOUT");
     location.reload();
   }
 }
