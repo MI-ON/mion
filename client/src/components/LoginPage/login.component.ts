@@ -25,11 +25,14 @@ export default class LoginComponent extends Vue {
     const profile = googleUser.getBasicProfile();
     const userEmail: string = profile.getEmail();
 
-    axios.post("/api/login", { userEmail: userEmail }).then((res) => {
-      if (res.data.loginSuccess) {
-        localStorage.setItem("userEmail", userEmail);
-        this.$router.push("/");
-      }
+    axios.post("/api/user/login", { userEmail: userEmail }).then((res) => {
+      const imageUrl = res.data.imageUrl ?? profile.getImageUrl();
+      const user = {
+        userEmail: userEmail,
+        userImageUrl: imageUrl,
+      };
+      this.$store.commit("SET_USER", user);
+      this.$router.push("/");
     });
   }
 
