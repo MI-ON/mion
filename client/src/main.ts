@@ -9,10 +9,8 @@ new Vue({
   router,
   store,
   created() {
-    const userEmail: string | null = localStorage.getItem("userEmail");
-    if (userEmail) {
-      this.$store.commit("SET_USER_EMAIL", userEmail);
-    } else {
+    const userEmail: string | null = this.$store.getters.getUserEmail;
+    if (!userEmail) {
       this.$router.push("/login");
     }
   },
