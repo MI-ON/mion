@@ -1,23 +1,23 @@
 <template>
   <div id="app" style="position: relative">
-    <Map />
+    <appbar-component />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Map from "./components/mainPage/map/map.component.vue";
+import { Component, Vue } from "vue-property-decorator";
+import appbarComponent from "./components/AppBar/appbar.component.vue";
 
 @Component({
-  components: {
-    Map
-  },
+  components: { appbarComponent },
 })
 export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;

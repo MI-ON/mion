@@ -1,42 +1,31 @@
 import App from "./App";
 import "reflect-metadata";
+
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
 
 import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resolvers";
 
+import * as dotenv from "dotenv";
+import * as path from "path";
+
+dotenv.config({ path: path.resolve(__dirname, ".env") });
+
 const server = new GraphQLServer({
     typeDefs: "src/graphql/schema.graphql",
     resolvers
   });
-
-  server.start(()=>console.log("Graphql Server Running"));
-
-// createConnection().then(async connection => {
-
-//   const app = new App().application;
-
-  
-//   app.listen(3000, () => {
-//     console.log("Server listening on port 3000");
-//   });
-
-//    //save
-//   // const user = new User();
-//   // user.user_email = "Mia@gmail.com";
-//   // user.nickname = "Mia";
-//   // user.image = null;
-//   // await connection.manager.save(user);
-
-//   console.log("connect 🚀");
+server.start(()=>console.log("Graphql Server Running"));
 
 
+createConnection().then(async connection  => {
+    const app = new App().application;
 
+    app.listen(3000, () => {
+      console.log("Server listening on port 3000");
+    });
 
-// }).catch(error => console.log(error));
-
-
-
-
-
+    console.log("connect 🚀");
+  })
+  .catch((error) => console.log(error));
