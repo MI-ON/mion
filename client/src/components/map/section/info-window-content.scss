@@ -1,11 +1,19 @@
 .infoWindowContainer {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
   background-color: white;
   border-radius: 25px;
-  padding: 15px;
+  padding: 20px;
   box-shadow: 0px 1px 3px rgb(150, 150, 150);
+}
+
+.topContentContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .infoContainer .titleContainer {
@@ -47,5 +55,28 @@
       height: 52px;
       filter: drop-shadow(0px 1px 1px rgb(175, 175, 175));
     }
+  }
+}
+
+.bottomContentContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  * {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0px 1px 1px rgb(138, 138, 138);
+  }
+  img {
+    margin-right: 5px;
+  }
+  span {
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #5caafa;
+    text-align: center;
+    line-height: 1.9;
   }
 }

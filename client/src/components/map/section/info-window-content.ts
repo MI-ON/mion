@@ -1,7 +1,7 @@
 export default class InfoWindowContent {
   public static makeInfoWindowContent(data: string | any): string {
-    const infoContent = this.drawInfoContent(data);
-    return infoContent;
+    const infoWindowContainer = this.drawInfoContent(data);
+    return infoWindowContainer;
   }
 
   static drawInfoContent(data: string | any): string {
@@ -28,11 +28,42 @@ export default class InfoWindowContent {
             <button type="button" ><img src='${require("../../../assets/vote-icon.png")}' /></button>
         </section>`;
 
+    const bottomContentContainer = this.votedUserProfileContent();
+
     return (
-      `<div class="infoWindowContainer">` +
+      `<div class="infoWindowContainer">
+        <div class="topContentContainer">
+      ` +
       infoContent +
       voteButtonContent +
+      ` </div>` +
+      bottomContentContainer +
       `</div>`
     );
+  }
+
+  static votedUserProfileContent(): string | any {
+    const votedSampleProfiles = [
+      require("../../../assets/sample-profile01.jpeg"),
+      require("../../../assets/sample-profile02.jpeg"),
+      require("../../../assets/sample-profile03.jpeg"),
+      require("../../../assets/sample-profile03.jpeg"),
+      require("../../../assets/sample-profile03.jpeg"),
+    ];
+    const votedUserProfileContent = `
+    <div class="bottomContentContainer">
+        ${votedSampleProfiles
+          .map((profile, i) => {
+            return i > 2 ? "" : `<img src='${profile}' key='${i}' />`;
+          })
+          .join("\n")}
+        <span>${
+          votedSampleProfiles.length > 2
+            ? `+${votedSampleProfiles.length - 3}`
+            : ""
+        }</span>
+      </div>`;
+
+    return votedUserProfileContent;
   }
 }
