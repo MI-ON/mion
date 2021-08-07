@@ -2,12 +2,12 @@ import App from "./App";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as dotenv from "dotenv";
-import connectionOptions from "../ormConfig";
+import connectionOptions from "../ormconfig";
 import * as path from "path";
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-createConnection(connectionOptions)
+createConnection()
   .then(async () => {
     const app = new App().application;
 

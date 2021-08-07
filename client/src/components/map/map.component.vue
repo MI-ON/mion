@@ -1,15 +1,21 @@
 <template>
-  <!-- view에 해당하는 html 코드를 작성하는 영역 -->
-  <!-- <div id="map"></div> -->
-  <div>
-    <div class="listview">
-      <label>키워드</label>
-      <input v-model="search" @keyup.enter="changeSearch" />
-      <button @click="changeSearch" @keyup.enter="changeSearch">
-        검색
-      </button>
-    </div>
+  <div class="map_wrap">
     <div id="map"></div>
+
+    <div id="menu_wrap" class="bg_white">
+      <div class="option">
+        <div>
+          <form onsubmit="searchPlaces(); return false;">
+            키워드 :
+            <input type="text" value="삼성동 맛집" id="keyword" size="15" />
+            <button type="submit">검색하기</button>
+          </form>
+        </div>
+      </div>
+      <hr />
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
+    </div>
   </div>
 </template>
 
