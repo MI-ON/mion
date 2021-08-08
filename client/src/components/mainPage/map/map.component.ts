@@ -11,26 +11,27 @@ declare global {
 @Component({})
 export default class MapComponent extends Vue {
   markers: any = [];
-  listEl: string | any = "";
-  menuEl: string | any = "";
+  listEl: any = "";
+  menuEl: any = "";
   fragment: any = "";
   listStr: string = "";
-  paginationEl: string | any = "";
-  el: string | any = "";
+  paginationEl: any = "";
+  el: any = "";
   keyword: string = "";
 
-  infowindow: string | any = "";
-  mapContainer: string | any = "";
-  map: string | any = "";
-  ps: string | any = "";
-  mapOption: string | any = "";
-  zoomControl: string | any = "";
-  marker: string | any = "";
-  place: string | any = "";
-  bounds: string | any = "";
-  search: string | any = "";
+  infowindow: any = "";
+  mapContainer: any =  "";
+  map: any = "";
+  ps: any = "";
+  mapOption: any = "";
+  zoomControl: any = "";
+  marker: any = "";
+  place: any = "";
+  bounds: any = "";
+  search: any = "";
   imageSrc: string = "";
-  selectedMarker: string | any = null;
+  selectedMarker: any = null;
+
 
   mapMarker = require("../../../assets/mainPage/default-marker.png");
   clickMapMarker = require("../../../assets/mainPage/click-marker.png");
@@ -65,7 +66,7 @@ export default class MapComponent extends Vue {
     this.searchPlaces();
   }
 
-  // 키워드 검색을 요청하는 함수입니다
+  // 키워드 검색을 요청하는 함수
   public searchPlaces() {
     const options = {
       location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
@@ -79,23 +80,23 @@ export default class MapComponent extends Vue {
       return false;
     }
 
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    // 장소검색 객체를 통해 키워드로 장소검색 요청
     console.log(this.keyword);
     this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
   }
 
-  // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+  // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(
-    data: string | any,
+    data: string,
     status: number,
     pagination: number
   ) {
     if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
-      // 검색 목록과 마커를 표출합니다
+      // 검색 목록과 마커 표출
       this.displayPlaces(data);
 
-      // 페이지 번호를 표출합니다
+      // 페이지 번호 표출
       this.displayPagination(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       alert("검색 결과가 존재하지 않습니다.");
@@ -106,35 +107,35 @@ export default class MapComponent extends Vue {
     }
   }
 
-  // 검색 결과 목록과 마커를 표출하는 함수입니다
-  public displayPlaces(places: string | any) {
+  // 검색 결과 목록과 마커를 표출하는 함수
+  public displayPlaces(places: any) {
     this.listEl = document.getElementById("placesList");
     this.menuEl = document.getElementById("menu_wrap");
     this.fragment = document.createDocumentFragment();
     this.bounds = new window.kakao.maps.LatLngBounds();
     this.listStr;
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    // 검색 결과 목록에 추가된 항목들 제거
     this.removeAllChildNods(this.listEl);
 
-    // 지도에 표시되고 있는 마커를 제거합니다
+    // 지도에 표시되고 있는 마커 제거
     this.removeMarker();
 
     for (let i = 0; i < places.length; i++) {
-      // 마커를 생성하고 지도에 표시합니다
+      // 마커를 생성하고 지도에 표시
       const placePosition = new window.kakao.maps.LatLng(
           places[i].y,
           places[i].x
         ),
         marker = this.addMarker(placePosition),
-        itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+        itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
 
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-      // LatLngBounds 객체에 좌표를 추가합니다
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기 위해
+      // LatLngBounds 객체에 좌표 추가
       this.bounds.extend(placePosition);
 
-      // 마커와 검색결과 항목에 mouseover 했을때
-      // 해당 장소에 인포윈도우에 장소명을 표시합니다
+      // 마커와 검색 결과 항목에 mouseover 했을 때
+      // 해당 장소에 인포윈도우에 장소명 표시
       // mouseout 했을 때는 인포윈도우를 닫습니다
       ((marker, places) => {
         window.kakao.maps.event.addListener(marker, "click", () => {
@@ -167,9 +168,7 @@ export default class MapComponent extends Vue {
 
           // 클릭된 마커를 현재 클릭된 마커 객체로 설정
           this.selectedMarker = marker;
-        });
-
-        window.kakao.maps.event.addListener(marker, "click", () => {
+          
           this.infowindow.setMap(null);
           this.displayInfowindow(marker, places);
         });
@@ -187,16 +186,16 @@ export default class MapComponent extends Vue {
       this.fragment.appendChild(itemEl);
     }
 
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가
     this.listEl.appendChild(this.fragment);
     this.menuEl.scrollTop = 0;
 
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정
     this.map.setBounds(this.bounds);
   }
 
-  // 검색결과 항목을 Element로 반환하는 함수입니다
-  public getListItem(index: number, places: string | any) {
+  // 검색결과 항목을 Element로 반환하는 함수
+  public getListItem(index: number, places: any) {
     this.el = document.createElement("li");
     let itemStr =
       `<span class="markerbg marker_${index + 1}"></span>` +
@@ -219,7 +218,7 @@ export default class MapComponent extends Vue {
     return this.el;
   }
 
-  // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+  // 마커를 생성하고 지도 위에 마커를 표시하는 함수
   public addMarker(position: string) {
     const mapMarker = require("../../../assets/mainPage/default-marker.png"), // default 마커 이미지
       imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기
@@ -235,13 +234,13 @@ export default class MapComponent extends Vue {
         image: markerImage,
       });
 
-    marker.setMap(this.map); // 지도 위에 마커를 표출합니다
-    this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
+    marker.setMap(this.map); // 지도 위에 마커 표출
+    this.markers.push(marker); // 배열에 생성된 마커 추가
 
     return marker;
   }
 
-  // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+  // 지도 위에 표시되고 있는 마커 모두 제거
   public removeMarker() {
     for (let i = 0; i < this.markers.length; i++) {
       this.markers[i].setMap(null);
@@ -249,13 +248,13 @@ export default class MapComponent extends Vue {
     this.markers = [];
   }
 
-  // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-  public displayPagination(pagination: number | any) {
+  // 검색결과 목록 하단에 페이지번호를 표시하는 함수
+  public displayPagination(pagination: any) {
     this.paginationEl = document.getElementById("pagination");
     this.fragment = document.createDocumentFragment();
     let i;
 
-    // 기존에 추가된 페이지번호를 삭제합니다
+    // 기존에 추가된 페이지번호 삭제
     while (this.paginationEl.hasChildNodes()) {
       this.paginationEl.removeChild(this.paginationEl.lastChild);
     }
@@ -280,10 +279,10 @@ export default class MapComponent extends Vue {
     this.paginationEl.appendChild(this.fragment);
   }
 
-  // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-  // 인포윈도우에 장소명을 표시합니다
-  public displayInfowindow(marker: string | any, places: string | any) {
-    // 인포윈도우를 생성합니다 (커스텀 오버레이)
+  // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
+  // 인포윈도우에 장소명 표시
+  public displayInfowindow(marker: any, places: any) {
+    // 인포윈도우 생성 (커스텀 오버레이)
     this.infowindow = new window.kakao.maps.CustomOverlay({
       yAnchor: 1.5,
     });
@@ -295,7 +294,7 @@ export default class MapComponent extends Vue {
     this.infowindow.setMap(this.map);
   }
 
-  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+  // 검색결과 목록의 자식 Element를 제거하는 함수
   public removeAllChildNods(el: any) {
     while (el.hasChildNodes()) {
       el.removeChild(el.lastChild);
