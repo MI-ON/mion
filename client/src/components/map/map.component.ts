@@ -1,4 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
+import InfoWindowContent from "./section/info-window-content";
 
 declare global {
   interface Window {
@@ -42,7 +43,7 @@ export default class MapComponent extends Vue {
     console.log("openMap()");
 
     // 마커를 클릭하면 장소명을 표출할 인포윈도우
-    this.infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+    this.infowindow = new window.kakao.maps.CustomOverlay({ zIndex: 1 });
 
     // 지도를 표시할 div
     this.mapContainer = document.getElementById("map");
@@ -126,7 +127,7 @@ export default class MapComponent extends Vue {
       // 마커와 검색결과 항목에 mouseover 했을때
       // 해당 장소에 인포윈도우에 장소명을 표시합니다
       // mouseout 했을 때는 인포윈도우를 닫습니다
-      ((marker, title) => {
+      ((marker, places) => {
         window.kakao.maps.event.addListener(marker, "click", () => {
           const imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기
             imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션 - 마커의 좌표와 일치시킬 이미지 안에서의 좌표 설정
@@ -160,7 +161,7 @@ export default class MapComponent extends Vue {
         });
 
         window.kakao.maps.event.addListener(marker, "mouseover", () => {
-          this.displayInfowindow(marker, title);
+          this.displayInfowindow(marker, places);
         });
 
         window.kakao.maps.event.addListener(marker, "mouseout", () => {
@@ -168,7 +169,7 @@ export default class MapComponent extends Vue {
         });
 
         itemEl.onmouseover = () => {
-          this.displayInfowindow(marker, title);
+          this.displayInfowindow(marker, places);
         };
 
         itemEl.onmouseout = () => {
@@ -274,17 +275,18 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
   // 인포윈도우에 장소명을 표시합니다
-  public displayInfowindow(marker: string | any, title: string) {
+  public displayInfowindow(marker: string | any, places: string | any) {
     const iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
     // 인포윈도우를 생성합니다
-    this.infowindow = new window.kakao.maps.InfoWindow({
-      removable: iwRemoveable,
+    this.infowindow = new window.kakao.maps.CustomOverlay({
+      yAnchor: 1.7,
     });
 
-    const content = `<div style="padding:25px 10px 10px 10px;font-size:12px;z-index:1;">${title}</div>`;
+    const content = InfoWindowContent.makeInfoWindowContent(places);
 
     this.infowindow.setContent(content);
+    this.infowindow.setPosition(marker.getPosition());
     this.infowindow.open(this.map, marker);
   }
 
