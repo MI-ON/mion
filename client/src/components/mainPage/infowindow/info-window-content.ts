@@ -44,24 +44,31 @@ export default class InfoWindowContent {
 
   static votedUserProfileContent(): string | any {
     const votedSampleProfiles = [
-      require("../../../assets/sample-profile01.jpeg"),
-      require("../../../assets/sample-profile02.jpeg"),
-      require("../../../assets/sample-profile03.jpeg"),
-      require("../../../assets/sample-profile03.jpeg"),
-      require("../../../assets/sample-profile03.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
+      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
     ];
     const votedUserProfileContent = `
     <div class="bottomContentContainer">
         ${votedSampleProfiles
           .map((profile, i) => {
-            return i > 2 ? "" : `<img src='${profile}' key='${i}' />`;
+            return i > 8 ? "" : `<img src='${profile}' key='${i}' />`;
           })
           .join("\n")}
-        <span>${
-          votedSampleProfiles.length > 2
-            ? `+${votedSampleProfiles.length - 3}`
+        ${
+          votedSampleProfiles.length > 8
+            ? `<span>+${votedSampleProfiles.length - 8}</span>`
             : ""
-        }</span>
+        }
       </div>`;
 
     return votedUserProfileContent;
