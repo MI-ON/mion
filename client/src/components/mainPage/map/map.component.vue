@@ -5,10 +5,9 @@
     <div id="menu_wrap" class="bg_white">
       <div class="option">
         <div>
-          <form onsubmit="searchPlaces(); return false;">
-            키워드 :
-            <input type="text" value="삼성동 맛집" id="keyword" size="15" />
-            <button type="submit">검색하기</button>
+          <form>
+              키워드 : <input type="text" value="삼성동 맛집" id="keyword" size="15"> 
+              <button @click.self.prevent="searchPlaces">검색하기</button> 
           </form>
         </div>
       </div>
