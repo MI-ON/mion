@@ -7,6 +7,8 @@ declare global {
   }
 }
 
+axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
+
 @Component({})
 export default class LoginComponent extends Vue {
   mounted() {
