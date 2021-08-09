@@ -42,3 +42,7 @@ type FoodList {
   members: [User]!
   reviews: [Post]!
 }
+
+type Query {
+  get_user_by_email(email: String!): User
+}
