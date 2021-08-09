@@ -1,17 +1,9 @@
 import App from "./App";
 import "reflect-metadata";
-
-
 import {createConnection} from "typeorm";
-import {User} from "./entity/User";
 
 import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resolvers";
-
-import * as dotenv from "dotenv";
-import * as path from "path";
-
-dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const server = new GraphQLServer({
     typeDefs: "src/graphql/schema.graphql",
@@ -26,7 +18,6 @@ createConnection().then(async connection  => {
     app.listen(3000, () => {
       console.log("Server listening on port 3000");
     });
-
-    console.log("connect 🚀");
+    console.log("typeorm connect 🚀");
   })
   .catch((error) => console.log(error));

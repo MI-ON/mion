@@ -1,21 +1,19 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 @Entity()
-export class Post extends BaseEntity{
+export class Post extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    idx: number;
+  @Column()
+  store_id: string;
 
-    @Column()
-    store_id:string;
+  @Column()
+  user_email: string;
 
-    @Column()
-    user_email:string;
+  @Column()
+  content: string;
 
-    @Column()
-    content:string;
-
-    @Column("decimal", { precision: 5, scale: 2 })
-    rating:number;
-
+  @Column("decimal", { precision: 5, scale: 2 })
+  rating: number;
 }
