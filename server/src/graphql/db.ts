@@ -22,3 +22,14 @@ export const dateScalar = new GraphQLScalarType({
 
 export const getUserByEmail = async (email: string) =>
   await User.findOne({ email: email });
+
+export const register = async (
+  email: string,
+  fullName: string,
+  imageUrl: string
+) =>
+  User.create({
+    email: email,
+    full_name: fullName,
+    image_url: imageUrl,
+  });
