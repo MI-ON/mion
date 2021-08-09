@@ -1,0 +1,47 @@
+
+type Store{
+    address_name:String!
+    category_group_code:String!
+    category_group_name:String!
+    category_name:String!
+    id: String!
+    phone:String!
+    place_name:String!
+    place_url:String!
+    road_address_name:String!
+    x:String!
+    y:String!
+}
+
+type User{
+    id: Int!,
+    full_name: String!
+    image_url: String!
+    email: String!
+}
+
+type Post{
+    id: Int!
+    userToken: String!
+    text: String!
+}
+
+
+scalar Date
+
+type Food_List{
+
+    id: Int! 
+    date: Date!
+    store_name: [Store]!
+    members: [User]!
+    reviews:[Post]!
+}
+
+type Query{
+    stores:[Store]!
+    users:[User]!
+    posts:[Post]!
+    food_list:[Food_List]!
+    
+}
