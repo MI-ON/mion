@@ -7,9 +7,9 @@ dotenv.config({ path: path.resolve(__dirname + "/src", ".env") });
 const connectionOptions: ConnectionOptions = {
   type: "mysql",
   host: process.env.DB_HOST,
-  port: +(process.env.DB_PORT || 3306),
+  port: 37331,
   username: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_ASSWORD,
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
