@@ -11,25 +11,13 @@ declare global {
 @Component({})
 export default class MapComponent extends Vue {
   markers: any = [];
-  listEl: any = "";
-  menuEl: any = "";
-  fragment: any = "";
-  listStr: string = "";
-  paginationEl: any = "";
-  el: any = "";
-  keyword: string = "";
-
-  infowindow: any = "";
-  mapContainer: any =  "";
-  map: any = "";
-  ps: any = "";
-  mapOption: any = "";
-  zoomControl: any = "";
   marker: any = "";
-  place: any = "";
-  bounds: any = "";
-  search: any = "";
-  imageSrc: string = "";
+  map: any = "";
+
+  fragment: any = "";
+  infowindow: any = "";
+  ps: any = "";
+  el: any = "";
   selectedMarker: any = null;
 
 
@@ -47,17 +35,14 @@ export default class MapComponent extends Vue {
     this.infowindow = new window.kakao.maps.CustomOverlay({ zIndex: 1 });
 
     // 지도를 표시할 div
-    this.mapContainer = document.getElementById("map");
-    this.mapOption = {
+    const mapContainer = document.getElementById("map") as HTMLDivElement;
+    const mapOption = {
       center: new window.kakao.maps.LatLng(37.5102134, 127.0539186), // 지도의 중심좌표
       level: 5, // 지도의 확대 레벨
     };
 
     // 지도 생성
-    this.map = new window.kakao.maps.Map(this.mapContainer, this.mapOption);
-
-    // 지도에 확대 축소 컨트롤 생성
-    this.zoomControl = new window.kakao.maps.ZoomControl();
+    this.map = new window.kakao.maps.Map(mapContainer, mapOption);
 
     // 장소 검색 객체 생성
     this.ps = new window.kakao.maps.services.Places();
@@ -73,16 +58,16 @@ export default class MapComponent extends Vue {
       radius: 1500,
     };
 
-    this.keyword = (<HTMLInputElement>document.getElementById("keyword")).value;
+    const keyword = (<HTMLInputElement>document.getElementById("keyword")).value;
 
-    if (!this.keyword.replace(/^\s+|\s+$/g, "")) {
+    if (!keyword.replace(/^\s+|\s+$/g, "")) {
       alert("키워드를 입력해주세요!");
       return false;
     }
 
     // 장소검색 객체를 통해 키워드로 장소검색 요청
-    console.log(this.keyword);
-    this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
+    console.log(keyword);
+    this.ps.keywordSearch(keyword, this.placesSearchCB, options);
   }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수
@@ -109,14 +94,13 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
-    this.listEl = document.getElementById("placesList");
-    this.menuEl = document.getElementById("menu_wrap");
+    const listEl = document.getElementById("placesList") as HTMLDivElement;
+    const menuEl = document.getElementById("menu_wrap") as HTMLDivElement;
     this.fragment = document.createDocumentFragment();
-    this.bounds = new window.kakao.maps.LatLngBounds();
-    this.listStr;
+    const bounds = new window.kakao.maps.LatLngBounds();
 
     // 검색 결과 목록에 추가된 항목들 제거
-    this.removeAllChildNods(this.listEl);
+    this.removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커 제거
     this.removeMarker();
@@ -132,7 +116,7 @@ export default class MapComponent extends Vue {
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기 위해
       // LatLngBounds 객체에 좌표 추가
-      this.bounds.extend(placePosition);
+      bounds.extend(placePosition);
 
       // 마커와 검색 결과 항목에 mouseover 했을 때
       // 해당 장소에 인포윈도우에 장소명 표시
@@ -187,11 +171,11 @@ export default class MapComponent extends Vue {
     }
 
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가
-    this.listEl.appendChild(this.fragment);
-    this.menuEl.scrollTop = 0;
+    listEl.appendChild(this.fragment);
+    menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
-    this.map.setBounds(this.bounds);
+    this.map.setBounds(bounds);
   }
 
   // 검색결과 항목을 Element로 반환하는 함수
@@ -250,13 +234,13 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 하단에 페이지번호를 표시하는 함수
   public displayPagination(pagination: any) {
-    this.paginationEl = document.getElementById("pagination");
+    const paginationEl = document.getElementById("pagination") as HTMLDivElement | any;
     this.fragment = document.createDocumentFragment();
     let i;
 
     // 기존에 추가된 페이지번호 삭제
-    while (this.paginationEl.hasChildNodes()) {
-      this.paginationEl.removeChild(this.paginationEl.lastChild);
+    while (paginationEl.hasChildNodes()) {
+      paginationEl.removeChild(paginationEl.lastChild);
     }
 
     for (i = 1; i <= pagination.last; i++) {
@@ -276,7 +260,7 @@ export default class MapComponent extends Vue {
 
       this.fragment.appendChild(this.el);
     }
-    this.paginationEl.appendChild(this.fragment);
+    paginationEl.appendChild(this.fragment);
   }
 
   // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
