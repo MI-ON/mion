@@ -14,9 +14,9 @@ export class User extends BaseEntity {
   @PrimaryColumn('varchar',{length:50})
   email: string;
 
-  @Column('varchar',{length:10})
+  @Column('varchar',{length:10, nullable:true})
   full_name: string;
 
-  @Column('varchar',{length:500})
+  @Column('varchar',{length:500, nullable:true})
   image_url: string;
 }

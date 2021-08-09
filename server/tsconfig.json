@@ -1,12 +1,30 @@
 {
   "compilerOptions": {
-     "lib": [ "es5", "es6", "webworker", "DOM" ], 
-     "target": "es5", 
-     "module": "commonjs", 
-     "moduleResolution": "node", 
-     "emitDecoratorMetadata": true, 
-     "experimentalDecorators": true, 
-     "outDir": "./dist", 
-     "esModuleInterop": true
-  }
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "lib": ["ESNext"],
+    "types": ["node"],
+    "sourceMap": true,
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "incremental": true,
+    "allowJs": true
+  },
+  "exclude": [
+    "./node_modules/",
+    "./dist/"
+  ]
 }
