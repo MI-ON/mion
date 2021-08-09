@@ -1,17 +1,32 @@
 .app-bar {
-  background-color: #5caafa;
-  width: 100%;
-  height: 10%;
+    background-color: #5caafa;
+    width: auto;
+    height: 10%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    align-content: center;
+    flex-grow: 1;
 }
 
 .app-logo {
-  margin-left: 5px;
-  margin-top: 5px;
+    margin: 0.5rem 0 0.5rem 4vw;
+    cursor: pointer;
+}
+
+.app-logo-text {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 900;
+    margin: 0.4rem 0 0 1.2vw;
+    cursor: pointer;
 }
 
 .user-profile-image {
-  float: right;
-  margin-right: 5px;
-  margin-top: 5px;
-  border-radius: 50px;
+    position: absolute;
+    right: 0;
+    margin-right: 1.5vw;
+    cursor: pointer;
 }
