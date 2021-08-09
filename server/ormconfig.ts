@@ -6,17 +6,17 @@ dotenv.config({ path: path.resolve(__dirname + "/src", ".env") });
 
 const connectionOptions: ConnectionOptions = {
   type: "mysql",
-  host: process.env.HOST,
-  port: 3306,
-  username: process.env.NAME,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  host: process.env.DB_HOST,
+  port: +(process.env.DB_PORT || 3306),
+  username: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
 
-  entities: ["src/entity/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"],
+  entities: ["@/entity/**/*{.ts,.js}"],
+  migrations: ["@/migration/**/*{.ts,.js}"],
+  subscribers: ["@/subscriber/**/*{.ts,.js}"],
 };
 
 export default connectionOptions;

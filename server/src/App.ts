@@ -1,12 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
+import { Connection } from "typeorm";
+import { GraphQLServer } from "graphql-yoga";
 import { User } from "./entity/User";
 
 class App {
   public application: express.Application;
 
-  constructor() {
-    this.application = express();
+  constructor(server: GraphQLServer, connection: Connection) {
+    this.application = server.express;
     this.modules();
     this.router();
   }

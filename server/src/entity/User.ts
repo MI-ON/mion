@@ -1,10 +1,9 @@
-import { Blob } from "buffer";
 import {Entity, PrimaryColumn, Column, BaseEntity} from "typeorm";
 
 @Entity()
 export class User extends BaseEntity{
 
-    @PrimaryColumn()
+    @PrimaryColumn('varchar', { length: 250 })
     user_email: string;
 
     @Column({
@@ -13,8 +12,8 @@ export class User extends BaseEntity{
     })
     nickname: string;
 
-    @Column('blob',{ nullable: true })
-    image: Blob;
+    @Column('blob', { nullable: true })
+    image: string | null;
 
     static saveUser(user: User){
         return

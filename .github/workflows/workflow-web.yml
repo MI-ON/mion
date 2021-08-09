@@ -1,0 +1,51 @@
+name: Deploy Web
+
+on:
+  push:
+    paths:
+      - 'client/*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ${{ matrix.os }}
+    env:
+      working-directory: ./client
+    strategy:
+      matrix:
+        node_version: [12.16.1]
+        os: [ubuntu-latest]
+
+    steps:
+    - name: Checkout to Branch
+      uses: actions/checkout@v2.3.3
+
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v2.1.2
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - run: pwd
+    - run: ls -al
+
+    - name: Install NPM Packages
+      run: npm ci
+      working-directory: ${{ env.working-directory }}
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ${{ env.working-directory }}
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: Upload Artifact to S3
+      run: aws s3 sync dist/ s3://mirimweb
+      env:
+        AWS_S3_BUCKET: mirimweb
+      working-directory: ${{ env.working-directory }}
