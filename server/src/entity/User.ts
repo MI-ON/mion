@@ -1,22 +1,22 @@
-import {Entity, PrimaryColumn, Column, BaseEntity} from "typeorm";
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryColumn('varchar', { length: 250 })
-    user_email: string;
+  @PrimaryColumn()
+  email: string;
 
-    @Column({
-        length:10,
-        nullable:true
-    })
-    nickname: string;
+  @Column()
+  full_name: string;
 
-    @Column('blob', { nullable: true })
-    image: string | null;
-
-    static saveUser(user: User){
-        return
-    }
-
+  @Column()
+  image_url: string | null;
 }
