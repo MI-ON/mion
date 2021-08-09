@@ -1,14 +1,26 @@
 import App from "./App";
 import "reflect-metadata";
-import { createConnection } from "typeorm";
+
+
+import {createConnection} from "typeorm";
+import {User} from "./entity/User";
+
+import { GraphQLServer } from "graphql-yoga";
+import resolvers from "./graphql/resolvers";
+
 import * as dotenv from "dotenv";
-import connectionOptions from "../ormConfig";
 import * as path from "path";
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-createConnection(connectionOptions)
-  .then(async () => {
+const server = new GraphQLServer({
+    typeDefs: "src/graphql/schema.graphql",
+    resolvers
+  });
+server.start(()=>console.log("Graphql Server Running"));
+
+
+createConnection().then(async connection  => {
     const app = new App().application;
 
     app.listen(3000, () => {
