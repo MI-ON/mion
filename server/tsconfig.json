@@ -10,7 +10,7 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     "target": "es2017",
-    "lib": ["ESNext"],
+    "lib": ["ESNext","DOM"],
     "types": ["node"],
     "sourceMap": true,
     "rootDir": "./",

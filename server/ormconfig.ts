@@ -9,7 +9,7 @@ const connectionOptions: ConnectionOptions = {
   host: process.env.DB_HOST,
   port: 37331,
   username: process.env.DB_NAME,
-  password: process.env.DB_ASSWORD,
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
