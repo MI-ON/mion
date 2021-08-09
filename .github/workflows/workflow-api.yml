@@ -1,0 +1,56 @@
+name: Deploy API
+
+on:
+  push:
+    paths:
+      - 'server/*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ${{ matrix.os }}
+    env:
+      working-directory: ./server
+    strategy:
+      matrix:
+        node_version: [14.16.0]
+        os: [ubuntu-latest]
+
+    steps:
+    - name: Get Current Timestamp
+      id: timestamp
+      run: echo "::set-output name=timestamp::$(date +%s)"
+
+    - name: Checkout to Branch
+      uses: actions/checkout@v2.2.0
+
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1.4.4
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: Install NPM Packages
+      run: npm ci
+      working-directory: ${{ env.working-directory }}
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ${{ env.working-directory }}
+
+    - name: Generate Deployment Package
+      run: |
+        zip mirimapi-${{steps.timestamp.outputs.timestamp}}.zip -r0 * .[^.]* -x "*node_modules*" -x "*.git*"
+        ls -alFh
+      working-directory: ${{ env.working-directory }}
+
+    - name: Deploy to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v16
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: mirim
+        environment_name: mirimapi
+        region: ap-northeast-2
+        deployment_package: ${{ env.working-directory }}/mirimapi-${{steps.timestamp.outputs.timestamp}}.zip
+        version_label: mirimapi-${{steps.timestamp.outputs.timestamp}}

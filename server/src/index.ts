@@ -17,7 +17,6 @@ createConnection()
     });
     server.start(options, () => {
       console.log("Graphql Server listening on port %d 🚀", options.port);
-      // new App(server); // TODO check this setting if nessecary
     });
     server.express.listen(3000, () =>
       console.log("Express Server listening on port %d", 3000)
