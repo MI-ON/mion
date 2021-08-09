@@ -11,12 +11,12 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @PrimaryColumn()
+  @PrimaryColumn('varchar',{length:50})
   email: string;
 
-  @Column()
+  @Column('varchar',{length:10})
   full_name: string;
 
-  @Column()
+  @Column('varchar',{length:500})
   image_url: string;
 }

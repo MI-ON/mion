@@ -11,13 +11,11 @@ export class CheckIN extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    length: 20,
-  })
+  @Column('varchar',{length:20})
   store_id: string;
 
-  @Column()
-  user_email: string;
+  @Column('varchar',{length:50})
+  email: string;
 
   @CreateDateColumn()
   created_at: Date;
