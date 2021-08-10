@@ -39,10 +39,6 @@ export const getStores = async(keyword:string)=>{
 
 }
 
-//* This is test code 
-// getStores("떡볶이").then((result)=>{
-//   console.log(result);
-// });
 
 
 
