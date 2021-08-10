@@ -11,6 +11,13 @@ declare global {
 @Component({})
 export default class LoginComponent extends Vue {
   mounted() {
+    window.addEventListener(
+      "google-oauth-library-load",
+      this.renderSignInButton
+    );
+  }
+
+  renderSignInButton() {
     window.gapi.signin2.render("my-signin2", {
       scope: "profile email",
       width: 240,
