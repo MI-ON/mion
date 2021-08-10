@@ -47,3 +47,7 @@ type Query {
   get_user_by_email(email: String!): User
   get_stores(keyword: String!): [Store]!
 }
+
+type Mutation {
+  add_user(email: String!, full_name: String!, image_url: String!): User!
+}

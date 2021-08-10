@@ -11,10 +11,10 @@ export default new Vuex.Store(<StoreOptions<any>>{
   },
   getters: {
     getUserEmail: (state) => {
-      return state.user.userEmail;
+      return state.user.email;
     },
     getUserImageUrl: (state) => {
-      return state.user.userImageUrl;
+      return state.user.imageUrl;
     },
   },
   mutations: {
