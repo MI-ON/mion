@@ -1,12 +1,16 @@
 import { Component, Vue } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 
+
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     kakao: any;
   }
 }
+
+
 
 @Component({})
 export default class MapComponent extends Vue {
@@ -26,6 +30,7 @@ export default class MapComponent extends Vue {
 
   mounted() {
     this.openMap();
+
   }
 
   public openMap() {
@@ -69,7 +74,7 @@ export default class MapComponent extends Vue {
     console.log(keyword);
     this.ps.keywordSearch(keyword, this.placesSearchCB, options);
   }
-
+  
   // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(
     data: string,
@@ -80,7 +85,7 @@ export default class MapComponent extends Vue {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
       this.displayPlaces(data);
-
+      console.log(data);
       // 페이지 번호 표출
       this.displayPagination(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
@@ -284,4 +289,7 @@ export default class MapComponent extends Vue {
       el.removeChild(el.lastChild);
     }
   }
+
 }
+
+
