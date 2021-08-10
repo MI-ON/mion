@@ -46,4 +46,7 @@ export const getStores = async (keyword: string) => {
   const stores = await axios.get(encode_url, config);
   //console.log(stores.data.documents);
   return stores.data.documents;
+
 }
+
+
