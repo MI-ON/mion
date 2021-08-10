@@ -6,8 +6,9 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/api': {
-                target: 'http://localhost:3000/'
+            '/graphql': {
+                target: process.env.VUE_APP_API_ENDPOINT,
+                changeOrigin: true
             }
         }
     }
