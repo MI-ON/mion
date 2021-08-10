@@ -32,4 +32,4 @@ export const register = async (
     email: email,
     full_name: fullName,
     image_url: imageUrl,
-  });
+  }).save();
