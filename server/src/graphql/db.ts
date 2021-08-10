@@ -1,7 +1,5 @@
 import { GraphQLScalarType, Kind } from "graphql";
 import { User } from "../entity/User";
-//import {abc} from "../../../client/src/components/mainPage/map/map.component.ts"
-import * as fetch from 'node-fetch'
 import axios from "axios";
 
 export const dateScalar = new GraphQLScalarType({
@@ -27,19 +25,24 @@ export const getUserByEmail = async (email: string) =>
   await User.findOne({ email: email });
 
 
-export const getStores = async()=>{
-
-  const API_URL = "https://dapi.kakao.com/v2/local/search/keyword.json?query=food&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15";
+export const getStores = async(keyword:string)=>{
+  
+  const API_URL = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
+  const encode_url = encodeURI(API_URL);
   const config = {
-    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1"}
   };
   
-  const stores = await axios.get(API_URL, config);
+  const stores = await axios.get(encode_url, config);
   //console.log(stores.data.documents);
   return stores.data.documents;
+
 }
 
-getStores().then((result)=>{
-  console.log(result);
-});
+//* This is test code 
+// getStores("떡볶이").then((result)=>{
+//   console.log(result);
+// });
+
+
 
