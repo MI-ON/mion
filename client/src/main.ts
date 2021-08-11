@@ -6,7 +6,7 @@ import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
 
 const apolloClient = new ApolloClient({
-  uri: process.env.GRAPHQL_API_ENDPOINT,
+  uri: process.env.VUE_APP_GRAPHQL_API_ENDPOINT,
 });
 
 const apolloProvider = new VueApollo({
