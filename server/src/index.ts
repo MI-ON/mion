@@ -18,5 +18,8 @@ createConnection()
     server.start(options, () => {
       console.log("Graphql Server listening on port %d 🚀", options.port);
     });
+    server.express.get("/graphql", (req, res) => {
+      res.send("Graphql Server listening!!");
+    });
   })
   .catch((error) => console.log(error));
