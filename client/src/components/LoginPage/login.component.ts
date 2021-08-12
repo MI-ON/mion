@@ -26,7 +26,8 @@ export default class LoginComponent extends Vue {
       window.google.accounts.id.renderButton(loginBtn, {
         theme: "outline",
         size: "large",
-        width: "400",
+        width: "250",
+        text: "Google계정으로 가입"
       });
     };
   }
