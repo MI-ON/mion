@@ -7,8 +7,7 @@ export default class AppBarComponent extends Vue {
     this.$store.commit("LOGOUT");
     location.reload();
   }
-
-  onClickRedirect(): void {
+  onClickRouteRoot(): void {
     router.push({ path: "/" });
   }
 }
