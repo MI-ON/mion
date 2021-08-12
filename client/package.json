@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "graphql": "^15.5.1",
+    "jwt-decode": "^3.1.2",
     "load-script-once": "^2.0.1",
     "vue": "^2.6.11",
     "vue-apollo": "^3.0.7",
