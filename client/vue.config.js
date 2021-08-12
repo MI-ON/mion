@@ -7,7 +7,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/graphql': {
-                target: process.env.GRAPHQL_API_ENDPOINT,
+                target: process.env.VUE_APP_GRAPHQL_API_ENDPOINT,
                 changeOrigin: true
             }
         }
