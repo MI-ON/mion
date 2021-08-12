@@ -1,0 +1,133 @@
+
+
+$main-color:#5caafa;
+
+#menu_wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 455px;
+    height: 100%;
+    overflow: hidden;
+    background: skyblue;
+    z-index: 1;
+    font-size: 12px;
+
+    
+}
+
+#menu_wrap {
+   
+    .option {
+
+        $btn-width: 30px;
+        $btn-height: 30px;
+        $input-width: 415px;
+        $input-height: 45px;
+        width: 100%;
+        height: 60px;
+        background-color: $main-color;
+        text-align: center;
+        position: relative;
+        p {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: white;
+            width: $btn-width;
+            height: $btn-height;
+            border: none;
+            position: absolute;
+            right: 40px;
+            top: $input-height/2 - $btn-height/2;
+        }
+
+        input{
+            padding-left: 20px;
+            width: $input-width;
+            height: $input-height;
+            border-radius: 5px;
+            border: none;
+        }
+
+       
+    }
+}
+
+#placesList {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    li {
+        list-style: none;
+    }
+
+    .item {
+        height: 143px;
+        background-color: white;
+        position: relative;
+        cursor: pointer;
+        min-height: 65px;
+
+        span {
+            display: block;
+            margin-top: 4px;
+        }
+
+        h5 {
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .info {
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 10px 0 10px 10px;
+        }
+    }
+
+    .info {
+        .title {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .gray {
+            color: #252525;
+        }
+
+        .tel {
+            color: #000000;
+        }
+    }
+}
+
+#select-bar{
+   
+    background-color: $main-color;
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
+        border: none;
+        border-radius: 5px;
+        color: white;
+        width: 125px;
+        height: 33px;
+    }
+    .style1-btn{
+        background-color: #1E7CDC;
+    }
+    .style2-btn{
+        background-color: #145AA1;
+    }
+    
+}

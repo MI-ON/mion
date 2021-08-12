@@ -1,6 +1,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
-
+import List from '@/components/mainPage/sidemenu/sidemenu.component.vue'
 
 
 declare global {
@@ -12,8 +12,13 @@ declare global {
 
 
 
-@Component({})
+@Component({
+  components:{
+    List,
+  }
+})
 export default class MapComponent extends Vue {
+  
   markers: any = [];
   marker: any = "";
   map: any = "";
