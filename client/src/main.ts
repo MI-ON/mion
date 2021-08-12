@@ -21,8 +21,8 @@ new Vue({
   router,
   store,
   created() {
-    const userEmail: string | null = this.$store.getters.getUserEmail;
-    if (!userEmail) {
+    const userToken: string | null = this.$store.state.userToken;
+    if (!userToken) {
       this.$router.push("/login");
     }
   },
