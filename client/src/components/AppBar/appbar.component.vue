@@ -8,14 +8,20 @@
       v-on:click="this.onClickRedirect"
     />
     <span class="app-logo-text" v-on:click="this.onClickRedirect">MI:ON</span>
-    <img
-      v-if="this.$store.state.userToken"
+    <div>
+    <v-avater>
+      <!-- 임시로 이미지 지정 -->
+      <!-- v-if="this.$store.state.userToken" -->
+      <!-- :src="this.$store.getters.getUserImageUrl" -->
+        <img
       class="user-profile-image"
-      :src="this.$store.getters.getUserImageUrl"
+      src="../../assets/AppBar/default-profile.png"
       width="52"
       height="52"
       v-on:click="this.onSignOut"
     />
+    </v-avater>
+    </div>
   </div>
 </template>
 
