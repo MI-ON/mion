@@ -21,7 +21,7 @@ export default class MapComponent extends Vue {
   selectedMarker: any = null;
 
   mapMarker = require("../../../assets/mainPage/default-marker.png");
-  clickMapMarker = require("../../../assets/mainPage/click-marker.png");
+  clickedMapMarker = require("../../../assets/mainPage/click-marker.png");
 
   mounted() {
     this.openMap();
