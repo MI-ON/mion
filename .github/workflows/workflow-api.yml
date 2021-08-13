@@ -54,3 +54,4 @@ jobs:
         region: ap-northeast-2
         deployment_package: ${{ env.working-directory }}/mirimapi-${{steps.timestamp.outputs.timestamp}}.zip
         version_label: mirimapi-${{steps.timestamp.outputs.timestamp}}
+        wait_for_deployment: false
