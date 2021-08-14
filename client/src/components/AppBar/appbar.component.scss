@@ -12,11 +12,13 @@
 }
 
 .app-logo {
+    float: left;
     margin: 0.5rem 0 0.5rem 4vw;
     cursor: pointer;
 }
 
 .app-logo-text {
+    float: left;
     text-align: center;
     font-size: 1.4em;
     font-weight: 900;
@@ -27,6 +29,7 @@
 .user-profile-image {
     position: absolute;
     right: 0;
+    top: 0.5vw;
     margin-right: 1.5vw;
     cursor: pointer;
 }
