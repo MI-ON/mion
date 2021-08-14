@@ -130,7 +130,7 @@ export default class MapComponent extends Vue {
           );
 
           const clickMarkerImage = new window.kakao.maps.MarkerImage(
-            this.clickMapMarker,
+            this.clickedMapMarker,
             imageSize,
             imageOption
           );
@@ -265,7 +265,7 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
   // 인포윈도우에 장소명 표시
-  public displayInfowindow(marker: any, places: any) {
+  public async displayInfowindow(marker: any, places: any) {
     // 인포윈도우 생성 (커스텀 오버레이)
     this.infowindow = new window.kakao.maps.CustomOverlay({
       clickable: true,
@@ -273,7 +273,7 @@ export default class MapComponent extends Vue {
       yAnchor: 1.5,
     });
 
-    const content = InfoWindowContent.makeInfoWindowContent(places);
+    const content = await InfoWindowContent.makeInfoWindowContent(places);
 
     this.infowindow.setContent(content);
     this.infowindow.setPosition(marker.getPosition());

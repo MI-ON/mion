@@ -1,11 +1,19 @@
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
+
 export default class InfoWindowContent {
-  public static makeInfoWindowContent(data: string | any): string {
-    const infoWindowContainer = this.drawInfoContent(data);
+  public static async makeInfoWindowContent(
+    data: string | any
+  ): Promise<HTMLDivElement> {
+    const infoWindowContainer = await this.drawInfoContent(data);
     return infoWindowContainer;
   }
 
-  static drawInfoContent(data: string | any): string {
+  static async drawInfoContent(data: string | any): Promise<HTMLDivElement> {
     const {
+      id,
       place_name,
       address_name,
       road_address_name,
@@ -23,53 +31,61 @@ export default class InfoWindowContent {
             </div>
         </section>`;
 
-    const voteButtonContent = `
-        <section class="voteButtonContainer">
-            <button type="button" ><img src='${require("../../../assets/vote-icon.png")}' /></button>
-        </section>`;
+    const voteBtn = document.createElement("button");
+    voteBtn.type = "button";
+    voteBtn.classList.add("voteBtn");
+    voteBtn.addEventListener("click", () => {
+      // TODO: click event method
+    });
+    voteBtn.innerHTML = `<img src='${require("../../../assets/vote-icon.png")}' />`;
 
-    const bottomContentContainer = this.votedUserProfileContent();
+    const voteButtonContent = document.createElement("section");
+    voteButtonContent.classList.add("voteButtonContainer");
+    voteButtonContent.appendChild(voteBtn);
 
-    return (
-      `<div class="infoWindowContainer">
-        <div class="topContentContainer">
-      ` +
-      infoContent +
-      voteButtonContent +
-      ` </div>` +
-      bottomContentContainer +
-      `</div>`
-    );
+    const infoWindowContainer = document.createElement("div");
+    infoWindowContainer.classList.add("infoWindowContainer");
+
+    const topContentContainer = document.createElement("div");
+    topContentContainer.classList.add("topContentContainer");
+
+    topContentContainer.innerHTML = infoContent;
+    topContentContainer.appendChild(voteButtonContent);
+
+    const bottomContentContainer = document.createElement("div");
+    bottomContentContainer.classList.add("bottomContentContainer");
+
+    bottomContentContainer.innerHTML = await this.votedUserProfileContent(id);
+
+    infoWindowContainer.appendChild(topContentContainer);
+    infoWindowContainer.appendChild(bottomContentContainer);
+
+    return infoWindowContainer;
   }
 
-  static votedUserProfileContent(): string | any {
-    const votedSampleProfiles = [
-      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile01.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile02.jpeg"),
-      require("../../../assets/mainPage/infowindow/sample-profile03.jpeg"),
-    ];
+  static async votedUserProfileContent(place_id: string): Promise<string> {
+    const response = await axios.post("/graphql", {
+      query: `query {
+        get_voted_users_by_store_id(store_id: "${place_id}") {
+          image_url
+        }
+      }`,
+    });
+
+    const votedUserImageList = await response.data.data
+      .get_voted_users_by_store_id;
+
     const votedUserProfileContent = `
-    <div class="bottomContentContainer">
-        ${votedSampleProfiles
-          .map((profile, i) => {
-            return i > 8 ? "" : `<img src='${profile}' key='${i}' />`;
+        ${await votedUserImageList
+          .map((user: { image_url: string }, i: number) => {
+            return i > 8 ? "" : `<img src='${user.image_url}' key='${i}' />`;
           })
           .join("\n")}
         ${
-          votedSampleProfiles.length > 8
-            ? `<span>+${votedSampleProfiles.length - 8}</span>`
+          votedUserImageList.length > 8
+            ? `<span>+${votedUserImageList.length - 8}</span>`
             : ""
-        }
-      </div>`;
+        }`;
 
     return votedUserProfileContent;
   }
