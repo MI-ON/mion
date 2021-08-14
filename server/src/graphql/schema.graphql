@@ -49,4 +49,5 @@ type Query {
 
 type Mutation {
   add_user(email: String!, full_name: String!, image_url: String!): User!
+  add_check_in(store_id: String!, email: String!): CheckIn!
 }

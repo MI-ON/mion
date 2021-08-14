@@ -2,6 +2,7 @@ import {
   getUserByEmail,
   getStores,
   register,
+  addCheckIn,
   getVotedUsersByStoreId,
 } from "./db";
 
@@ -15,6 +16,8 @@ const resolvers = {
   Mutation: {
     add_user: (_: any, { email, full_name, image_url }: any) =>
       register(email, full_name, image_url),
+    add_check_in: (_: any, { store_id, email }: any) =>
+      addCheckIn(store_id, email),
   },
 };
 

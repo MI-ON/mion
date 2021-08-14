@@ -32,6 +32,15 @@ const getVotedStoreUserEmailList = async (storeId: string) => {
   return votedStoreList.map((store) => store.email);
 };
 
+const isUserVoted = async (email: string): Promise<CheckIN | undefined> => {
+  const createdAt = getCreatedAt();
+
+  return await CheckIN.findOne({
+    email: email,
+    created_at: createdAt,
+  });
+};
+
 export const getUserByEmail = async (email: string) =>
   await User.findOne({ email: email });
 
@@ -55,6 +64,22 @@ export const getStores = async (keyword: string) => {
 
   const stores = await axios.get(encode_url, config);
   return stores.data.documents;
+};
+
+export const addCheckIn = async (storeId: string, email: string) => {
+  const createdAt = getCreatedAt();
+  const isVoted = await isUserVoted(email);
+
+  if (!isVoted) {
+    return CheckIN.create({
+      store_id: storeId,
+      email: email,
+      created_at: createdAt,
+    }).save();
+  } else {
+    await CheckIN.update(isVoted, { store_id: storeId });
+    return CheckIN.findOne({ email: email, created_at: createdAt });
+  }
 };
 
 export const getVotedUsersByStoreId = async (storeId: string) => {
