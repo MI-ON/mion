@@ -6,13 +6,20 @@
       <div class="option">
         <div>
           <form>
-              키워드 : <input type="text" value="삼성동 맛집" id="keyword" size="15"> 
-              <button @click.self.prevent="searchPlaces">검색하기</button> 
+            키워드 :
+            <input type="text" value="삼성동 맛집" id="keyword" size="15" />
+            <button @click.self.prevent="searchPlaces">검색하기</button>
           </form>
         </div>
       </div>
       <hr />
-      <ul id="placesList"></ul>
+
+      <ul id="placesList">
+        <li v-for="item in searchResultData" v-bind:key="item">
+          <PlaceItemComponent v-bind:searchResult="item" />
+        </li>
+      </ul>
+
       <div id="pagination"></div>
     </div>
   </div>

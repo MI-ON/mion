@@ -1,7 +1,6 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
-
-
+import PlaceItemComponent from "../placeitem/placeitem.component.vue";
 
 declare global {
   interface Window {
@@ -10,9 +9,7 @@ declare global {
   }
 }
 
-
-
-@Component({})
+@Component({ components: { PlaceItemComponent } })
 export default class MapComponent extends Vue {
   markers: any = [];
   marker: any = "";
@@ -24,13 +21,12 @@ export default class MapComponent extends Vue {
   el: any = "";
   selectedMarker: any = null;
 
-
   mapMarker = require("../../../assets/mainPage/default-marker.png");
   clickMapMarker = require("../../../assets/mainPage/click-marker.png");
 
+  searchResultData: any = "";
   mounted() {
     this.openMap();
-
   }
 
   public openMap() {
@@ -63,7 +59,8 @@ export default class MapComponent extends Vue {
       radius: 1500,
     };
 
-    const keyword = (<HTMLInputElement>document.getElementById("keyword")).value;
+    const keyword = (<HTMLInputElement>document.getElementById("keyword"))
+      .value;
 
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
       alert("키워드를 입력해주세요!");
@@ -74,13 +71,9 @@ export default class MapComponent extends Vue {
     console.log(keyword);
     this.ps.keywordSearch(keyword, this.placesSearchCB, options);
   }
-  
+
   // 장소검색이 완료됐을 때 호출되는 콜백함수
-  public placesSearchCB(
-    data: string,
-    status: number,
-    pagination: number
-  ) {
+  public placesSearchCB(data: string, status: number, pagination: number) {
     if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
@@ -99,6 +92,8 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
+    this.searchResultData = places;
+
     const listEl = document.getElementById("placesList") as HTMLDivElement;
     const menuEl = document.getElementById("menu_wrap") as HTMLDivElement;
     this.fragment = document.createDocumentFragment();
@@ -157,22 +152,24 @@ export default class MapComponent extends Vue {
 
           // 클릭된 마커를 현재 클릭된 마커 객체로 설정
           this.selectedMarker = marker;
-          
+
           this.infowindow.setMap(null);
           this.displayInfowindow(marker, places);
         });
 
+        /*
         itemEl.onclick = () => {
           this.infowindow.setMap(null);
           this.displayInfowindow(marker, places);
         };
+        */
 
         window.kakao.maps.event.addListener(this.map, "click", () => {
           this.infowindow.setMap(null);
         });
       })(marker, places[i]);
 
-      this.fragment.appendChild(itemEl);
+      // this.fragment.appendChild(itemEl);
     }
 
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가
@@ -185,6 +182,8 @@ export default class MapComponent extends Vue {
 
   // 검색결과 항목을 Element로 반환하는 함수
   public getListItem(index: number, places: any) {
+    return { index, places };
+    /*
     this.el = document.createElement("li");
     let itemStr =
       `<span class="markerbg marker_${index + 1}"></span>` +
@@ -205,6 +204,7 @@ export default class MapComponent extends Vue {
     this.el.className = "item";
 
     return this.el;
+    */
   }
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수
@@ -239,7 +239,9 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 하단에 페이지번호를 표시하는 함수
   public displayPagination(pagination: any) {
-    const paginationEl = document.getElementById("pagination") as HTMLDivElement | any;
+    const paginationEl = document.getElementById("pagination") as
+      | HTMLDivElement
+      | any;
     this.fragment = document.createDocumentFragment();
     let i;
 
@@ -289,7 +291,4 @@ export default class MapComponent extends Vue {
       el.removeChild(el.lastChild);
     }
   }
-
 }
-
-
