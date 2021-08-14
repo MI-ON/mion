@@ -9,10 +9,10 @@
       </v-col>
       <v-col>
         <v-card class="container col2">
-          <v-text class="title">LOGIN</v-text><br>
-          <v-text class="content">Nice to meet you.</v-text><br>
-          <v-text class="content">Please join us through Google</v-text><br>
-          <div class="loginBtn" id="btn"></div>
+          <p class="title">LOGIN</p>
+          <p class="content">Nice to meet you. <br>
+          Please join us through Google</p>
+          <center><div class="loginBtn"></div></center>
         </v-card>
       </v-col>
      </v-row>
