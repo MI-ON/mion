@@ -34,8 +34,21 @@ export default class InfoWindowContent {
     const voteBtn = document.createElement("button");
     voteBtn.type = "button";
     voteBtn.classList.add("voteBtn");
-    voteBtn.addEventListener("click", () => {
-      // TODO: click event method
+    voteBtn.addEventListener("click", async () => {
+      const vuex: string | null = localStorage.getItem("vuex");
+      const userJWToken = vuex ? JSON.parse(vuex).userToken : "";
+
+      const userTokenDecoded: { email: string } = jwt_decode(userJWToken);
+      const userEmail = userTokenDecoded.email;
+
+      await axios.post("/graphql", {
+        query: `mutation {
+          add_check_in(store_id: "${id}", email: "${userEmail}") {
+            id
+          }
+        }`,
+      });
+      location.reload();
     });
     voteBtn.innerHTML = `<img src='${require("../../../assets/vote-icon.png")}' />`;
 
