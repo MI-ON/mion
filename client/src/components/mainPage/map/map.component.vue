@@ -15,7 +15,7 @@
       <hr />
 
       <ul id="placesList">
-        <li v-for="item in searchResultData" v-bind:key="item">
+        <li v-for="item in searchResultData" v-bind:key="item.place_name">
           <PlaceItemComponent v-bind:searchResult="item" />
         </li>
       </ul>
