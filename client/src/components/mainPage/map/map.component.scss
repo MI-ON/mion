@@ -1,6 +1,6 @@
 #map {
     z-index: 1;
-    width: 80%;
+    width: calc(100% - 455px);
     height: 100vh;
 }
 
@@ -39,4 +39,78 @@
     background: #fff;
 }
 
+$main-color:#5caafa;
 
+#side-menu-wrap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 455px;
+    height: 100%;
+    overflow: hidden;
+    background-color: #E5E5E5;
+    
+    z-index: 1;
+    font-size: 12px;
+
+    .option {
+
+        $btn-width: 30px;
+        $btn-height: 30px;
+        $input-width: 415px;
+        $input-height: 45px;
+        width: 100%;
+        height: 60px;
+        background-color: $main-color;
+        text-align: center;
+        position: relative;
+        p {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: white;
+            width: $btn-width;
+            height: $btn-height;
+            border: none;
+            position: absolute;
+            right: 40px;
+            top: $input-height/2 - $btn-height/2;
+        }
+
+        input{
+            padding-left: 20px;
+            width: $input-width;
+            height: $input-height;
+            border-radius: 5px;
+            border: none;
+        }
+
+       
+    }
+}
+
+#select-bar{
+   
+    background-color: $main-color;
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
+        border: none;
+        border-radius: 5px;
+        color: white;
+        width: 125px;
+        height: 33px;
+    }
+    .style1-btn{
+        background-color: #1E7CDC;
+    }
+    .style2-btn{
+        background-color: #145AA1;
+    }
+    
+}

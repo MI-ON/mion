@@ -1,6 +1,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
-import List from '@/components/mainPage/sidemenu/sidemenu.component.vue'
+import List from '@/components/mainPage/list/list.component.vue'
 
 
 declare global {
@@ -193,22 +193,23 @@ export default class MapComponent extends Vue {
     this.el = document.createElement("li");
     let itemStr =
       `<span class="markerbg marker_${index + 1}"></span>` +
+      '<div class="item">' +
       '<div class="info">' +
       `<spen class="title">${places.place_name}</spen>`;
 
+    itemStr+='<div class="sub-info">'
     if (places.road_address_name) {
       itemStr +=
-        `<span>${places.road_address_name}</span>` +
+        `<span class="road">${places.road_address_name}</span>` +
         `<span class="gray">${places.address_name}</span>`;
     } else {
       itemStr += `<span>${places.address_name}</span>`;
     }
 
-    itemStr += `<span class="tel">${places.phone}</span>` + "</div>";
+    itemStr += `<span class="tel">${places.phone}</span>` + "</div></div></div>";
 
     this.el.innerHTML = itemStr;
-    this.el.className = "item";
-
+    
     return this.el;
   }
 
