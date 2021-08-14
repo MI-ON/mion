@@ -3,16 +3,16 @@
     <div id="map"></div>
 
     <div id="menu_wrap" class="bg_white">
-      <div class="option">
+      <div id="searchBar">
         <div>
           <form>
-            키워드 :
             <input type="text" value="삼성동 맛집" id="keyword" size="15" />
-            <button @click.self.prevent="searchPlaces">검색하기</button>
+            <button @click.self.prevent="searchPlaces">
+              <img src="../../../assets/mainPage/search-icon.png" />
+            </button>
           </form>
         </div>
       </div>
-      <hr />
 
       <ul id="placesList">
         <li v-for="item in searchResultData" v-bind:key="item.place_name">
