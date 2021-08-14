@@ -1,8 +1,19 @@
+$main-color:#5caafa;
+$side-menu-width: 455px;
+
 #map {
     z-index: 1;
-    width: calc(100% - 455px);
     height: 100vh;
 }
+
+.map-close{      
+    width: calc(100% - 455px);
+}
+
+.map-open{
+    width: 100%;      
+}
+
 
 .map_wrap {
     display: flex;
@@ -39,14 +50,13 @@
     background: #fff;
 }
 
-$main-color:#5caafa;
 
 #side-menu-wrap{
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 455px;
+    width: $side-menu-width;
     height: 100%;
     overflow: hidden;
     background-color: #E5E5E5;
@@ -77,6 +87,7 @@ $main-color:#5caafa;
             position: absolute;
             right: 40px;
             top: $input-height/2 - $btn-height/2;
+            cursor: pointer;
         }
 
         input{
@@ -100,6 +111,7 @@ $main-color:#5caafa;
     justify-content: space-around;
     align-items: center;
     button{
+        cursor: pointer;
         border: none;
         border-radius: 5px;
         color: white;
@@ -109,8 +121,63 @@ $main-color:#5caafa;
     .style1-btn{
         background-color: #1E7CDC;
     }
-    .style2-btn{
+    .on{
         background-color: #145AA1;
     }
     
 }
+%side-menu{
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    height: 134px;
+    width: 34px;
+    border: none;
+
+    top: calc(50% - 130px/2);
+}
+
+%tri{
+    position: relative;
+    top:-65px-12px;
+    right: 0px;
+    width: 0px;
+    height: 0px;
+
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+}
+
+#side-menu-close{
+   
+    @extend %side-menu;
+    right: calc(100% - #{$side-menu-width} - 34px);
+    
+    .tri-close{
+        @extend %tri;
+        border-right: 25px solid #2196F3;
+    }
+   
+}
+
+#side-menu-open{
+    @extend %side-menu;
+    right: calc(100% - 34px);
+
+    .tri-open{
+        @extend %tri;
+        border-left: 25px solid #2196F3;
+
+    }
+}
+
+.react{
+    height: 100px;
+    width: 0px;
+    border-left: 34px solid white;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+  
+}
+

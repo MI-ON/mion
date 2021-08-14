@@ -1,5 +1,5 @@
 $background-color: #E5E5E5;
-
+$main-color: #5CAAFA;
 #lists{
     font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
     width: 455px;
@@ -14,6 +14,7 @@ $background-color: #E5E5E5;
         margin: 10px 0px 10px 0px;
     }
 }
+
 #lists::-webkit-scrollbar{
     display: none;
 }
@@ -21,6 +22,7 @@ $background-color: #E5E5E5;
 #zoom-in{
     float: right;
     //position: fixed;
+    cursor: pointer;
     background-color: $background-color;
     border: none;
     img{
@@ -30,7 +32,7 @@ $background-color: #E5E5E5;
     }
 }
 
-$main-color: #5CAAFA;
+
 
 .item{
    
@@ -41,7 +43,7 @@ $main-color: #5CAAFA;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    cursor: pointer;
     .info{
        
         .title{
