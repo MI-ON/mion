@@ -1,4 +1,4 @@
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 import PlaceItemComponent from "../placeitem/placeitem.component.vue";
 
@@ -11,6 +11,11 @@ declare global {
 
 @Component({ components: { PlaceItemComponent } })
 export default class MapComponent extends Vue {
+  @Watch("searchResultData")
+  updateMessage() {
+    console.log("map.component.ts에서 변경감지");
+  }
+
   markers: any = [];
   marker: any = "";
   map: any = "";
@@ -92,6 +97,7 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
+    console.log("검색됐어요");
     this.searchResultData = places;
 
     const listEl = document.getElementById("placesList") as HTMLDivElement;

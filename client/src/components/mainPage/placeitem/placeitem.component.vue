@@ -21,11 +21,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class PlaceItemComponent extends Vue {
-  @Prop(String) protected searchResult!: string;
+  @Prop(Object) protected searchResult!: Object;
+  @Watch("searchResult")
+  updateMessage() {
+    console.log("변경감지");
+  }
 }
 </script>
 <style lang="scss" src="./placeitem.component.scss"></style>

@@ -15,7 +15,11 @@
       </div>
 
       <ul id="placesList">
-        <li v-for="item in searchResultData" v-bind:key="item.place_name">
+        <li
+          v-for="(item, index) in searchResultData"
+          v-bind:index="index"
+          v-bind:key="item.place_name"
+        >
           <PlaceItemComponent v-bind:searchResult="item" />
         </li>
       </ul>
