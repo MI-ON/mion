@@ -44,6 +44,7 @@ type FoodList {
 type Query {
   get_user_by_email(email: String!): User
   get_stores(keyword: String!): [Store]!
+  get_voted_users_by_store_id(store_id: String!): [User]
 }
 
 type Mutation {
