@@ -25,8 +25,18 @@ export const getUserByEmail = async (email: string) =>
   await User.findOne({ email: email });
 
 
-export const getStores= async(keyword:string)=>{
-  
+export const register = async (
+  email: string,
+  fullName: string,
+  imageUrl: string
+) =>
+  User.create({
+    email: email,
+    full_name: fullName,
+    image_url: imageUrl,
+  }).save();
+
+export const getStores = async (keyword: string) => {
   const API_URL:string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
   const encode_url:string = encodeURI(API_URL);
   const config = {
@@ -42,7 +52,4 @@ export const getStores= async(keyword:string)=>{
     return false;
   }
 }
-
-
-getStores('철물점');
 
