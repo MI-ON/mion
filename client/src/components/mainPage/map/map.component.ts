@@ -1,6 +1,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 
+import List from '@/components/mainPage/list/list.component.vue'
 
 
 declare global {
@@ -12,8 +13,14 @@ declare global {
 
 
 
-@Component({})
+@Component({
+  components:{
+    List,
+  }
+})
+
 export default class MapComponent extends Vue {
+  
   markers: any = [];
   marker: any = "";
   map: any = "";
@@ -24,13 +31,46 @@ export default class MapComponent extends Vue {
   el: any = "";
   selectedMarker: any = null;
 
-
+  clickBtns: NodeListOf<HTMLParagraphElement> | null = null;
+  isList:boolean = true;
+  isReview:boolean = false;
+  isVote:boolean = false;
+  isMenu:boolean = true;
   mapMarker = require("../../../assets/mainPage/default-marker.png");
   clickMapMarker = require("../../../assets/mainPage/click-marker.png");
-
+  
   mounted() {
     this.openMap();
+  }
 
+  public sideMenuState(event:any){
+    //console.log('클릭');
+    this.isMenu = !this.isMenu;
+    
+  }
+
+  public clickSelectbar(event:any):void{
+
+    // 클릭 표시 삭제
+    this.clickBtns = document.querySelectorAll('.on');
+    this.clickBtns.forEach((btn,i)=>{
+      btn.classList.remove('on');
+    });
+    this.isList = false;
+    this.isReview = false;
+    this.isVote = false;
+
+    const target:HTMLParagraphElement = event.target;
+    target.classList.add('on');
+  
+    if(target.id == 'search-btn') {
+      this.isList = true
+      this.searchPlaces();
+    }
+    else if(target.id == 'review-btn') this.isReview = true;
+    else if(target.id == 'vote-btn') this.isVote = true;
+    
+    
   }
 
   public openMap() {
@@ -63,7 +103,8 @@ export default class MapComponent extends Vue {
       radius: 1500,
     };
 
-    const keyword = (<HTMLInputElement>document.getElementById("keyword")).value;
+    const keyword = (<HTMLInputElement>document.getElementById("keyword"))
+      .value;
 
     if (!keyword.replace(/^\s+|\s+$/g, "")) {
       alert("키워드를 입력해주세요!");
@@ -74,20 +115,30 @@ export default class MapComponent extends Vue {
     console.log(keyword);
     this.ps.keywordSearch(keyword, this.placesSearchCB, options);
   }
-  
+
   // 장소검색이 완료됐을 때 호출되는 콜백함수
+
   public placesSearchCB(
-    data: string,
+    data: any[],
     status: number,
     pagination: number
   ) {
+
+  public placesSearchCB(data: string, status: number, pagination: number) {
     if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
-      this.displayPlaces(data);
-      console.log(data);
-      // 페이지 번호 표출
-      this.displayPagination(pagination);
+      //data = data.filter(v=> v.category_group_code == 'FD6');
+      if(data.length>0){
+        this.displayPlaces(data);
+        // console.log(data);
+        // console.log(pagination);
+        // 페이지 번호 표출
+        this.displayPagination(pagination);
+      }else{
+        alert("검색 결과가 존재하지 않습니다.");
+      }
+      
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
       alert("검색 결과가 존재하지 않습니다.");
       return;
@@ -157,7 +208,9 @@ export default class MapComponent extends Vue {
 
           // 클릭된 마커를 현재 클릭된 마커 객체로 설정
           this.selectedMarker = marker;
-          
+        });
+
+        window.kakao.maps.event.addListener(marker, "click", () => {
           this.infowindow.setMap(null);
           this.displayInfowindow(marker, places);
         });
@@ -188,22 +241,23 @@ export default class MapComponent extends Vue {
     this.el = document.createElement("li");
     let itemStr =
       `<span class="markerbg marker_${index + 1}"></span>` +
+      '<div class="item">' +
       '<div class="info">' +
       `<spen class="title">${places.place_name}</spen>`;
 
+    itemStr+='<div class="sub-info">'
     if (places.road_address_name) {
       itemStr +=
-        `<span>${places.road_address_name}</span>` +
+        `<span class="road">${places.road_address_name}</span>` +
         `<span class="gray">${places.address_name}</span>`;
     } else {
       itemStr += `<span>${places.address_name}</span>`;
     }
 
-    itemStr += `<span class="tel">${places.phone}</span>` + "</div>";
+    itemStr += `<span class="tel">${places.phone}</span>` + "</div></div></div>";
 
     this.el.innerHTML = itemStr;
-    this.el.className = "item";
-
+    
     return this.el;
   }
 
@@ -239,7 +293,9 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 하단에 페이지번호를 표시하는 함수
   public displayPagination(pagination: any) {
-    const paginationEl = document.getElementById("pagination") as HTMLDivElement | any;
+    const paginationEl = document.getElementById("pagination") as
+      | HTMLDivElement
+      | any;
     this.fragment = document.createDocumentFragment();
     let i;
 
@@ -273,6 +329,8 @@ export default class MapComponent extends Vue {
   public displayInfowindow(marker: any, places: any) {
     // 인포윈도우 생성 (커스텀 오버레이)
     this.infowindow = new window.kakao.maps.CustomOverlay({
+      clickable: true,
+      zIndex: 999,
       yAnchor: 1.5,
     });
 
@@ -289,7 +347,4 @@ export default class MapComponent extends Vue {
       el.removeChild(el.lastChild);
     }
   }
-
 }
-
-
