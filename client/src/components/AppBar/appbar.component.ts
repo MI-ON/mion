@@ -10,7 +10,4 @@ export default class AppBarComponent extends Vue {
     onClickRouteRoot(): void {
         router.push({ path: '/' });
     }
-    onSignOn(): void {
-        router.push({ path: '/login' });
-    }
 }
