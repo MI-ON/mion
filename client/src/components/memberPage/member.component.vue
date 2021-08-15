@@ -7,15 +7,19 @@
                 width="25%"
                 height="25%"
             /><br />
-            <span class="name">이름</span>
-            <input
-                type="text"
-                class="input-box"
-                v-on:keyup.enter="changeNickname"
-            /><br />
-            <button class="change-nickname" @click="changeNickname">
-                변경
-            </button>
+
+            <form v-on:submit="changeNickname">
+                <span class="name">이름</span>
+                <input
+                    type="text"
+                    class="input-box"
+                    v-model="name"
+                    placeholder=""
+                /><br />
+                <button class="change-nickname">
+                    변경
+                </button>
+            </form>
         </div>
     </div>
 </template>
