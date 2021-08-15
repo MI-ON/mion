@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
-import jwtDecode from "jwt-decode";
 
 import persistedstate from "vuex-persistedstate";
 
@@ -8,26 +7,28 @@ Vue.use(Vuex);
 
 export default new Vuex.Store(<StoreOptions<any>>{
   state: {
-    userToken: null,
+    user: {},
   },
   getters: {
+    getUserEmail: (state) => {
+      return state.user.email;
+    },
     getUserImageUrl: (state) => {
-      const userTokenDecoded: { picture: string } = jwtDecode(state.userToken);
-      return userTokenDecoded.picture;
+      return state.user.imageUrl;
     },
   },
   mutations: {
-    SET_USER_TOKEN(state, userToken) {
-      state.userToken = userToken;
+    SET_USER(state, user) {
+      state.user = user;
     },
     LOGOUT(state) {
-      state.userToken = null;
+      state.user = {};
     },
   },
   actions: {},
   plugins: [
     persistedstate({
-      paths: ["userToken"],
+      paths: ["user"],
     }),
   ],
 });
