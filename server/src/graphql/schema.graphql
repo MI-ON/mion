@@ -1,53 +1,54 @@
 type Store {
-  address_name: String!
-  category_group_code: String!
-  category_group_name: String!
-  category_name: String!
-  id: String!
-  phone: String!
-  place_name: String!
-  place_url: String!
-  road_address_name: String!
-  x: String!
-  y: String!
+    address_name: String!
+    category_group_code: String!
+    category_group_name: String!
+    category_name: String!
+    id: String!
+    phone: String!
+    place_name: String!
+    place_url: String!
+    road_address_name: String!
+    x: String!
+    y: String!
 }
 
 type User {
-  full_name: String!
-  image_url: String!
-  email: String!
+    full_name: String!
+    image_url: String!
+    email: String!
 }
 
 type Post {
-  id: Int!
-  store_id: String!
-  user_email: String!
-  content: String!
-  rating: Float!
+    id: Int!
+    store_id: String!
+    user_email: String!
+    content: String!
+    rating: Float!
 }
 
 type CheckIn {
-  id: Int!
-  store_id: String!
-  user_email: String!
-  created_at: String!
+    id: Int!
+    store_id: String!
+    user_email: String!
+    created_at: String!
 }
 
 type FoodList {
-  id: Int!
-  date: String!
-  store_name: [Store]!
-  members: [User]!
-  reviews: [Post]!
+    id: Int!
+    date: String!
+    store_name: [Store]!
+    members: [User]!
+    reviews: [Post]!
 }
 
 type Query {
-  get_user_by_email(email: String!): User
-  get_stores(keyword: String!): [Store]!
-  get_voted_users_by_store_id(store_id: String!): [User]
+    get_user_by_email(email: String!): User
+    get_stores(keyword: String!): [Store]!
+    get_voted_users_by_store_id(store_id: String!): [User]
 }
 
 type Mutation {
-  add_user(email: String!, full_name: String!, image_url: String!): User!
-  add_check_in(store_id: String!, email: String!): CheckIn!
+    add_user(email: String!, full_name: String!, image_url: String!): User!
+    add_check_in(store_id: String!, email: String!): CheckIn!
+    add_full_name(full_name: String!): User!
 }
