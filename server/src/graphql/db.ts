@@ -44,6 +44,7 @@ const isUserVoted = async (email: string): Promise<CheckIN | undefined> => {
 export const getUserByEmail = async (email: string) =>
   await User.findOne({ email: email });
 
+
 export const register = async (
   email: string,
   fullName: string,
@@ -56,15 +57,21 @@ export const register = async (
   }).save();
 
 export const getStores = async (keyword: string) => {
-  const API_URL = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&category_group_code=FD6&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
-  const encode_url = encodeURI(API_URL);
+  const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
+  const encode_url: string = encodeURI(API_URL);
   const config = {
-    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1"}
   };
-
-  const stores = await axios.get(encode_url, config);
-  return stores.data.documents;
-};
+  
+  const stores: any = await axios.get(encode_url, config);
+  
+  const result: any[] = stores.data.documents.map(v=> v.category_group_code == 'FD6');
+  if (result.length > 0) {
+    return result;
+  } else {
+    return false;
+  }
+}
 
 export const addCheckIn = async (storeId: string, email: string) => {
   const createdAt = getCreatedAt();

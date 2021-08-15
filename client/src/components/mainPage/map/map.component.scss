@@ -1,10 +1,23 @@
+$main-color:#5caafa;
+$side-menu-width: 455px;
+
 #map {
     z-index: 1;
-    width: 100%;
     height: 100vh;
 }
 
+.map-close{      
+    width: calc(100% - 455px);
+}
+
+.map-open{
+    width: 100%;      
+}
+
+
 .map_wrap {
+    display: flex;
+    flex-direction: row-reverse;
     margin: 0;
     padding: 0;
     font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
@@ -30,111 +43,141 @@
 
     position: relative;
     width: 100%;
-    height: 500px;
-}
-
-#menu_wrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 250px;
-    margin: 10px 0 30px 10px;
-    padding: 5px;
-    overflow-y: auto;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 1;
-    font-size: 12px;
-    border-radius: 10px;
+    
 }
 
 .bg_white {
     background: #fff;
 }
 
-#menu_wrap {
-    hr {
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 2px solid #5f5f5f;
-        margin: 3px 0;
-    }
+
+#side-menu-wrap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $side-menu-width;
+    height: 100%;
+    overflow: hidden;
+    background-color: #E5E5E5;
+    
+    z-index: 1;
+    font-size: 12px;
 
     .option {
-        text-align: center;
 
+        $btn-width: 30px;
+        $btn-height: 30px;
+        $input-width: 415px;
+        $input-height: 45px;
+        width: 100%;
+        height: 60px;
+        background-color: $main-color;
+        text-align: center;
+        position: relative;
         p {
             margin: 10px 0;
         }
 
         button {
-            margin-left: 5px;
+            background-color: white;
+            width: $btn-width;
+            height: $btn-height;
+            border: none;
+            position: absolute;
+            right: 40px;
+            top: $input-height/2 - $btn-height/2;
+            cursor: pointer;
         }
+
+        input{
+            padding-left: 20px;
+            width: $input-width;
+            height: $input-height;
+            border-radius: 5px;
+            border: none;
+        }
+
+       
     }
 }
 
-#placesList {
-    li {
-        list-style: none;
-    }
-
-    .item {
-        position: relative;
-        border-bottom: 1px solid #888;
-        overflow: hidden;
+#select-bar{
+   
+    background-color: $main-color;
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
         cursor: pointer;
-        min-height: 65px;
-
-        span {
-            display: block;
-            margin-top: 4px;
-        }
-
-        h5 {
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .info {
-            text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 10px 0 10px 10px;
-        }
+        border: none;
+        border-radius: 5px;
+        color: white;
+        width: 125px;
+        height: 33px;
     }
+    .style1-btn{
+        background-color: #1E7CDC;
+    }
+    .on{
+        background-color: #145AA1;
+    }
+    
+}
+%side-menu{
+    cursor: pointer;
+    z-index: 5;
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    height: 134px;
+    width: 34px;
+    border: none;
 
-    .info {
-        .title {
-            font-weight: bold;
-            color: #000000;
-        }
+    top: calc(50% - 130px/2);
+}
 
-        .gray {
-            color: #252525;
-        }
+%tri{
+    position: relative;
+    top:-65px-12px;
+    right: 0px;
+    width: 0px;
+    height: 0px;
 
-        .tel {
-            color: #000000;
-        }
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+}
+
+#side-menu-close{
+   
+    @extend %side-menu;
+    right: calc(100% - #{$side-menu-width} - 34px);
+    
+    .tri-close{
+        @extend %tri;
+        border-right: 25px solid #2196F3;
+    }
+   
+}
+
+#side-menu-open{
+    @extend %side-menu;
+    right: calc(100% - 34px);
+
+    .tri-open{
+        @extend %tri;
+        border-left: 25px solid #2196F3;
+
     }
 }
 
-#pagination {
-    margin: 10px auto;
-    text-align: center;
-
-    a {
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    .on {
-        font-weight: bold;
-        cursor: default;
-        color: #777;
-    }
+.react{
+    height: 100px;
+    width: 0px;
+    border-left: 34px solid white;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+  
 }
+
