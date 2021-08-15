@@ -25,12 +25,45 @@ export default class MapComponent extends Vue {
   el: any = "";
   selectedMarker: any = null;
 
+  isSearchPlace:boolean = true;
+  isReview:boolean = false;
+  isVote:boolean = false;
+  isMenu:boolean = true;
+  clickBtns: NodeListOf<HTMLParagraphElement> | null = null;
+
   mapMarker = require("../../../assets/mainPage/default-marker.png");
   clickMapMarker = require("../../../assets/mainPage/click-marker.png");
 
   searchResultData: any = "";
   mounted() {
     this.openMap();
+  }
+
+  public sideMenuState(event:any){
+    this.isMenu = !this.isMenu;
+    
+  }
+  public clickSelectbar(event:any):void{
+
+    // 클릭 표시 삭제
+    this.clickBtns = document.querySelectorAll('.on');
+    this.clickBtns.forEach((btn,i)=>{
+      btn.classList.remove('on');
+    });
+    this.isSearchPlace = false;
+    this.isReview = false;
+    this.isVote = false;
+
+    const target:HTMLParagraphElement = event.target;
+    target.classList.add('on');
+  
+    if(target.id == 'search-btn') {
+      this.isSearchPlace = true
+      this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
+    }
+    else if(target.id == 'review-btn') this.isReview = true;
+    else if(target.id == 'vote-btn') this.isVote = true;
+    
   }
 
   public openMap() {
@@ -49,10 +82,10 @@ export default class MapComponent extends Vue {
     // 지도 생성
     this.map = new window.kakao.maps.Map(mapContainer, mapOption);
     this.ps = new window.kakao.maps.services.Places();
-    this.ps.keywordSearch("이태원 맛집", this.placesSearchCB);
+    this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
   }
 
-  // 키워드 검색을 요청하는 함수
+  // 키워드 검색을 요청하는 함수( 서치를 했을때 )
   public searchPlaces(e: Event) {
     e.preventDefault();
     // 장소 검색 객체 생성
