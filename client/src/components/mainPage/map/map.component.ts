@@ -12,13 +12,12 @@ declare global {
 @Component({ components: { PlaceItemComponent } })
 export default class MapComponent extends Vue {
   @Watch("searchResultData")
-  updateMessage() {
-    console.log("map.component.ts에서 변경감지");
-  }
+  updateMessage() {}
 
   markers: any = [];
   marker: any = "";
   map: any = "";
+  keyword: string = "";
 
   fragment: any = "";
   infowindow: any = "";
@@ -49,32 +48,23 @@ export default class MapComponent extends Vue {
 
     // 지도 생성
     this.map = new window.kakao.maps.Map(mapContainer, mapOption);
-
-    // 장소 검색 객체 생성
     this.ps = new window.kakao.maps.services.Places();
-
-    // 키워드로 장소 검색
-    this.searchPlaces();
+    this.ps.keywordSearch("이태원 맛집", this.placesSearchCB);
   }
 
   // 키워드 검색을 요청하는 함수
-  public searchPlaces() {
+  public searchPlaces(e: Event) {
+    e.preventDefault();
+    // 장소 검색 객체 생성
+
     const options = {
       location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
       radius: 1500,
     };
 
-    const keyword = (<HTMLInputElement>document.getElementById("keyword"))
-      .value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, "")) {
-      alert("키워드를 입력해주세요!");
-      return false;
-    }
-
     // 장소검색 객체를 통해 키워드로 장소검색 요청
-    console.log(keyword);
-    this.ps.keywordSearch(keyword, this.placesSearchCB, options);
+    console.log(this.keyword);
+    this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
   }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수
@@ -97,16 +87,12 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
-    console.log("검색됐어요");
-    this.searchResultData = places;
+    this.searchResultData = Object.assign({}, this.searchResultData, places);
 
-    const listEl = document.getElementById("placesList") as HTMLDivElement;
-    const menuEl = document.getElementById("menu_wrap") as HTMLDivElement;
     this.fragment = document.createDocumentFragment();
     const bounds = new window.kakao.maps.LatLngBounds();
 
     // 검색 결과 목록에 추가된 항목들 제거
-    this.removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커 제거
     this.removeMarker();
@@ -117,8 +103,7 @@ export default class MapComponent extends Vue {
           places[i].y,
           places[i].x
         ),
-        marker = this.addMarker(placePosition),
-        itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
+        marker = this.addMarker(placePosition);
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기 위해
       // LatLngBounds 객체에 좌표 추가
@@ -163,54 +148,14 @@ export default class MapComponent extends Vue {
           this.displayInfowindow(marker, places);
         });
 
-        /*
-        itemEl.onclick = () => {
-          this.infowindow.setMap(null);
-          this.displayInfowindow(marker, places);
-        };
-        */
-
         window.kakao.maps.event.addListener(this.map, "click", () => {
           this.infowindow.setMap(null);
         });
       })(marker, places[i]);
-
-      // this.fragment.appendChild(itemEl);
     }
-
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가
-    listEl.appendChild(this.fragment);
-    menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
     this.map.setBounds(bounds);
-  }
-
-  // 검색결과 항목을 Element로 반환하는 함수
-  public getListItem(index: number, places: any) {
-    return { index, places };
-    /*
-    this.el = document.createElement("li");
-    let itemStr =
-      `<span class="markerbg marker_${index + 1}"></span>` +
-      '<div class="info">' +
-      `<spen class="title">${places.place_name}</spen>`;
-
-    if (places.road_address_name) {
-      itemStr +=
-        `<span>${places.road_address_name}</span>` +
-        `<span class="gray">${places.address_name}</span>`;
-    } else {
-      itemStr += `<span>${places.address_name}</span>`;
-    }
-
-    itemStr += `<span class="tel">${places.phone}</span>` + "</div>";
-
-    this.el.innerHTML = itemStr;
-    this.el.className = "item";
-
-    return this.el;
-    */
   }
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수
@@ -289,12 +234,5 @@ export default class MapComponent extends Vue {
     this.infowindow.setContent(content);
     this.infowindow.setPosition(marker.getPosition());
     this.infowindow.setMap(this.map);
-  }
-
-  // 검색결과 목록의 자식 Element를 제거하는 함수
-  public removeAllChildNods(el: any) {
-    while (el.hasChildNodes()) {
-      el.removeChild(el.lastChild);
-    }
   }
 }

@@ -28,7 +28,8 @@ export default class PlaceItemComponent extends Vue {
   @Prop(Object) protected searchResult!: Object;
   @Watch("searchResult")
   updateMessage() {
-    console.log("변경감지");
+    console.log("placeitem에서 변경 감지");
+    console.log(this.searchResult);
   }
 }
 </script>

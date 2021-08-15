@@ -5,24 +5,28 @@
     <div id="menu_wrap" class="bg_white">
       <div id="searchBar">
         <div>
-          <form>
-            <input type="text" value="삼성동 맛집" id="keyword" size="15" />
-            <button @click.self.prevent="searchPlaces">
+          <form @submit="searchPlaces">
+            <input
+              type="text"
+              v-model="keyword"
+              id="keyword"
+              size="15"
+              placeholder="음식점 키워드를 입력해주세요."
+            />
+            <button type="submit">
               <img src="../../../assets/mainPage/search-icon.png" />
             </button>
           </form>
         </div>
       </div>
 
-      <ul id="placesList">
-        <li
+      <div id="placesList">
+        <PlaceItemComponent
           v-for="(item, index) in searchResultData"
-          v-bind:index="index"
-          v-bind:key="item.place_name"
-        >
-          <PlaceItemComponent v-bind:searchResult="item" />
-        </li>
-      </ul>
+          v-bind:key="index"
+          v-bind:searchResult="item"
+        />
+      </div>
 
       <div id="pagination"></div>
     </div>
