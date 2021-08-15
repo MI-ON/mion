@@ -1,34 +1,38 @@
-import Vue from "vue";
-import Vuex, { StoreOptions } from "vuex";
+import Vue from 'vue';
+import Vuex, { StoreOptions } from 'vuex';
+import jwtDecode from 'jwt-decode';
 
-import persistedstate from "vuex-persistedstate";
+import persistedstate from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store(<StoreOptions<any>>{
-  state: {
-    user: {},
-  },
-  getters: {
-    getUserEmail: (state) => {
-      return state.user.email;
+    state: {
+        userToken: null
     },
-    getUserImageUrl: (state) => {
-      return state.user.imageUrl;
+    getters: {
+        getUserImageUrl: (state) => {
+            const userTokenDecoded: { picture: string } = jwtDecode(
+                state.userToken
+            );
+            return userTokenDecoded.picture;
+        },
+        getFullName: (state) => {
+            return state.userToken.full_name;
+        }
     },
-  },
-  mutations: {
-    SET_USER(state, user) {
-      state.user = user;
+    mutations: {
+        SET_USER_TOKEN(state, userToken) {
+            state.userToken = userToken;
+        },
+        LOGOUT(state) {
+            state.userToken = null;
+        }
     },
-    LOGOUT(state) {
-      state.user = {};
-    },
-  },
-  actions: {},
-  plugins: [
-    persistedstate({
-      paths: ["user"],
-    }),
-  ],
+    actions: {},
+    plugins: [
+        persistedstate({
+            paths: ['userToken']
+        })
+    ]
 });
