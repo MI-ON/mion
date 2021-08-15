@@ -1,59 +1,32 @@
 import { gql } from "apollo-boost";
 import axios from "axios";
 import { Component, Vue } from "vue-property-decorator";
-import jwt_decode from "jwt-decode";
 
 declare global {
   interface Window {
-    google: any;
+    gapi: any;
   }
 }
 
 @Component({})
 export default class LoginComponent extends Vue {
   mounted() {
-    window.onload = () => {
-      const loginBtn = document.querySelector(".loginBtn");
-
-      window.google.accounts.id.initialize({
-        client_id:
-          "607676472574-toht3fposdjn2ab2tbhaoh5i67vnlmet.apps.googleusercontent.com",
-        callback: this.handleCredentialResponse,
-        ux_mode: "popup",
-        auto_select: true,
-      });
-      window.google.accounts.id.prompt();
-      window.google.accounts.id.renderButton(loginBtn, {
-        theme: "outline",
-        size: "large",
-        width: "400",
-      });
-    };
+    window.addEventListener(
+      "google-oauth-library-load",
+      this.renderSignInButton
+    );
   }
 
-  async handleCredentialResponse(response: any) {
-    interface UserProfile {
-      email: string;
-      name: string;
-      picture: string;
-    }
-
-    const userJWToken = response.credential;
-    const userTokenDecoded: UserProfile = jwt_decode(userJWToken);
-
-    const userData = {
-      email: userTokenDecoded.email,
-      name: userTokenDecoded.name,
-      imageUrl: userTokenDecoded.picture,
-    };
-
-    const isMember = (await this.memberCheck(userData.email)) ? true : false;
-
-    if (!isMember) {
-      await this.register(userData);
-    }
-    this.$store.commit("SET_USER_TOKEN", userJWToken);
-    this.$router.push("/");
+  renderSignInButton() {
+    window.gapi.signin2.render("my-signin2", {
+      scope: "profile email",
+      width: 240,
+      height: 50,
+      longtitle: true,
+      theme: "dark",
+      onsuccess: this.onSuccess,
+      onfailure: this.onFailure,
+    });
   }
 
   async memberCheck(userEmail: string) {
@@ -89,5 +62,26 @@ export default class LoginComponent extends Vue {
         imageUrl: userData.imageUrl,
       },
     });
+  }
+
+  async onSuccess(googleUser: any): Promise<void> {
+    const profile = googleUser.getBasicProfile();
+    const userData = {
+      email: profile.getEmail(),
+      name: profile.getName(),
+      imageUrl: profile.getImageUrl(),
+    };
+
+    const isMember = (await this.memberCheck(userData.email)) ? true : false;
+
+    if (!isMember) {
+      await this.register(userData);
+    }
+    this.$store.commit("SET_USER", userData);
+    this.$router.push("/");
+  }
+
+  onFailure(err: string): void {
+    console.log(err);
   }
 }
