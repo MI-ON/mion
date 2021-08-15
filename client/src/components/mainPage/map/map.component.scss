@@ -86,7 +86,7 @@ $side-menu-width: 455px;
             border: none;
             position: absolute;
             right: 40px;
-            top: $input-height/2 - $btn-height/2;
+            top: calc(#{$input-height}/2 - #{$btn-height}/2);
             cursor: pointer;
         }
 
