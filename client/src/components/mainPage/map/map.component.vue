@@ -20,6 +20,7 @@
         v-bind:searchResult="searchResultData"
         v-on:searchplace-keyword="eventFromSearchplace"
       />
+      <VoteComponent v-if="isVote" />
     </div>
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">
       <div class="react"></div>
