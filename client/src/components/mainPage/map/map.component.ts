@@ -1,6 +1,6 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
-import PlaceItemComponent from "../placeitem/placeitem.component.vue";
+import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 
 declare global {
   interface Window {
@@ -9,10 +9,16 @@ declare global {
   }
 }
 
-@Component({ components: { PlaceItemComponent } })
+@Component({ components: { SearchPlaceComponent } })
 export default class MapComponent extends Vue {
-  @Watch("searchResultData")
-  updateMessage() {}
+  @Watch("keyword")
+  updateMessage() {
+    const options = {
+      location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
+      radius: 1500,
+    };
+    this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
+  }
 
   markers: any = [];
   marker: any = "";
@@ -25,10 +31,10 @@ export default class MapComponent extends Vue {
   el: any = "";
   selectedMarker: any = null;
 
-  isSearchPlace:boolean = true;
-  isReview:boolean = false;
-  isVote:boolean = false;
-  isMenu:boolean = true;
+  isSearchPlace: boolean = true;
+  isReview: boolean = false;
+  isVote: boolean = false;
+  isMenu: boolean = true;
   clickBtns: NodeListOf<HTMLParagraphElement> | null = null;
 
   mapMarker = require("../../../assets/mainPage/default-marker.png");
@@ -39,31 +45,31 @@ export default class MapComponent extends Vue {
     this.openMap();
   }
 
-  public sideMenuState(event:any){
-    this.isMenu = !this.isMenu;
-    
+  public eventFromSearchplace(keyword: string) {
+    this.keyword = keyword;
   }
-  public clickSelectbar(event:any):void{
 
+  public sideMenuState(event: any) {
+    this.isMenu = !this.isMenu;
+  }
+  public clickSelectbar(event: any): void {
     // 클릭 표시 삭제
-    this.clickBtns = document.querySelectorAll('.on');
-    this.clickBtns.forEach((btn,i)=>{
-      btn.classList.remove('on');
+    this.clickBtns = document.querySelectorAll(".on");
+    this.clickBtns.forEach((btn, i) => {
+      btn.classList.remove("on");
     });
     this.isSearchPlace = false;
     this.isReview = false;
     this.isVote = false;
 
-    const target:HTMLParagraphElement = event.target;
-    target.classList.add('on');
-  
-    if(target.id == 'search-btn') {
-      this.isSearchPlace = true
+    const target: HTMLParagraphElement = event.target;
+    target.classList.add("on");
+
+    if (target.id == "search-btn") {
+      this.isSearchPlace = true;
       this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
-    }
-    else if(target.id == 'review-btn') this.isReview = true;
-    else if(target.id == 'vote-btn') this.isVote = true;
-    
+    } else if (target.id == "review-btn") this.isReview = true;
+    else if (target.id == "vote-btn") this.isVote = true;
   }
 
   public openMap() {
