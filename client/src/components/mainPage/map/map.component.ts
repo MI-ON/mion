@@ -1,6 +1,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
+import VoteComponent from "../selectbar/vote/vote.component.vue";
 
 declare global {
   interface Window {
@@ -9,7 +10,7 @@ declare global {
   }
 }
 
-@Component({ components: { SearchPlaceComponent } })
+@Component({ components: { SearchPlaceComponent, VoteComponent } })
 export default class MapComponent extends Vue {
   @Watch("keyword")
   updateMessage() {
