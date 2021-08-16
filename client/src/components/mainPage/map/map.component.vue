@@ -10,33 +10,11 @@
       </div>
       <!-- 3개 컴포넌트-->
       <div>
-        <div id="searchBar">
-          <div>
-            <form @submit="searchPlaces">
-              <input
-                type="text"
-                v-model="keyword"
-                id="keyword"
-                size="15"
-                placeholder="음식점 키워드를 입력해주세요."
-              />
-              <button type="submit">
-                <img src="../../../assets/mainPage/search-icon.png" />
-              </button>
-            </form>
-          </div>
-        </div>
-
-        <div id="placesList">
-          <PlaceItemComponent
-            v-for="(item, index) in searchResultData"
-            v-bind:key="index"
-            v-bind:searchResult="item"
-          />
-        </div>
+        <ReviewListComponent/>
+       
       </div>
      
-      <div id="pagination"></div>
+      
     </div>
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState"><div class="react"></div><div class="tri-close"></div></button>
     <button v-else id="side-menu-open" @click="sideMenuState"><div class="react"></div><div class="tri-open"></div></button>

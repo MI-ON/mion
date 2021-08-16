@@ -1,6 +1,8 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 import PlaceItemComponent from "../placeitem/placeitem.component.vue";
+import ReviewListComponent from  "../selectbar/review.component.vue";
+//import ReviewListComponent from  "@/components/mainPage/selectbar/a/review.component.vue";
 
 declare global {
   interface Window {
@@ -9,7 +11,7 @@ declare global {
   }
 }
 
-@Component({ components: { PlaceItemComponent } })
+@Component({ components: { PlaceItemComponent,ReviewListComponent} })
 export default class MapComponent extends Vue {
   @Watch("searchResultData")
   updateMessage() {}
