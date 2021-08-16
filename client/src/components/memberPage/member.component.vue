@@ -3,20 +3,21 @@
         <div class="wrapper">
             <span class="profile-text">프로필 변경</span><br />
             <img
-                src="../../assets/AppBar/default-profile.png"
-                width="25%"
-                height="25%"
+                class="member-profile"
+                v-if="this.$store.state.userToken"
+                :src="$store.getters.getUserImageUrl"
             /><br />
 
-            <form v-on:submit="changeNickname">
+            <form v-on:submit.prevent>
                 <span class="name">이름</span>
                 <input
+                    v-if="this.$store.state.userToken"
                     type="text"
                     class="input-box"
-                    v-model="name"
-                    placeholder=""
+                    v-model="inputName"
+                    :placeholder="fullName"
                 /><br />
-                <button class="change-nickname">
+                <button class="change-full-name-btn" @click="addFullName">
                     변경
                 </button>
             </form>
