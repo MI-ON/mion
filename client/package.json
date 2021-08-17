@@ -20,6 +20,7 @@
     "vue-daum-map": "^1.1.0",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.2",
+    "vuetify": "^2.5.8",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.0.0"
   },

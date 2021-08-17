@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: '/member',
-        name: 'memberPage',
+        name: 'MemberPage',
         component: MemberComponent
     }
 ];
