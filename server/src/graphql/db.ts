@@ -100,18 +100,16 @@ export const getVotedUsersByStoreId = async (storeId: string) => {
     return userList;
 };
 
-export const getUserByFullName = async (full_name: string) =>
-    await User.findOne({ full_name: full_name });
 
-export const addFullName = async (full_name: string, email: string) => {
-    const isEmail: any = await isUserEmail(email);
 
-    await User.update(isEmail, { full_name: full_name });
-    return User.findOne({ full_name: full_name });
-};
-
-const isUserEmail = async (email: string): Promise<User | undefined> => {
-    return await User.findOne({
+export const addFullName = async (email: string, full_name: string): Promise<User | undefined> => {
+    const isEmail: User = await User.findOne({
         email: email
     });
+
+    if(isEmail){
+        await User.update(isEmail, { full_name: full_name });
+    }
+
+    return User.findOne({ full_name: full_name });
 };
