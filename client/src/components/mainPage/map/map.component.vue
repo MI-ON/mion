@@ -1,6 +1,7 @@
 <template>
   <div class="map_wrap">
-    <div id="map"></div>
+    <div id="map" class="map-close" v-if="isMenu"></div>
+    <div id="map" class="map-open" v-else></div>
 
     <div id="menu_wrap" class="bg_white" v-if="isMenu">
       <div id="select-bar">
@@ -20,8 +21,7 @@
       <SearchPlaceComponent
         v-if="isSearchPlace"
         v-bind:searchResult="searchResultData"
-        v-on:searchplace-keyword="eventFromSearchplace"
-      />
+        v-on:searchplace-keyword="eventFromSearchplace"/>
       <VoteComponent v-if="isVote" />
 
     </div>
@@ -33,9 +33,12 @@
       <div class="react"></div>
       <div class="tri-open"></div>
     </button>
+
   </div>
 </template>
 
+
 <script lang="ts" src="./map.component.ts"></script>
+
 <style lang="scss" src="./map.component.scss"></style>
 <style lang="scss" src="../infowindow/info-window-content.scss"></style>

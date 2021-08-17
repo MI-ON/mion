@@ -14,9 +14,9 @@ const connectionOptions: ConnectionOptions = {
   synchronize: true,
   logging: false,
 
-  entities: ["src/entity/**/*{.ts,.js}"],
-  migrations: ["src/migration/**/*{.ts,.js}"],
-  subscribers: ["src/subscriber/**/*{.ts,.js}"],
+  entities: [__dirname + "/src/entity/**/*{.ts,.js}"],
+  migrations: [__dirname + "/src/migration/**/*{.ts,.js}"],
+  subscribers: [__dirname + "/src/subscriber/**/*{.ts,.js}"],
 };
 
 export default connectionOptions;
