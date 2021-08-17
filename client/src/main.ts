@@ -25,7 +25,7 @@ new Vue({
   created() {
     const userToken: string | null = this.$store.state.userToken;
     if (!userToken) {
-      this.$router.push("/login");
+      this.$router.push("/");
     }
   },
   render: (h) => h(App),

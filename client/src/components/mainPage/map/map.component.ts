@@ -1,7 +1,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
 import PlaceItemComponent from "../placeitem/placeitem.component.vue";
-import ReviewListComponent from  "../selectbar/review.component.vue";
+import ReviewListComponent from  "../selectbar/reviewlist/review.component.vue";
 //import ReviewListComponent from  "@/components/mainPage/selectbar/a/review.component.vue";
 
 declare global {

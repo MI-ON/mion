@@ -14,15 +14,24 @@
         height: 30px;
     }
 }
-
+#review-lists{
+    height: 550px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+#review-lists::-webkit-scrollbar{
+    display: none;
+    width: 0 !important;
+}
 #list-div{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    width: 100%; 
     margin-top: 10px;
     .list{
+        cursor: pointer;
+        margin: auto;
         $list-width:400px;
-        $list-height:150px;
+        $list-height:158px;
+        margin-bottom: 20px;
 
         width: $list-width;
         height: $list-height;
@@ -59,6 +68,7 @@
             display: inline-block;
         }
         .sub{
+            padding: 3px 0px 3px;
             margin-top: 7px;
             border-radius: 5px;
             width: 380px;
@@ -66,10 +76,14 @@
             background-color: #E8F3FF;
             span{
                 display: block;
-                font-size: 14px;
+                font-size: 13px;
             }
+            
         }
         
+    }
+    .list:last-child{
+        margin-bottom: 0px;
     }
 
 }

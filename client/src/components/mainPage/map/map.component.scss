@@ -14,7 +14,6 @@ $side-menu-width: 420px;
   padding: 0;
   font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
   font-size: 12px;
-
   * {
     margin: 0;
     padding: 0;
@@ -46,7 +45,6 @@ $side-menu-width: 420px;
   width: $side-menu-width;
   height: 90vh;
 
-  overflow-y: auto;
   background: #ececec;
   z-index: 1;
   font-size: 12px;
@@ -58,7 +56,7 @@ $side-menu-width: 420px;
   justify-content: center;
   text-align: center;
   align-items: center;
-  height: 7vh;
+  height: 60px;
 
   background-color: #5caafa;
 
@@ -73,7 +71,7 @@ $side-menu-width: 420px;
 
     input {
       width: 300px;
-      height: 4vh;
+      height: 35px;
       border: none;
       outline: none;
       font-weight: bold;
