@@ -8,7 +8,7 @@
                 :src="$store.getters.getUserImageUrl"
             /><br />
 
-            <form v-on:submit.prevent>
+            <form>
                 <span class="name">이름</span>
                 <input
                     v-if="this.$store.state.userToken"
@@ -17,7 +17,11 @@
                     v-model="inputName"
                     :placeholder="fullName"
                 /><br />
-                <button class="change-full-name-btn" @click="addFullName">
+                <button
+                    class="change-full-name-btn"
+                    type="submit"
+                    @click="addFullName"
+                >
                     변경
                 </button>
             </form>
