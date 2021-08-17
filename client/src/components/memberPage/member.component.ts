@@ -3,12 +3,17 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class MemberComponent extends Vue {
-    fullName: string = '';
     userEmail: string = this.$store.getters.getUserByEmail;
+    fullName: string = '';
     inputName: string = '';
 
-    async getUserByEmail(userEmail: String) {
+    mounted() {
+        this.getUserFullName();
+    }
+    async getUserFullName() {
         this.fullName = await this.getUserByEmail(this.userEmail);
+    }
+    async getUserByEmail(userEmail: String) {
         const response = await this.$apollo.query({
             query: gql`
                 query($email: String!) {
@@ -21,7 +26,7 @@ export default class MemberComponent extends Vue {
                 email: userEmail
             }
         });
-        return response.data.get_user_by_email;
+        return response.data.get_user_by_email.full_name;
     }
 
     async addFullName() {

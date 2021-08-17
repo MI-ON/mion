@@ -107,10 +107,8 @@ const isUserEmail = async (email: string): Promise<User | undefined> => {
 };
 
 export const addFullName = async (email: string, full_name: string) => {
-    //  user가 있을 때만 update
     const isEmail: any = await isUserEmail(email);
+    await User.update(isEmail, { full_name: full_name });
 
-    const isUserUpdate = await User.update(isEmail, { full_name: full_name });
-    console.log('isUserUpdate', isUserUpdate);
     return User.findOne({ full_name: full_name });
 };
