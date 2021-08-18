@@ -17,13 +17,13 @@
       </div>
       <!-- 3개 컴포넌트-->
 
-      <ReviewListComponent v-if="isReview"/>
+      <ReviewListComponent v-if="isReview" />
       <SearchPlaceComponent
         v-if="isSearchPlace"
         v-bind:searchResult="searchResultData"
-        v-on:searchplace-keyword="eventFromSearchplace"/>
+        v-on:searchplace-keyword="eventFromSearchplace"
+      />
       <VoteComponent v-if="isVote" />
-
     </div>
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">
       <div class="react"></div>
@@ -33,10 +33,8 @@
       <div class="react"></div>
       <div class="tri-open"></div>
     </button>
-
   </div>
 </template>
-
 
 <script lang="ts" src="./map.component.ts"></script>
 

@@ -14,7 +14,9 @@
       </v-flex>
 
       <v-flex id="voteButtonContainer" colum>
-        <v-btn><img src="../../../assets/vote-icon.png"/></v-btn>
+        <button type="button">
+          <img src="../../../assets/vote-icon.png" />
+        </button>
       </v-flex>
     </v-layout>
   </v-container>
