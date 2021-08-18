@@ -16,9 +16,6 @@ export default new Vuex.Store(<StoreOptions<any>>{
                 state.userToken
             );
             return userTokenDecoded.picture;
-        },
-        getFullName: (state) => {
-            return state.userToken.full_name;
         }
     },
     mutations: {

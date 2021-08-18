@@ -111,7 +111,7 @@ export default class MapComponent extends Vue {
   }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수
-  public placesSearchCB(data: string, status: number, pagination: number) {
+  public placesSearchCB(data: any[], status: number, pagination: number) {
     if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
@@ -156,7 +156,7 @@ export default class MapComponent extends Vue {
       // 해당 장소에 인포윈도우에 장소명 표시
       // mouseout 했을 때는 인포윈도우를 닫습니다
       ((marker, places) => {
-        window.kakao.maps.event.addListener(marker, "click", () => {
+        window.kakao.maps.event.addListener(marker, "click", async () => {
           const imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기
             imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션 - 마커의 좌표와 일치시킬 이미지 안에서의 좌표 설정
 
@@ -188,7 +188,7 @@ export default class MapComponent extends Vue {
           this.selectedMarker = marker;
 
           this.infowindow.setMap(null);
-          this.displayInfowindow(marker, places);
+          await this.displayInfowindow(marker, places);
         });
 
         window.kakao.maps.event.addListener(this.map, "click", () => {
@@ -266,13 +266,15 @@ export default class MapComponent extends Vue {
 
   // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
   // 인포윈도우에 장소명 표시
-  public displayInfowindow(marker: any, places: any) {
+  public async displayInfowindow(marker: any, places: any) {
     // 인포윈도우 생성 (커스텀 오버레이)
     this.infowindow = new window.kakao.maps.CustomOverlay({
+      clickable: true,
+      zIndex: 999,
       yAnchor: 1.5,
     });
 
-    const content = InfoWindowContent.makeInfoWindowContent(places);
+    const content = await InfoWindowContent.makeInfoWindowContent(places);
 
     this.infowindow.setContent(content);
     this.infowindow.setPosition(marker.getPosition());

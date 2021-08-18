@@ -2,57 +2,17 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 @Component({})
 export default class ReviewComponent extends Vue{
-    id:number=0;
-    title:string ="크라이치즈버거 삼성역점";
-    address1:string|null ="서울 강남구 테헤란로 616";
-    address2:string|null ="서울 강남구 대치동 996-17";
-    tel:string|null ="02-566-6244";
-    r_count:number|null =2;
-    rating:number|null = 4.0; 
-    reviewKeyword:string|null ="";
+
+    id:number|null= null;
+    title:string|null =null;
+    address1:string|null =null;
+    address2:string|null =null;
+    tel:string|null =null;
+    r_count:number|null =null;
+    rating:number|null = null; 
+    reviewKeyword:string|null =null;
     
-    //test sample
-    lists:object[] = [{
-        id:0,
-        title:"크라이치즈버거 삼성역점",
-        address1:"서울 강남구 테헤란로 616",
-        address2:"서울 강남구 대치동 996-17",
-        tel:"02-566-6244",
-        r_count:2,
-        rating: 4.0, 
-    },{
-        id:0,
-        title:"크라이치즈버거 삼성역점",
-        address1:"서울 강남구 테헤란로 616",
-        address2:"서울 강남구 대치동 996-17",
-        tel:"02-566-6244",
-        r_count:2,
-        rating: 4.0, 
-    },{
-        id:0,
-        title:"크라이치즈버거 삼성역점",
-        address1:"서울 강남구 테헤란로 616",
-        address2:"서울 강남구 대치동 996-17",
-        tel:"02-566-6244",
-        r_count:2,
-        rating: 4.0, 
-    },{
-        id:0,
-        title:"크라이치즈버거 삼성역점",
-        address1:"서울 강남구 테헤란로 616",
-        address2:"서울 강남구 대치동 996-17",
-        tel:"02-566-6244",
-        r_count:2,
-        rating: 4.0, 
-    },{
-        id:0,
-        title:"크라이치즈버거 삼성역점",
-        address1:"서울 강남구 테헤란로 616",
-        address2:"서울 강남구 대치동 996-17",
-        tel:"02-566-6244",
-        r_count:2,
-        rating: 4.0, 
-    }]
+    lists:object[] = []
 
     mounted(){
 
@@ -69,7 +29,7 @@ export default class ReviewComponent extends Vue{
      * 마커를 가져온후 graphql에 있는 store만 표시하기?
      */
     rkewordClick(){
-        console.log(this.reviewKeyword);
+        
     }
 
     clickList(){

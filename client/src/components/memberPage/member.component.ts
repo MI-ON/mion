@@ -3,38 +3,33 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class MemberComponent extends Vue {
-    // changeNickname1(e: any): void {
-    //     alert('test');
-    //     e.preventDefault();
-    //     console.log(this.$emit('input', e.target.value));
+    userEmail: string = this.$store.getters.getUserByEmail;
+    fullName: string = '';
+    inputName: string = '';
 
-    //     // this.$store.commit('SET_NICKNAME_TOKEN', userJWToken);
-    //     //  디비에 저장된 nickname을 불러와 인풋에 입력한 값으로 교체
-    //     // location.reload();
-    // }
-    async getFullName(userEmail: string) {
+    mounted() {
+        this.getUserFullName();
+    }
+    async getUserFullName() {
+        this.fullName = await this.getUserByEmail(this.userEmail);
+    }
+    async getUserByEmail(userEmail: String) {
         const response = await this.$apollo.query({
             query: gql`
-                query($full_name: String!) {
-                    get_user_by_fullName(full_name: $full_name) {
+                query($email: String!) {
+                    get_user_by_email(email: $email) {
                         full_name
                     }
                 }
             `,
             variables: {
-                full_name: userEmail
+                email: userEmail
             }
         });
-        return response.data.get_user_by_fullName;
+        return response.data.get_user_by_email.full_name;
     }
 
-    async addFullName(
-        e: any,
-        userData: {
-            email: string;
-            full_name: string;
-        }
-    ) {
+    async addFullName() {
         await this.$apollo.mutate({
             mutation: gql`
                 mutation($email: String!, $full_name: String!) {
@@ -45,12 +40,11 @@ export default class MemberComponent extends Vue {
                 }
             `,
             variables: {
-                email: userData.email,
-                full_name: userData.full_name
+                email: this.userEmail,
+                full_name: this.inputName
             }
         });
 
-        alert('test');
-        e.preventDefault();
+        this.fullName = this.inputName;
     }
 }
