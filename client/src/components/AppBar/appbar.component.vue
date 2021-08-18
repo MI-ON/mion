@@ -10,14 +10,24 @@
         <span class="app-logo-text" v-on:click="this.onClickRedirect"
             >MI:ON</span
         >
-        <img
-            v-if="this.$store.getters.getUserImageUrl"
-            class="user-profile-image"
-            :src="this.$store.getters.getUserImageUrl"
-            width="52"
-            height="52"
-            v-on:click="this.onSignOut"
-        />
+        <v-avater>
+            <img
+                class="user-profile-image"
+                v-if="this.$store.state.userToken"
+                :src="$store.getters.getUserImageUrl"
+                width="50"
+                height="50"
+                v-on:click="this.onSignOut"
+            />
+            <img
+                v-show="!this.$store.state.userToken"
+                class="user-profile-image"
+                :src="defaultProfile"
+                width="50"
+                height="50"
+                v-on:click="this.onSignOn"
+            />
+        </v-avater>
     </div>
 </template>
 

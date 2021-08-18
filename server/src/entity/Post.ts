@@ -5,18 +5,18 @@ export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar',{length:20})
+  @Column("varchar", { length: 20 })
   store_id: string;
 
-  @Column('varchar',{length:50})
+  @Column("varchar", { length: 50 })
   email: string;
 
-  @Column('varchar',{length:200})
+  @Column("varchar", { length: 200 })
   content: string;
 
   @Column("decimal", { precision: 5, scale: 2 })
   rating: number;
 
-  @Column()
-  created_at: Date;
+  @Column("varchar", { length: 15 })
+  created_at: string;
 }

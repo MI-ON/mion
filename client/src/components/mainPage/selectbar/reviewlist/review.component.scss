@@ -1,0 +1,89 @@
+#button-div{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+   
+    button{
+        margin: 10px;
+        background-color: transparent;
+        border: none;
+    }
+    img{
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+    }
+}
+#review-lists{
+    height: 700px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+#review-lists::-webkit-scrollbar{
+    display: none;
+    width: 0 !important;
+}
+#list-div{
+    width: 100%; 
+    margin-top: 10px;
+    .list{
+        cursor: pointer;
+        margin: auto;
+        $list-width:400px;
+        $list-height:158px;
+        margin-bottom: 20px;
+
+        width: $list-width;
+        height: $list-height;
+        background-color: white;
+        border-radius: 15px;
+        text-align: center;
+        position: relative;
+
+        .list-center{
+           // background-color: magenta;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        .title{
+
+            $title-height:38px;
+            color: white;
+            width: 380px;
+            height: $title-height;
+            line-height: $title-height;
+            display: inline-block;
+            background-color: #5CAAFA;
+            border-radius: 5px;
+            
+            font-size: 18px;
+            font-weight: 700;
+        }
+        hr{
+            border: 1px solid #A8D3FF;
+            width: 350px;
+            display: inline-block;
+        }
+        .sub{
+            padding: 3px 0px 3px;
+            margin-top: 7px;
+            border-radius: 5px;
+            width: 380px;
+            height: 90px;
+            background-color: #E8F3FF;
+            span{
+                display: block;
+                font-size: 13px;
+            }
+            
+        }
+        
+    }
+    .list:last-child{
+        margin-bottom: 0px;
+    }
+
+}
