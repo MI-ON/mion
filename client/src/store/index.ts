@@ -16,6 +16,12 @@ export default new Vuex.Store(<StoreOptions<any>>{
                 state.userToken
             );
             return userTokenDecoded.picture;
+        },
+        getUserByEmail: (state) => {
+            const userTokenDecoded: { email: string } = jwtDecode(
+                state.userToken
+            );
+            return userTokenDecoded.email;
         }
     },
     mutations: {

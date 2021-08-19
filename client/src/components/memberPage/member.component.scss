@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-.wrapper {
+.member-wrapper {
     width: 50%;
     height: auto;
     text-align: center;
@@ -24,8 +24,14 @@
     font-weight: bold;
     line-height: 47px;
 }
+.member-profile {
+    width: 150px;
+    border-radius: 10rem;
+    margin-top: 1.5vh;
+    margin-bottom: 2vh;
+}
 
-.name {
+.fullname-text {
     font-weight: 900;
     font-size: 1.2em;
     line-height: 28px;
@@ -34,7 +40,7 @@
     margin-right: 2rem;
 }
 
-.input-box {
+.fullname-input-box {
     width: 15vw;
     height: 5vh;
     background: #ffffff;
@@ -46,7 +52,7 @@
     margin-right: 3vw;
 }
 
-.change-nickname {
+.change-fullname-btn {
     width: 190px;
     height: 50px;
     background: #6aa2d5;
