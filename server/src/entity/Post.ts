@@ -9,6 +9,12 @@ export class Post extends BaseEntity {
   store_id: string;
 
   @Column("varchar", { length: 50 })
+  store_name: string;
+
+  @Column("varchar", { length: 50 })
+  category_name: string;
+
+  @Column("varchar", { length: 50 })
   email: string;
 
   @Column("varchar", { length: 200 })

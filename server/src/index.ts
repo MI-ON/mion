@@ -3,6 +3,7 @@ import { createConnection } from "typeorm";
 import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resolvers";
 import connectionOptions from "../ormconfig";
+import { Post } from "./entity/Post";
 
 const options = {
   port: 3000,
@@ -18,9 +19,11 @@ createConnection(connectionOptions)
     });
     server.start(options, () => {
       console.log("Graphql Server listening on port %d 🚀", options.port);
+      
     });
     server.express.get("/graphql", (req, res) => {
       res.send("Graphql Server listening!!");
     });
+    
   })
   .catch((error) => console.log(error));

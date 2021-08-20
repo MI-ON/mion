@@ -1,6 +1,8 @@
 import { User } from "../entity/User";
 import { CheckIN } from "../entity/CheckIN";
 import axios from "axios";
+import { Post } from "../entity/Post";
+import { Equal, Like } from "typeorm";
 
 const getDate = (isToday: boolean) => {
   let date = new Date();
@@ -55,7 +57,7 @@ export const register = async (
     image_url: imageUrl,
   }).save();
 
-export const getStores = async (keyword: string) => {
+export const getStores = async (keyword: string):Promise<object[]|boolean> => {
   const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
   const encode_url: string = encodeURI(API_URL);
   const config = {
@@ -64,7 +66,7 @@ export const getStores = async (keyword: string) => {
 
   const stores: any = await axios.get(encode_url, config);
 
-  const result: any[] = stores.data.documents.map(
+  const result: any[] = stores.data.documents.filter(
     (v) => v.category_group_code == "FD6"
   );
   if (result.length > 0) {
@@ -73,6 +75,23 @@ export const getStores = async (keyword: string) => {
     return false;
   }
 };
+
+export const getStore = async(store_name:string):Promise<Post[]|boolean>=>{
+  const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
+  const encode_url: string = encodeURI(API_URL);
+  const config = {
+    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+  };
+
+  const store: any = await axios.get(encode_url, config);
+
+  const result = store.data.documents;
+  if (result.length > 0) {
+    return result;
+  } else {
+    return false;
+  }
+}
 
 export const addCheckIn = async (storeId: string, email: string) => {
   const createdAt = getCreatedAt();
@@ -114,3 +133,18 @@ export const addFullName = async (
 
   return User.findOne({ full_name: full_name });
 };
+
+export const getPosts = async(keyword:string):Promise<Post[]>=>{
+  //이름에서 keyword 이름에 없다면 group에서 
+  return Post.find({
+    where:[
+      {store_name: Equal(`${keyword}`)},
+      {store_name: Like(`%${keyword}%`)},
+      {category_name: Like(`%${keyword}%`)}
+    ]
+  });
+}
+
+
+
+
