@@ -13,7 +13,6 @@ export default class InfoWindowContent {
 
   static async drawInfoContent(data: string | any): Promise<HTMLDivElement> {
     const {
-      id,
       place_name,
       address_name,
       road_address_name,
@@ -43,7 +42,7 @@ export default class InfoWindowContent {
 
       await axios.post("/graphql", {
         query: `mutation {
-          add_check_in(store_id: "${id}", email: "${userEmail}") {
+          add_check_in(store_name: "${place_name}", email: "${userEmail}") {
             id
           }
         }`,
@@ -68,7 +67,9 @@ export default class InfoWindowContent {
     const bottomContentContainer = document.createElement("div");
     bottomContentContainer.classList.add("bottomContentContainer");
 
-    bottomContentContainer.innerHTML = await this.votedUserProfileContent(id);
+    bottomContentContainer.innerHTML = await this.votedUserProfileContent(
+      place_name
+    );
 
     infoWindowContainer.appendChild(topContentContainer);
     infoWindowContainer.appendChild(bottomContentContainer);
@@ -76,17 +77,17 @@ export default class InfoWindowContent {
     return infoWindowContainer;
   }
 
-  static async votedUserProfileContent(place_id: string): Promise<string> {
+  static async votedUserProfileContent(store_name: string): Promise<string> {
     const response = await axios.post("/graphql", {
       query: `query {
-        get_voted_users_by_store_id(store_id: "${place_id}") {
-          image_url
-        }
-      }`,
+                get_voted_users_by_store_name(store_name: "${store_name}") {
+                image_url
+                }
+            }`,
     });
 
     const votedUserImageList = await response.data.data
-      .get_voted_users_by_store_id;
+      .get_voted_users_by_store_name;
 
     const votedUserProfileContent = `
         ${await votedUserImageList

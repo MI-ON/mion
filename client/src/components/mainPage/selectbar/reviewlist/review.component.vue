@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="searchBar">
-          <form @submit="searchPlaces">
+          <form>
               <input
                 type="text"
                 v-model="reviewKeyword"
@@ -27,7 +27,7 @@
                     <span class="address2">{{list.address2}}</span>
                     <span class="tel">{{list.tel}}</span>
                     <hr>
-                    <span class="review">리뷰 {{r_count}} | ☆☆☆☆</span>
+                    <span class="review">리뷰 {{list.r_count}} | ☆☆☆☆</span>
                   </div>
                 </div>
               </div>

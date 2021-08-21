@@ -16,13 +16,13 @@
         </button>
       </div>
       <!-- 3개 컴포넌트-->
-
-      <ReviewListComponent v-if="isReview" />
       <SearchPlaceComponent
         v-if="isSearchPlace"
         v-bind:searchResult="searchResultData"
         v-on:searchplace-keyword="eventFromSearchplace"
       />
+      <ReviewListComponent v-if="isReview" />
+      
       <VoteComponent v-if="isVote" />
     </div>
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">
