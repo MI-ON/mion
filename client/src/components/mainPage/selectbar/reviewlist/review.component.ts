@@ -1,3 +1,4 @@
+import { gql } from 'apollo-boost';
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 @Component({})
@@ -12,24 +13,40 @@ export default class ReviewComponent extends Vue{
     rating:number|null = null; 
     reviewKeyword:string|null =null;
     
-    lists:object[] = []
+    lists:object[] = [];
 
     mounted(){
 
     }
 
-    //graphql에서 review 가져오기
-    getReviews(){
+   
+    /**
+     * 키워드를 입력 관련 키워드에 관한 post 가져오기(db에서)
+     * post.store_name으로 정보 찾기 getStore로
+     * 
+     */
 
+    //graphql에서 post에 store_name 가져오기
+    async getPosts(keyword:string|null){
+        const respose = await this.$apollo.query({
+            query: gql`
+            query($keyword: String!) {
+                get_posts(keyword: $keyword) {
+                    store_name
+                }
+            }
+            `,
+            variables:{
+                keyword:keyword
+            }
+        });
+
+        console.log(respose);
     }
 
-    //리뷰 키워드 버튼 클릭
-    /**
-     * 검색한 키워드를 부모로 올려보내고 
-     * 마커를 가져온후 graphql에 있는 store만 표시하기?
-     */
     rkewordClick(){
-        
+        console.log(this.reviewKeyword);
+        this.getPosts(this.reviewKeyword);
     }
 
     clickList(){
