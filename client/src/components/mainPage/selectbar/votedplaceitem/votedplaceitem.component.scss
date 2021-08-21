@@ -1,4 +1,4 @@
-#votedplaceItemContainer {
+#voted-place-item-container {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 
-#markerImageContainer {
+#marker-image-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,7 +21,7 @@
     }
 }
 
-#votedImageContainer {
+#voted-image-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -36,7 +36,7 @@
     }
 }
 
-#votedplaceInfoContainer {
+#voted-place-info-container {
     div,
     span,
     a {
@@ -52,25 +52,5 @@
         margin-bottom: 3px;
         font-weight: bold;
         font-size: 13px;
-    }
-}
-
-#voteButtonContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: auto;
-
-    button {
-        background: none;
-        width: 52px;
-        height: 52px;
-        border: none;
-        cursor: pointer;
-        img {
-            width: 52px;
-            height: 52px;
-            filter: drop-shadow(0px 1px 1px rgb(175, 175, 175));
-        }
     }
 }
