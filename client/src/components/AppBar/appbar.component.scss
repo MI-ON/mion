@@ -1,8 +1,6 @@
-.app-bar {
+.mx-auto {
     background-color: #5caafa;
     width: auto;
-    height: 10%;
-
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -22,7 +20,6 @@
     text-align: center;
     font-size: 1.4em;
     font-weight: 900;
-    margin: 0.4rem 0 0 1.2vw;
     cursor: pointer;
 }
 
@@ -33,4 +30,42 @@
     border-radius: 4vw;
     margin-right: 1.5vw;
     cursor: pointer;
+}
+
+.clearfix::after {
+	content:'';
+	display: block;
+	clear: both;
+}
+.menu{
+    background-color: #5caafa;
+    right: 1vw;
+    top: 5vw;
+    text-align: center;
+    width: 10vw;
+    height: 7vw;
+    box-shadow: 0px 4px 6px #434547;
+    border: solid 1px #5496d8;
+    border-radius: 1vw;
+    display:none;
+    position: absolute;
+}
+
+.profile:active .menu{
+    color: white;
+    z-index: 5;
+    display: block;
+    p:nth-child(1){
+        padding-bottom: 0.5vw;
+        border-bottom:solid 1px #627381;
+    }
+    p:nth-child(1):hover{
+        background-color: #549ae0;
+    }
+    p:nth-child(2){
+        padding-top: 0;
+    }
+    p:nth-child(2):hover{
+        background-color: #549ae0;
+    }
 }
