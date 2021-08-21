@@ -47,7 +47,7 @@ type Query {
     get_user_by_email(email: String!): User
     get_stores(keyword: String!): [Store]!
     get_voted_users_by_store_id(store_id: String!): [User]
-    get_store(keyword:String!):[Store]!
+    get_store(store_names:[String]!):[Store]!
     get_posts(keyword:String!):[Post]!
 }
 

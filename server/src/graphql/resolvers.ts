@@ -15,7 +15,7 @@ const resolvers = {
         get_stores: (_: any, { keyword }: any) => getStores(keyword),
         get_voted_users_by_store_id: (_: any, { store_id }: any) =>
             getVotedUsersByStoreId(store_id),
-        get_store:(_:any,{keyword}:any)=>getStore(keyword),
+        get_store:(_:any,{store_names}:any)=>getStore(store_names),
         get_posts:(_:any,{keyword}:any)=>getPosts(keyword)
     },
     Mutation: {

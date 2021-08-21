@@ -69,6 +69,7 @@ export const getStores = async (keyword: string):Promise<object[]|boolean> => {
   const result: any[] = stores.data.documents.filter(
     (v) => v.category_group_code == "FD6"
   );
+  console.log(result);
   if (result.length > 0) {
     return result;
   } else {
@@ -76,22 +77,29 @@ export const getStores = async (keyword: string):Promise<object[]|boolean> => {
   }
 };
 
-export const getStore = async(store_name:string):Promise<Post[]|boolean>=>{
-  const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
-  const encode_url: string = encodeURI(API_URL);
-  const config = {
-    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
-  };
 
-  const store: any = await axios.get(encode_url, config);
+export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
 
-  const result = store.data.documents;
+  const result:object[] = [];
+  for(let i=0; i<store_names.length; i++){
+    const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_names[i]}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
+    const encode_url: string = encodeURI(API_URL);
+    const config = {
+      headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+    };
+    const store: any = await axios.get(encode_url, config);
+    const v = store.data.documents[0];
+    result.push(v);
+  }
+
   if (result.length > 0) {
     return result;
   } else {
     return false;
   }
+  
 }
+
 
 export const addCheckIn = async (storeId: string, email: string) => {
   const createdAt = getCreatedAt();
@@ -135,7 +143,7 @@ export const addFullName = async (
 };
 
 export const getPosts = async(keyword:string):Promise<Post[]>=>{
-  //이름에서 keyword 이름에 없다면 group에서 
+ 
   return Post.find({
     where:[
       {store_name: Equal(`${keyword}`)},

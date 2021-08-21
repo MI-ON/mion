@@ -12,7 +12,7 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent},
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
@@ -95,20 +95,7 @@ export default class MapComponent extends Vue {
     this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
   }
 
-  // 키워드 검색을 요청하는 함수( 서치를 했을때 )
-  public searchPlaces(e: Event) {
-    e.preventDefault();
-    // 장소 검색 객체 생성
 
-    const options = {
-      location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
-      radius: 1500,
-    };
-
-    // 장소검색 객체를 통해 키워드로 장소검색 요청
-    console.log(this.keyword);
-    this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
-  }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(data: any[], status: number, pagination: number) {
