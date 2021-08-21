@@ -7,6 +7,7 @@ import {
   addFullName,
   getStore,
   getPosts,
+  addPost,
 } from "./db";
 
 const resolvers = {
@@ -25,6 +26,10 @@ const resolvers = {
       addCheckIn(store_name, email),
     add_full_name: (_: any, { email, full_name }: any) =>
       addFullName(email, full_name),
+    add_post: (
+      _: any,
+      { store_name, category_name, email, content, rating }: any
+    ) => addPost(store_name, category_name, email, content, rating),
   },
 };
 

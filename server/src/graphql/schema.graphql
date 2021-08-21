@@ -20,7 +20,6 @@ type User {
 
 type Post {
   id: Int!
-  store_id: String!
   store_name: String!
   category_name: String!
   email: String!
@@ -55,4 +54,11 @@ type Mutation {
   add_user(email: String!, full_name: String!, image_url: String!): User!
   add_check_in(store_id: String!, email: String!): CheckIn!
   add_full_name(email: String!, full_name: String!): User!
+  add_post(
+    store_name: String!
+    category_name: String!
+    email: String!
+    content: String!
+    rating: Float!
+  ): Post!
 }

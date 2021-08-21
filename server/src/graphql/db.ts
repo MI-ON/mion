@@ -153,3 +153,30 @@ export const getPosts = async (keyword: string): Promise<Post[]> => {
     ],
   });
 };
+
+export const addPost = async (
+  store_name: string,
+  category_name: string,
+  email: string,
+  content: string,
+  rating: number
+): Promise<Post | String> => {
+  const today = getDate(true);
+  const check_in = await CheckIN.findOne({
+    store_name: store_name,
+    email: email,
+    created_at: today,
+  });
+  if (check_in) {
+    return Post.create({
+      store_name: store_name,
+      category_name: category_name,
+      email: email,
+      content: content,
+      rating: rating,
+      created_at: today,
+    }).save();
+  } else {
+    return "리뷰를 쓸 권한이 없습니다.";
+  }
+};
