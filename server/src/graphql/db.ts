@@ -23,11 +23,11 @@ const getCreatedAt = () => {
   return createdAt;
 };
 
-const getVotedStoreUserEmailList = async (storeId: string) => {
+const getVotedStoreUserEmailList = async (storeName: string) => {
   const createdAt = getCreatedAt();
 
   const votedStoreList = await CheckIN.find({
-    store_id: storeId,
+    store_name: storeName,
     created_at: createdAt,
   });
 
@@ -57,7 +57,9 @@ export const register = async (
     image_url: imageUrl,
   }).save();
 
-export const getStores = async (keyword: string):Promise<object[]|boolean> => {
+export const getStores = async (
+  keyword: string
+): Promise<object[] | boolean> => {
   const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
   const encode_url: string = encodeURI(API_URL);
   const config = {
@@ -76,7 +78,9 @@ export const getStores = async (keyword: string):Promise<object[]|boolean> => {
   }
 };
 
-export const getStore = async(store_name:string):Promise<Post[]|boolean>=>{
+export const getStore = async (
+  store_name: string
+): Promise<Post[] | boolean> => {
   const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
   const encode_url: string = encodeURI(API_URL);
   const config = {
@@ -91,26 +95,26 @@ export const getStore = async(store_name:string):Promise<Post[]|boolean>=>{
   } else {
     return false;
   }
-}
+};
 
-export const addCheckIn = async (storeId: string, email: string) => {
+export const addCheckIn = async (storeName: string, email: string) => {
   const createdAt = getCreatedAt();
   const isVoted = await isUserVoted(email);
 
   if (!isVoted) {
     return CheckIN.create({
-      store_id: storeId,
+      store_name: storeName,
       email: email,
       created_at: createdAt,
     }).save();
   } else {
-    await CheckIN.update(isVoted, { store_id: storeId });
+    await CheckIN.update(isVoted, { store_name: storeName });
     return CheckIN.findOne({ email: email, created_at: createdAt });
   }
 };
 
-export const getVotedUsersByStoreId = async (storeId: string) => {
-  const emailList: Array<string> = await getVotedStoreUserEmailList(storeId);
+export const getVotedUsersByStoreName = async (storeName: string) => {
+  const emailList: Array<string> = await getVotedStoreUserEmailList(storeName);
 
   const userList = emailList.map(async (email) => {
     return await User.findOne({ email: email });
@@ -134,17 +138,18 @@ export const addFullName = async (
   return User.findOne({ full_name: full_name });
 };
 
-export const getPosts = async(keyword:string):Promise<Post[]>=>{
-  //이름에서 keyword 이름에 없다면 group에서 
+export const getVotedStores = async () => {
+  const createdAt = getCreatedAt();
+  return CheckIN.find({ created_at: createdAt });
+};
+
+export const getPosts = async (keyword: string): Promise<Post[]> => {
+  //이름에서 keyword 이름에 없다면 group에서
   return Post.find({
-    where:[
-      {store_name: Equal(`${keyword}`)},
-      {store_name: Like(`%${keyword}%`)},
-      {category_name: Like(`%${keyword}%`)}
-    ]
+    where: [
+      { store_name: Equal(`${keyword}`) },
+      { store_name: Like(`%${keyword}%`) },
+      { category_name: Like(`%${keyword}%`) },
+    ],
   });
-}
-
-
-
-
+};
