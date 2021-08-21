@@ -67,8 +67,8 @@ export default class InfoWindowContent {
 
     const bottomContentContainer = document.createElement("div");
     bottomContentContainer.classList.add("bottomContentContainer");
-
-    bottomContentContainer.innerHTML = await this.votedUserProfileContent(id);
+  
+    //bottomContentContainer.innerHTML = await this.votedUserProfileContent(id);
 
     infoWindowContainer.appendChild(topContentContainer);
     infoWindowContainer.appendChild(bottomContentContainer);

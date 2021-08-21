@@ -2,7 +2,7 @@ import { User } from "../entity/User";
 import { CheckIN } from "../entity/CheckIN";
 import axios from "axios";
 import { Post } from "../entity/Post";
-import { Equal, Like } from "typeorm";
+import { Equal, getConnection, getManager, getRepository, Like } from "typeorm";
 
 const getDate = (isToday: boolean) => {
   let date = new Date();
@@ -153,6 +153,13 @@ export const getPosts = async(keyword:string):Promise<Post[]>=>{
   });
 }
 
+export const CountPostByName = async(name:string) =>{
+   return await Post.CountByName(name);
+}
+
+export const SumPostByName = async(name:string) =>{
+    return await Post.SumByName(name);
+}
 
 
 

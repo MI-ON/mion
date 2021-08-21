@@ -6,7 +6,9 @@ import {
     getVotedUsersByStoreId,
     addFullName,
     getStore,
-    getPosts
+    getPosts,
+    CountPostByName,
+    SumPostByName
 } from './db';
 
 const resolvers = {
@@ -16,7 +18,9 @@ const resolvers = {
         get_voted_users_by_store_id: (_: any, { store_id }: any) =>
             getVotedUsersByStoreId(store_id),
         get_store:(_:any,{store_names}:any)=>getStore(store_names),
-        get_posts:(_:any,{keyword}:any)=>getPosts(keyword)
+        get_posts:(_:any,{keyword}:any)=>getPosts(keyword),
+        count_postbyname:(_:any,{name}:any)=>CountPostByName(name),
+        sum_postbyname:(_:any,{name}:any) => SumPostByName(name)
     },
     Mutation: {
         add_user: (_: any, { email, full_name, image_url }: any) =>

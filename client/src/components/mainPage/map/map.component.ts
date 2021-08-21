@@ -117,6 +117,8 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
+    console.log("displayPlaces");
+    console.log(places);
     this.searchResultData = Object.assign({}, this.searchResultData, places);
 
     this.fragment = document.createDocumentFragment();
@@ -128,6 +130,7 @@ export default class MapComponent extends Vue {
     this.removeMarker();
 
     for (let i = 0; i < places.length; i++) {
+      console.log(places[i]);
       // 마커를 생성하고 지도에 표시
       const placePosition = new window.kakao.maps.LatLng(
           places[i].y,
@@ -185,7 +188,7 @@ export default class MapComponent extends Vue {
     }
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
-    this.map.setBounds(bounds);
+    //this.map.setBounds(bounds);
   }
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수

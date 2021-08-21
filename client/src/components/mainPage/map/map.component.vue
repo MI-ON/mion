@@ -21,10 +21,10 @@
         v-bind:searchResult="searchResultData"
         v-on:searchplace-keyword="eventFromSearchplace"
       />
-      <ReviewListComponent v-if="isReview" />
-      
+      <ReviewListComponent v-if="isReview" @displayPlaces="displayPlaces" />  
       <VoteComponent v-if="isVote" />
     </div>
+    
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">
       <div class="react"></div>
       <div class="tri-close"></div>

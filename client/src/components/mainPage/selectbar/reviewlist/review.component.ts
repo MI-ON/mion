@@ -5,10 +5,10 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 export default class ReviewComponent extends Vue{
 
     id:number|null= null;
-    title:string|null =null;
-    address1:string|null =null;
-    address2:string|null =null;
-    tel:string|null =null;
+    place_name:string|null =null;
+    address_name:string|null =null;
+    road_address_name:string|null =null;
+    phone:string|null =null;
     r_count:number|null =null;
     rating:number|null = null; 
     reviewKeyword:string|null =null;
@@ -16,7 +16,7 @@ export default class ReviewComponent extends Vue{
     lists:object[] = [];
 
     mounted(){
-        //this.$emit('displayPlaces');
+        
     }
 
    
@@ -46,17 +46,24 @@ export default class ReviewComponent extends Vue{
     }
 
     async getStoresData(names:string[]){
-        console.log("이름들:",names);
+        //console.log("이름들:",names);
 
         const respose = await this.$apollo.query({
             query: gql`
             query($store_names:[String]!){
                 get_store(store_names:$store_names) {
                     address_name,
+                    category_group_code,
+                    category_group_name,
                     category_name,
                     id,
                     phone,
-                    place_name
+                    place_name,
+                    place_url,
+                    road_address_name,
+                    x,
+                    y
+
                 }
             }
             `,
@@ -64,16 +71,30 @@ export default class ReviewComponent extends Vue{
                 store_names:names
             }
         });
-        console.log(respose);
+        return respose.data.get_store;
+        
+    }
+
+    async getPostInfos(name:String){
+        
+    }
+
+    addLists(datas:any[]){
+        datas.forEach((data)=>{
+            data.r_count = "2";
+            console.log(data);
+            this.lists.push(data);
+        })
     }
 
     async rkewordClick(){
-        console.log(this.reviewKeyword);
         const store_names = await this.getPosts(this.reviewKeyword);
-        const datas = this.getStoresData(store_names);
+        const datas = await this.getStoresData(store_names);
+        this.addLists(datas);
+        this.$emit('displayPlaces',datas);
     }
 
     clickList(){
-        
+
     }
 }
