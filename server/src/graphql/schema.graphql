@@ -21,14 +21,16 @@ type User {
 type Post {
     id: Int!
     store_id: String!
-    user_email: String!
+    store_name: String!
+    category_name: String!
+    email: String!
     content: String!
     rating: Float!
 }
 
 type CheckIn {
     id: Int!
-    store_id: String!
+    store_name: String!
     user_email: String!
     created_at: String!
 }
@@ -44,7 +46,9 @@ type FoodList {
 type Query {
     get_user_by_email(email: String!): User
     get_stores(keyword: String!): [Store]!
-    get_voted_users_by_store_id(store_id: String!): [User]
+    get_voted_users_by_store_name(store_name: String!): [User]
+    get_store(keyword: String!): [Store]!
+    get_posts(keyword: String!): [Post]!
 }
 
 type Mutation {
