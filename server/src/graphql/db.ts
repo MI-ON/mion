@@ -2,7 +2,7 @@ import { User } from "../entity/User";
 import { CheckIN } from "../entity/CheckIN";
 import axios from "axios";
 import { Post } from "../entity/Post";
-import { Equal, Like } from "typeorm";
+import { Equal, getConnection, getManager, getRepository, Like } from "typeorm";
 
 const getDate = (isToday: boolean) => {
   let date = new Date();
@@ -71,6 +71,7 @@ export const getStores = async (
   const result: any[] = stores.data.documents.filter(
     (v) => v.category_group_code == "FD6"
   );
+  console.log(result);
   if (result.length > 0) {
     return result;
   } else {
@@ -78,24 +79,27 @@ export const getStores = async (
   }
 };
 
-export const getStore = async (
-  store_name: string
-): Promise<Post[] | boolean> => {
-  const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
-  const encode_url: string = encodeURI(API_URL);
-  const config = {
-    headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
-  };
+export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
 
-  const store: any = await axios.get(encode_url, config);
+  const result:object[] = [];
+  for(let i=0; i<store_names.length; i++){
+    const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_names[i]}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
+    const encode_url: string = encodeURI(API_URL);
+    const config = {
+      headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+    };
+    const store: any = await axios.get(encode_url, config);
+    const v = store.data.documents[0];
+    result.push(v);
+  }
 
-  const result = store.data.documents;
   if (result.length > 0) {
     return result;
   } else {
     return false;
-  }
-};
+  }  
+}
+
 
 export const addCheckIn = async (storeName: string, email: string) => {
   const createdAt = getCreatedAt();
@@ -144,7 +148,7 @@ export const getVotedStores = async () => {
 };
 
 export const getPosts = async (keyword: string): Promise<Post[]> => {
-  //이름에서 keyword 이름에 없다면 group에서
+
   return Post.find({
     where: [
       { store_name: Equal(`${keyword}`) },
@@ -152,4 +156,14 @@ export const getPosts = async (keyword: string): Promise<Post[]> => {
       { category_name: Like(`%${keyword}%`) },
     ],
   });
-};
+}
+
+export const CountPostByName = async(name:string) =>{
+   return await Post.CountByName(name);
+}
+
+export const SumPostByName = async(name:string) =>{
+    return await Post.SumByName(name);
+}
+
+

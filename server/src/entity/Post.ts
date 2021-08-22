@@ -3,8 +3,6 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column("varchar", { length: 20 })
-  store_id: string;
 
   @Column("varchar", { length: 50 })
   store_name: string;
@@ -23,4 +21,16 @@ export class Post extends BaseEntity {
 
   @Column("varchar", { length: 15 })
   created_at: string;
+
+  static CountByName(name:string){
+    return this.createQueryBuilder('post')
+      .where('post.store_name = :name',{name})
+      .getCount();
+  }
+
+  static SumByName(name:string){
+    return this.createQueryBuilder('post')
+    .select("SUM(post.rating)", "sum")
+    .getRawOne();
+  }
 }
