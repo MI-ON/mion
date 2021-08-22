@@ -156,7 +156,66 @@ export const getPosts = async (keyword: string): Promise<Post[]> => {
       { category_name: Like(`%${keyword}%`) },
     ],
   });
-}
+};
+
+export const addPost = async (
+  store_name: string,
+  category_name: string,
+  email: string,
+  content: string,
+  rating: number
+): Promise<Boolean> => {
+  const today = getDate(true);
+  const check_in = await CheckIN.findOne({
+    store_name: store_name,
+    email: email,
+    created_at: today,
+  });
+  if (check_in) {
+    await Post.create({
+      store_name: store_name,
+      category_name: category_name,
+      email: email,
+      content: content,
+      rating: rating,
+      created_at: today,
+    }).save();
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deletePost = async (id: number) => {
+  // 파라미터의 email과 해당 post의 id 일치 확인
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    await Post.delete({
+      id: id,
+    });
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const updatePost = async (
+  id: number,
+  content: string,
+  rating: number
+) => {
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    await Post.update(is_id, { content: content, rating: rating });
+    return true;
+  } else {
+    return false;
+  }
+};
 
 export const CountPostByName = async(name:string) =>{
    return await Post.CountByName(name);
@@ -165,5 +224,4 @@ export const CountPostByName = async(name:string) =>{
 export const SumPostByName = async(name:string) =>{
     return await Post.SumByName(name);
 }
-
 
