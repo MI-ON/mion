@@ -12,18 +12,16 @@ const options = {
 };
 
 createConnection(connectionOptions)
-  .then(async connection  => {
+  .then(async (connection) => {
     const server = new GraphQLServer({
       typeDefs: "src/graphql/schema.graphql",
       resolvers,
     });
     server.start(options, () => {
       console.log("Graphql Server listening on port %d 🚀", options.port);
-      
     });
     server.express.get("/graphql", (req, res) => {
       res.send("Graphql Server listening!!");
     });
-    
   })
   .catch((error) => console.log(error));

@@ -14,7 +14,7 @@
       </v-flex>
 
       <v-flex id="voteButtonContainer" colum>
-        <button type="button">
+        <button type="button" v-on:click="this.onClickVoteBtn">
           <img src="../../../assets/vote-icon.png" />
         </button>
       </v-flex>
@@ -22,17 +22,5 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-
-@Component
-export default class PlaceItemComponent extends Vue {
-  @Prop(Object) protected searchResult!: Object;
-  @Watch("searchResult")
-  updateMessage() {
-    console.log("placeitem에서 변경 감지");
-    console.log(this.searchResult);
-  }
-}
-</script>
+<script lang="ts" src="./placeitem.component.ts"></script>
 <style lang="scss" src="./placeitem.component.scss"></style>

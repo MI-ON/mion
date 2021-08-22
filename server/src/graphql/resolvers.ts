@@ -30,6 +30,7 @@ const resolvers = {
         add_full_name: (_: any, { email, full_name }: any) =>
             addFullName(email, full_name)
     }
+
 };
 
 export default resolvers;
