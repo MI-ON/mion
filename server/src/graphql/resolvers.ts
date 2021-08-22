@@ -10,6 +10,8 @@ import {
   addPost,
   deletePost,
   updatePost,
+  CountPostByName,
+  SumPostByName
 } from "./db";
 
 const resolvers = {
@@ -20,6 +22,8 @@ const resolvers = {
       getVotedUsersByStoreName(store_name),
     get_store: (_: any, { keyword }: any) => getStore(keyword),
     get_posts: (_: any, { keyword }: any) => getPosts(keyword),
+    count_postbyname:(_:any,{name}:any)=>CountPostByName(name),
+    sum_postbyname:(_:any,{name}:any) => SumPostByName(name),
   },
   Mutation: {
     add_user: (_: any, { email, full_name, image_url }: any) =>

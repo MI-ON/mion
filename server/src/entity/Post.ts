@@ -21,4 +21,16 @@ export class Post extends BaseEntity {
 
   @Column("varchar", { length: 15 })
   created_at: string;
+
+  static CountByName(name:string){
+    return this.createQueryBuilder('post')
+      .where('post.store_name = :name',{name})
+      .getCount();
+  }
+
+  static SumByName(name:string){
+    return this.createQueryBuilder('post')
+    .select("SUM(post.rating)", "sum")
+    .getRawOne();
+  }
 }

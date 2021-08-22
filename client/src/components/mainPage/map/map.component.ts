@@ -12,7 +12,7 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent},
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
@@ -95,20 +95,7 @@ export default class MapComponent extends Vue {
     this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
   }
 
-  // 키워드 검색을 요청하는 함수( 서치를 했을때 )
-  public searchPlaces(e: Event) {
-    e.preventDefault();
-    // 장소 검색 객체 생성
 
-    const options = {
-      location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
-      radius: 1500,
-    };
-
-    // 장소검색 객체를 통해 키워드로 장소검색 요청
-    console.log(this.keyword);
-    this.ps.keywordSearch(this.keyword, this.placesSearchCB, options);
-  }
 
   // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(data: any[], status: number, pagination: number) {
@@ -130,6 +117,8 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
+    console.log("displayPlaces");
+    console.log(places);
     this.searchResultData = Object.assign({}, this.searchResultData, places);
 
     this.fragment = document.createDocumentFragment();
@@ -141,6 +130,7 @@ export default class MapComponent extends Vue {
     this.removeMarker();
 
     for (let i = 0; i < places.length; i++) {
+      console.log(places[i]);
       // 마커를 생성하고 지도에 표시
       const placePosition = new window.kakao.maps.LatLng(
           places[i].y,
@@ -198,7 +188,7 @@ export default class MapComponent extends Vue {
     }
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정
-    this.map.setBounds(bounds);
+    //this.map.setBounds(bounds);
   }
 
   // 마커를 생성하고 지도 위에 마커를 표시하는 함수
