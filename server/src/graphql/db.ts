@@ -217,11 +217,14 @@ export const updatePost = async (
   }
 };
 
-export const CountPostByName = async(name:string) =>{
-   return await Post.CountByName(name);
+export const getSubInfo = async(name:string) =>{
+  const count =  await Post.CountByName(name);
+  const sum:any = await Post.SumByName(name);
+
+  return {
+    count,
+    sum:Number(sum.sum)
+  }
 }
 
-export const SumPostByName = async(name:string) =>{
-    return await Post.SumByName(name);
-}
 

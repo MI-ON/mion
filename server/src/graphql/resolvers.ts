@@ -10,8 +10,7 @@ import {
   addPost,
   deletePost,
   updatePost,
-  CountPostByName,
-  SumPostByName
+  getSubInfo
 } from "./db";
 
 const resolvers = {
@@ -22,8 +21,7 @@ const resolvers = {
       getVotedUsersByStoreName(store_name),
     get_store: (_: any, { keyword }: any) => getStore(keyword),
     get_posts: (_: any, { keyword }: any) => getPosts(keyword),
-    count_postbyname:(_:any,{name}:any)=>CountPostByName(name),
-    sum_postbyname:(_:any,{name}:any) => SumPostByName(name),
+    get_subinfo:(_:any,{name}:any) =>getSubInfo(name)
   },
   Mutation: {
     add_user: (_: any, { email, full_name, image_url }: any) =>
@@ -39,6 +37,7 @@ const resolvers = {
     delete_post: (_: any, { id }: any) => deletePost(id),
     update_post: (_: any, { id, content, rating }) => {
       updatePost(id, content, rating);
+
     },
   },
 };
