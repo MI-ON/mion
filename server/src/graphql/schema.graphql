@@ -19,13 +19,13 @@ type User {
 }
 
 type Post {
-    id: Int!
-    store_name:String!
-    category_name:String!
-    email: String!
-    content: String!
-    rating: Float!
-    created_at:String!
+  id: Int!
+  store_name: String!
+  category_name: String!
+  email: String!
+  content: String!
+  rating: Float!
+  created_at: String!
 }
 
 type CheckIn {
@@ -68,4 +68,6 @@ type Mutation {
     content: String!
     rating: Float!
   ): Boolean!
+  delete_post(id: Number!): Boolean!
+  update_post(id: Number!, content: String!, rating: Number!): Boolean!
 }
