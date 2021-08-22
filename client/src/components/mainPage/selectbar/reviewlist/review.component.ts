@@ -76,13 +76,28 @@ export default class ReviewComponent extends Vue{
     }
 
     async getPostInfos(name:String){
-        
+        const respose = await this.$apollo.query({
+            query: gql`
+            query($store_names:String!){
+                get_subinfo(name:$store_names) {
+                    count,
+                    sum
+
+                }
+            }
+            `,
+            variables:{
+                store_names:name
+            }
+        });
+        return respose.data.get_subinfo;
     }
 
     addLists(datas:any[]){
-        datas.forEach((data)=>{
-            data.r_count = "2";
-            console.log(data);
+        datas.forEach(async(data)=>{
+            const subinfo:any = await this.getPostInfos(data.place_name);
+            data.r_count = subinfo.count;
+            data.rating = subinfo.sum/subinfo.count; //☆찍기
             this.lists.push(data);
         })
     }
