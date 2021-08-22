@@ -105,7 +105,6 @@ export default class ReviewComponent extends Vue{
     async rkewordClick(){
         const store_names = await this.getPosts(this.reviewKeyword);
         const datas = await this.getStoresData(store_names);
-        console.log(datas);
         this.addLists(datas);
         this.$emit('displayPlaces',datas);
     }
