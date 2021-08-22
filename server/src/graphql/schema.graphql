@@ -68,4 +68,6 @@ type Mutation {
     content: String!
     rating: Float!
   ): Boolean!
+  delete_post(id: Number!): Boolean!
+  update_post(id: Number!, content: String!, rating: Number!): Boolean!
 }
