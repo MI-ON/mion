@@ -43,14 +43,18 @@ type FoodList {
   reviews: [Post]!
 }
 
+type SubInfo {
+  count: Int!
+  sum: Float!
+}
+
 type Query {
   get_user_by_email(email: String!): User
   get_stores(keyword: String!): [Store]!
   get_voted_users_by_store_name(store_name: String!): [User]
   get_store(store_names: [String]!): [Store]!
   get_posts(keyword: String!): [Post]!
-  count_postbyname(name: String!): Int!
-  sum_postbyname(name: String!): Float!
+  get_subinfo(name: String!): SubInfo!
 }
 
 type Mutation {
