@@ -180,3 +180,32 @@ export const addPost = async (
     return "리뷰를 쓸 권한이 없습니다.";
   }
 };
+
+export const deletePost = async (id: number) => {
+  // 파라미터의 email과 해당 post의 id 일치 확인
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    return Post.delete({
+      id: id,
+    });
+  } else {
+    return false;
+  }
+};
+
+export const updatePost = async (
+  id: number,
+  content: string,
+  rating: number
+) => {
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    return Post.update(is_id, { content: content, rating: rating });
+  } else {
+    return false;
+  }
+};

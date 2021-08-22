@@ -8,6 +8,8 @@ import {
   getStore,
   getPosts,
   addPost,
+  deletePost,
+  updatePost,
 } from "./db";
 
 const resolvers = {
@@ -30,6 +32,10 @@ const resolvers = {
       _: any,
       { store_name, category_name, email, content, rating }: any
     ) => addPost(store_name, category_name, email, content, rating),
+    delete_post: (_: any, { id }: any) => deletePost(id),
+    update_post: (_: any, { id, content, rating }) => {
+      updatePost(id, content, rating);
+    },
   },
 };
 
