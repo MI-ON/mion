@@ -1,0 +1,76 @@
+#votedplaceItemContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    padding: 15px;
+
+    background-color: white;
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+#markerImageContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    img {
+        width: 50px;
+        margin-right: 5px;
+    }
+}
+
+#votedImageContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    img {
+        width: 25px;
+        margin-top: 3px;
+        margin-right: 6px;
+    }
+    :nth-child(1) {
+        margin-top: 6px;
+    }
+}
+
+#votedplaceInfoContainer {
+    div,
+    span,
+    a {
+        font-size: 11px;
+    }
+
+    a {
+        margin-left: 5px;
+        color: #787878;
+    }
+
+    :nth-child(1) {
+        margin-bottom: 3px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+}
+
+#voteButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+
+    button {
+        background: none;
+        width: 52px;
+        height: 52px;
+        border: none;
+        cursor: pointer;
+        img {
+            width: 52px;
+            height: 52px;
+            filter: drop-shadow(0px 1px 1px rgb(175, 175, 175));
+        }
+    }
+}

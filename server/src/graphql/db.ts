@@ -23,11 +23,11 @@ const getCreatedAt = () => {
   return createdAt;
 };
 
-const getVotedStoreUserEmailList = async (storeId: string) => {
+const getVotedStoreUserEmailList = async (storeName: string) => {
   const createdAt = getCreatedAt();
 
   const votedStoreList = await CheckIN.find({
-    store_id: storeId,
+    store_name: storeName,
     created_at: createdAt,
   });
 
@@ -57,7 +57,9 @@ export const register = async (
     image_url: imageUrl,
   }).save();
 
-export const getStores = async (keyword: string):Promise<object[]|boolean> => {
+export const getStores = async (
+  keyword: string
+): Promise<object[] | boolean> => {
   const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=15`;
   const encode_url: string = encodeURI(API_URL);
   const config = {
@@ -77,7 +79,6 @@ export const getStores = async (keyword: string):Promise<object[]|boolean> => {
   }
 };
 
-
 export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
 
   const result:object[] = [];
@@ -96,29 +97,28 @@ export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
     return result;
   } else {
     return false;
-  }
-  
+  }  
 }
 
 
-export const addCheckIn = async (storeId: string, email: string) => {
+export const addCheckIn = async (storeName: string, email: string) => {
   const createdAt = getCreatedAt();
   const isVoted = await isUserVoted(email);
 
   if (!isVoted) {
     return CheckIN.create({
-      store_id: storeId,
+      store_name: storeName,
       email: email,
       created_at: createdAt,
     }).save();
   } else {
-    await CheckIN.update(isVoted, { store_id: storeId });
+    await CheckIN.update(isVoted, { store_name: storeName });
     return CheckIN.findOne({ email: email, created_at: createdAt });
   }
 };
 
-export const getVotedUsersByStoreId = async (storeId: string) => {
-  const emailList: Array<string> = await getVotedStoreUserEmailList(storeId);
+export const getVotedUsersByStoreName = async (storeName: string) => {
+  const emailList: Array<string> = await getVotedStoreUserEmailList(storeName);
 
   const userList = emailList.map(async (email) => {
     return await User.findOne({ email: email });
@@ -142,16 +142,80 @@ export const addFullName = async (
   return User.findOne({ full_name: full_name });
 };
 
-export const getPosts = async(keyword:string):Promise<Post[]>=>{
- 
+export const getVotedStores = async () => {
+  const createdAt = getCreatedAt();
+  return CheckIN.find({ created_at: createdAt });
+};
+
+export const getPosts = async (keyword: string): Promise<Post[]> => {
+
   return Post.find({
-    where:[
-      {store_name: Equal(`${keyword}`)},
-      {store_name: Like(`%${keyword}%`)},
-      {category_name: Like(`%${keyword}%`)}
-    ]
+    where: [
+      { store_name: Equal(`${keyword}`) },
+      { store_name: Like(`%${keyword}%`) },
+      { category_name: Like(`%${keyword}%`) },
+    ],
   });
-}
+};
+
+export const addPost = async (
+  store_name: string,
+  category_name: string,
+  email: string,
+  content: string,
+  rating: number
+): Promise<Boolean> => {
+  const today = getDate(true);
+  const check_in = await CheckIN.findOne({
+    store_name: store_name,
+    email: email,
+    created_at: today,
+  });
+  if (check_in) {
+    await Post.create({
+      store_name: store_name,
+      category_name: category_name,
+      email: email,
+      content: content,
+      rating: rating,
+      created_at: today,
+    }).save();
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const deletePost = async (id: number) => {
+  // 파라미터의 email과 해당 post의 id 일치 확인
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    await Post.delete({
+      id: id,
+    });
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const updatePost = async (
+  id: number,
+  content: string,
+  rating: number
+) => {
+  const is_id = await Post.findOne({
+    id: id,
+  });
+  if (is_id) {
+    await Post.update(is_id, { content: content, rating: rating });
+    return true;
+  } else {
+    return false;
+  }
+};
 
 export const getSubInfo = async(name:string) =>{
   const count =  await Post.CountByName(name);
@@ -162,8 +226,5 @@ export const getSubInfo = async(name:string) =>{
     sum:Number(sum.sum)
   }
 }
-
-
-
 
 
