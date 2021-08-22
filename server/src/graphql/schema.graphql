@@ -60,5 +60,5 @@ type Mutation {
     email: String!
     content: String!
     rating: Float!
-  ): Post!
+  ): Boolean!
 }

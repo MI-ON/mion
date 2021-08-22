@@ -160,7 +160,7 @@ export const addPost = async (
   email: string,
   content: string,
   rating: number
-): Promise<Post | String> => {
+): Promise<Boolean> => {
   const today = getDate(true);
   const check_in = await CheckIN.findOne({
     store_name: store_name,
@@ -168,7 +168,7 @@ export const addPost = async (
     created_at: today,
   });
   if (check_in) {
-    return Post.create({
+    await Post.create({
       store_name: store_name,
       category_name: category_name,
       email: email,
@@ -176,8 +176,9 @@ export const addPost = async (
       rating: rating,
       created_at: today,
     }).save();
+    return true;
   } else {
-    return "리뷰를 쓸 권한이 없습니다.";
+    return false;
   }
 };
 
@@ -187,9 +188,10 @@ export const deletePost = async (id: number) => {
     id: id,
   });
   if (is_id) {
-    return Post.delete({
+    await Post.delete({
       id: id,
     });
+    return true;
   } else {
     return false;
   }
@@ -204,7 +206,8 @@ export const updatePost = async (
     id: id,
   });
   if (is_id) {
-    return Post.update(is_id, { content: content, rating: rating });
+    await Post.update(is_id, { content: content, rating: rating });
+    return true;
   } else {
     return false;
   }
