@@ -12,7 +12,7 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent},
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
@@ -95,11 +95,13 @@ export default class MapComponent extends Vue {
     this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
   }
 
-
-
   // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(data: any[], status: number, pagination: number) {
-    if (status === window.kakao.maps.services.Status.OK) {
+    data = data.filter((d) => d.category_group_code === "FD6");
+    if (data.length === 0) {
+      // 검색어가 음식점이 아닌 다른 장소를 입력할 경우
+      location.reload();
+    } else if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
       this.displayPlaces(data);
