@@ -11,7 +11,7 @@ const options = {
 };
 
 createConnection(connectionOptions)
-  .then(async connection  => {
+  .then(async (connection) => {
     const server = new GraphQLServer({
       typeDefs: "src/graphql/schema.graphql",
       resolvers,

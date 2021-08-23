@@ -1,6 +1,6 @@
 <template>
     <div id="member">
-        <div class="wrapper">
+        <div class="member-wrapper">
             <span class="profile-text">프로필 변경</span><br />
             <img
                 class="member-profile"
@@ -9,16 +9,16 @@
             /><br />
 
             <form>
-                <span class="name">이름</span>
+                <span class="fullname-text">이름</span>
                 <input
                     v-if="this.$store.state.userToken"
                     type="text"
-                    class="input-box"
+                    class="fullname-input-box"
                     v-model="inputName"
                     :placeholder="fullName"
                 /><br />
                 <button
-                    class="change-full-name-btn"
+                    class="change-fullname-btn"
                     type="submit"
                     @click="addFullName"
                 >

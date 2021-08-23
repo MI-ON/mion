@@ -1,38 +1,115 @@
+import { gql } from 'apollo-boost';
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 @Component({})
 export default class ReviewComponent extends Vue{
 
     id:number|null= null;
-    title:string|null =null;
-    address1:string|null =null;
-    address2:string|null =null;
-    tel:string|null =null;
+    place_name:string|null =null;
+    address_name:string|null =null;
+    road_address_name:string|null =null;
+    phone:string|null =null;
     r_count:number|null =null;
     rating:number|null = null; 
     reviewKeyword:string|null =null;
     
-    lists:object[] = []
+    lists:object[] = [];
 
     mounted(){
-
-    }
-
-    //graphql에서 review 가져오기
-    getReviews(){
-
-    }
-
-    //리뷰 키워드 버튼 클릭
-    /**
-     * 검색한 키워드를 부모로 올려보내고 
-     * 마커를 가져온후 graphql에 있는 store만 표시하기?
-     */
-    rkewordClick(){
         
+    }
+
+   
+    /**
+     * 키워드에 연관된 post 가져오기(db에서)  
+     * post 음식점 이름만 배열에 담기
+     * post.store_name으로 정보 찾기 getStore로
+     * 찾은 정보로 마커 만들기
+     */
+
+    //graphql에서 post에 store_name 가져오기
+    async getPosts(keyword:string|null){
+        const respose = await this.$apollo.query({
+            query: gql`
+            query($keyword: String!) {
+                get_posts(keyword: $keyword) {
+                    store_name
+                }
+            }
+            `,
+            variables:{
+                keyword:keyword
+            }
+        });
+
+        return respose.data.get_posts.map((data:any)=>data.store_name);    
+    }
+
+    async getStoresData(names:string[]){
+        //console.log("이름들:",names);
+
+        const respose = await this.$apollo.query({
+            query: gql`
+            query($store_names:[String]!){
+                get_store(store_names:$store_names) {
+                    address_name,
+                    category_group_code,
+                    category_group_name,
+                    category_name,
+                    id,
+                    phone,
+                    place_name,
+                    place_url,
+                    road_address_name,
+                    x,
+                    y
+
+                }
+            }
+            `,
+            variables:{
+                store_names:names
+            }
+        });
+        return respose.data.get_store;
+        
+    }
+
+    async getPostInfos(name:String){
+        const respose = await this.$apollo.query({
+            query: gql`
+            query($store_names:String!){
+                get_subinfo(name:$store_names) {
+                    count,
+                    sum
+
+                }
+            }
+            `,
+            variables:{
+                store_names:name
+            }
+        });
+        return respose.data.get_subinfo;
+    }
+
+    addLists(datas:any[]){
+        datas.forEach(async(data)=>{
+            const subinfo:any = await this.getPostInfos(data.place_name);
+            data.r_count = subinfo.count;
+            data.rating = subinfo.sum/subinfo.count; //☆찍기
+            this.lists.push(data);
+        })
+    }
+
+    async rkewordClick(){
+        const store_names = await this.getPosts(this.reviewKeyword);
+        const datas = await this.getStoresData(store_names);
+        this.addLists(datas);
+        this.$emit('displayPlaces',datas);
     }
 
     clickList(){
-        
+
     }
 }
