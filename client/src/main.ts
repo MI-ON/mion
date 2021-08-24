@@ -5,22 +5,22 @@ import store from "./store";
 import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
 const apolloClient = new ApolloClient({
-    uri: process.env.VUE_APP_GRAPHQL_API_ENDPOINT
+  uri: process.env.VUE_APP_GRAPHQL_API_ENDPOINT,
 });
 const apolloProvider = new VueApollo({
-    defaultClient: apolloClient
+  defaultClient: apolloClient,
 });
 Vue.config.productionTip = false;
 Vue.use(VueApollo);
 new Vue({
-    apolloProvider,
-    router,
-    store,
-    created() {
-        const userToken: string | null = this.$store.state.userToken;
-        if (!userToken) {
-            this.$router.push('/login');
-        }
-    },
-    render: (h) => h(App)
-}).$mount('#app');
+  apolloProvider,
+  router,
+  store,
+  created() {
+    const userToken: string | null = this.$store.state.userToken;
+    if (location.pathname !== "/" && !userToken) {
+      this.$router.push("/login");
+    }
+  },
+  render: (h) => h(App),
+}).$mount("#app");
