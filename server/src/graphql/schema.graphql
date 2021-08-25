@@ -49,7 +49,7 @@ type Query {
     get_voted_users_by_store_name(store_name: String!): [User]
     get_store(keyword: String!): [Store]!
     get_posts(keyword: String!): [Post]!
-    get_voted_stores(): [Store]
+    get_voted_stores: [Store]
 }
 
 type Mutation {

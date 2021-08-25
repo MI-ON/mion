@@ -43,7 +43,7 @@ export default class InfoWindowContent {
 
       await axios.post("/graphql", {
         query: `mutation {
-          add_check_in(store_name: "${id}", email: "${userEmail}") {
+          add_check_in(store_name: "${place_name}", email: "${userEmail}") {
             id
           }
         }`,
