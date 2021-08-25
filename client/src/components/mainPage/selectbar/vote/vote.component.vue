@@ -1,15 +1,16 @@
 <template>
-    <div>
-        <div id="placesList">
-            <VotedPlaceItemComponent
-                v-for="(item, index) in votedPlaceData"
-                v-bind:key="index"
-                v-bind:votedPlaceData="item"
-            />
-        </div>
-
-        <div id="pagination"></div>
+  <div>
+    <div id="placesList">
+      <VotedPlaceItemComponent
+        v-for="(item, index) in votedPlaceData"
+        v-bind:key="index"
+        v-bind:votedPlaceData="item"
+      />
+      <!-- <VotedPlaceItemComponent votedPlaceData /> -->
     </div>
+
+    <div id="pagination"></div>
+  </div>
 </template>
 
 <script lang="ts" src="./vote.component.ts"></script>

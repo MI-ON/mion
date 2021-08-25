@@ -1,4 +1,5 @@
 import axios from "axios";
+import { gql } from "apollo-boost";
 import { Component, Vue } from "vue-property-decorator";
 import VotedPlaceItemComponent from "../votedplaceitem/votedplaceitem.component.vue";
 
@@ -6,17 +7,22 @@ import VotedPlaceItemComponent from "../votedplaceitem/votedplaceitem.component.
 export default class VoteComponent extends Vue {
   mounted() {
     let votedPlaceData: any = async (store_name: string): Promise<string> => {
-      const response = await axios.post("/graphql", {
-        query: `query {
-                get_stores(store_name: "${store_name}") {
-                    id
-                    place_name
-                    address_name
-                    road_address_name
-                    phone
-                    place_url
-                }
-            }`,
+      const response = await this.$apollo.query({
+        query: gql`
+          query($store_name: String!) {
+            get_stores(store_name: $store_name) {
+              id
+              place_name
+              address_name
+              road_address_name
+              phone
+              place_url
+            }
+          }
+        `,
+        variables: {
+          store_name: store_name,
+        },
       });
       votedPlaceData = Object.assign({}, await response.data.data.get_stores);
       return votedPlaceData;

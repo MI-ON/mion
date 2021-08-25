@@ -25,17 +25,5 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-
-@Component
-export default class PlaceItemComponent extends Vue {
-  @Prop(Object) protected votedPlaceData!: Object;
-  @Watch("votedPlaceData")
-  updateMessage() {
-    console.log("votedplaceitem에서 변경 감지");
-    console.log(this.votedPlaceData);
-  }
-}
-</script>
+<script lang="ts" src="./votedplaceitem.component.ts"></script>
 <style lang="scss" src="./votedplaceitem.component.scss"></style>
