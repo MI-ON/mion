@@ -47,10 +47,20 @@
     color: #5caafa;
     margin-right: 2vw;
   }
+  :nth-child(1):active {
+    border: 3px solid #1568be;
+    background-color: #5caafa;
+    color: #1568be;
+  }
   :nth-child(2) {
     border: 3px solid #1568be;
     background-color: #5caafa;
     color: #1568be;
+  }
+  :nth-child(2):active {
+    background-color: #1568be;
+    color: #5caafa;
+    margin-right: 2vw;
   }
 }
 
