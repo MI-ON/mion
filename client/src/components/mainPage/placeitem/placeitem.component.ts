@@ -5,11 +5,9 @@ import { gql } from "apollo-boost";
 @Component
 export default class PlaceItemComponent extends Vue {
   @Prop(Object) protected searchResult!: { place_name: String };
+
   @Watch("searchResult")
-  updateMessage() {
-    console.log("placeitem에서 변경 감지");
-    console.log(this.searchResult);
-  }
+  updateSearchResult() {}
 
   async onClickVoteBtn() {
     const userJWToken = this.$store.state.userToken;
