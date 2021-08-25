@@ -49,10 +49,11 @@ type Query {
     get_voted_users_by_store_name(store_name: String!): [User]
     get_store(keyword: String!): [Store]!
     get_posts(keyword: String!): [Post]!
+    get_voted_stores(): [Store]
 }
 
 type Mutation {
     add_user(email: String!, full_name: String!, image_url: String!): User!
-    add_check_in(store_id: String!, email: String!): CheckIn!
+    add_check_in(store_name: String!, email: String!): CheckIn!
     add_full_name(email: String!, full_name: String!): User!
 }
