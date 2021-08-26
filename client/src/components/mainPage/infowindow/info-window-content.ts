@@ -13,7 +13,6 @@ export default class InfoWindowContent {
 
   static async drawInfoContent(data: string | any): Promise<HTMLDivElement> {
     const {
-      id,
       place_name,
       address_name,
       road_address_name,
@@ -68,7 +67,9 @@ export default class InfoWindowContent {
     const bottomContentContainer = document.createElement("div");
     bottomContentContainer.classList.add("bottomContentContainer");
 
-    bottomContentContainer.innerHTML = await this.votedUserProfileContent(id);
+    bottomContentContainer.innerHTML = await this.votedUserProfileContent(
+      place_name
+    );
 
     infoWindowContainer.appendChild(topContentContainer);
     infoWindowContainer.appendChild(bottomContentContainer);

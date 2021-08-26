@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="searchBar">
-          <form @submit="searchPlaces">
+          <form>
               <input
                 type="text"
                 v-model="reviewKeyword"
@@ -21,13 +21,13 @@
             <div id="list-div">
               <div class="list" v-for="(list) in lists" v-bind:key="list.id" @click="clickList">
                 <div class="list-center">
-                  <span class="title">{{list.title}}</span>
+                  <span class="title">{{list.place_name}}</span>
                   <div class="sub">
-                    <span class="address1">{{list.address1}}</span>
-                    <span class="address2">{{list.address2}}</span>
-                    <span class="tel">{{list.tel}}</span>
+                    <span class="address1">{{list.address_name}}</span>
+                    <span class="address2">{{list.road_address_name}}</span>
+                    <span class="tel">{{list.phone}}</span>
                     <hr>
-                    <span class="review">리뷰 {{r_count}} | ☆☆☆☆</span>
+                    <span class="review">리뷰 {{list.r_count}} | ☆☆☆☆</span>
                   </div>
                 </div>
               </div>
