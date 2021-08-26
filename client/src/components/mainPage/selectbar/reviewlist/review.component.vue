@@ -19,7 +19,7 @@
             </div>
 
             <div id="list-div">
-              <div class="list" v-for="(list) in lists" v-bind:key="list.id" @click="clickList">
+              <div class="list" v-for="(list) in lists" v-bind:key="list.place_name" @click="clickReview($event,list.place_name)">
                 <div class="list-center">
                   <span class="title">{{list.place_name}}</span>
                   <div class="sub">

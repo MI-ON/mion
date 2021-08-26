@@ -21,7 +21,8 @@ const routes: Array<RouteConfig> = [
         path: '/member',
         name: 'MemberPage',
         component: MemberComponent
-    }
+    },
+    
 ];
 
 const router = new VueRouter({

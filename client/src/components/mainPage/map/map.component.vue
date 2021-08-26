@@ -19,11 +19,10 @@
       <SearchPlaceComponent
         v-if="isSearchPlace"
         v-bind:searchResult="searchResultData"
-        v-on:searchplace-keyword="eventFromSearchplace"
-      />
-      <ReviewListComponent v-if="isReview" @displayPlaces="displayPlaces" />  
-      <VoteComponent v-if="isVote" />
-      <!-- <WriteReviewComponent></WriteReviewComponent> -->
+        v-on:searchplace-keyword="eventFromSearchplace"/>
+      <ReviewListComponent v-else-if="isReview" @displayPlaces="displayPlaces" @showWriteReview="showWriteReview"/>  
+      <VoteComponent v-else-if="isVote" />
+      <WriteReviewComponent v-else-if="isWriteReview" ></WriteReviewComponent>
 
     </div>
     

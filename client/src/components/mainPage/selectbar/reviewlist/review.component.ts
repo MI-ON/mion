@@ -105,8 +105,7 @@ export default class ReviewComponent extends Vue{
         datas.forEach(async(data)=>{
             const subinfo:any = await this.getPostInfos(data.place_name);
             data.r_count = subinfo.count;
-            data.rating = this.createStar(subinfo.sum/subinfo.count); //☆찍기
-            //console.log(data.rating);
+            data.rating = this.createStar(subinfo.sum/subinfo.count);
             this.lists.push(data);
         })
     }
@@ -118,7 +117,7 @@ export default class ReviewComponent extends Vue{
         this.$emit('displayPlaces',datas);
     }
 
-    clickList(){
-
+    clickReview(event:any,key:string){
+        this.$emit('showWriteReview',key);
     }
 }

@@ -3,7 +3,8 @@ import InfoWindowContent from "../infowindow/info-window-content";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
-import WriteReviewComponent from "../selectbar/writereview/writereview.component.vue"
+import WriteReviewComponent from "../selectbar/writereview/writereview.component.vue"     
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,6 +38,7 @@ export default class MapComponent extends Vue {
 
   isSearchPlace: boolean = true;
   isReview: boolean = false;
+  isWriteReview:boolean = false;
   isVote: boolean = false;
   isMenu: boolean = true;
   clickBtns: NodeListOf<HTMLParagraphElement> | null = null;
@@ -47,6 +49,14 @@ export default class MapComponent extends Vue {
   searchResultData: any = "";
   mounted() {
     this.openMap();
+  }
+
+  public showWriteReview(place_name:string){
+    console.log("클릭",place_name);
+    this.isSearchPlace = false;
+    this.isReview = false;
+    this.isVote = false;
+    this.isWriteReview = true;
   }
 
   public eventFromSearchplace(keyword: string) {
