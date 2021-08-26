@@ -1,5 +1,6 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
+import WriteReivewComponent from "../selectbar/writereview/writereview.component.vue";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
@@ -12,7 +13,7 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent, WriteReivewComponent },
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
