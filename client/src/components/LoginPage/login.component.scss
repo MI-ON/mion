@@ -1,15 +1,16 @@
 .container{
   width: 90vw;
   height: 40vw;
-  margin: 5vw 0 0 0;
+  margin: 3em 0 0 0;
   display: flex;
+  background-color: none;
 }
 .container .col1{
-  margin-left: 10vw;
   flex-direction: column;
-  background-color: white;
+  background-color: none;
   box-shadow: 0px 1px 3px rgb(150, 150, 150);
   border-radius: 2.5vw 0 0 2.5vw;
+  border-color: none;
   height: 35vw;
   width:40vw;
   display: block;
@@ -38,6 +39,7 @@
   }
   .content{
     font-size: 1.5vw;
+    margin-bottom: 1em;
   }
 }
 
