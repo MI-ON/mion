@@ -3,7 +3,7 @@ import InfoWindowContent from "../infowindow/info-window-content";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
-
+import WriteReviewComponent from "../selectbar/writereview/writereview.component.vue"
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,7 +12,7 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent},
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent, WriteReviewComponent},
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")

@@ -23,6 +23,8 @@
       />
       <ReviewListComponent v-if="isReview" @displayPlaces="displayPlaces" />  
       <VoteComponent v-if="isVote" />
+      <!-- <WriteReviewComponent></WriteReviewComponent> -->
+
     </div>
     
     <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">

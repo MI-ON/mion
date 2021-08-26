@@ -27,7 +27,7 @@
                     <span class="address2">{{list.road_address_name}}</span>
                     <span class="tel">{{list.phone}}</span>
                     <hr>
-                    <span class="review">리뷰 {{list.r_count}} | ☆☆☆☆</span>
+                    <span class="review">리뷰 {{list.r_count}} | <p class="rating">{{list.rating}}</p></span>
                   </div>
                 </div>
               </div>

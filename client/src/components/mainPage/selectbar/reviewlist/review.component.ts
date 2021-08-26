@@ -93,11 +93,20 @@ export default class ReviewComponent extends Vue{
         return respose.data.get_subinfo;
     }
 
+    createStar(rating:number){
+        let result = '★'.repeat( Math.floor(rating));
+        if(rating%1 == 0.5){
+            result+='☆';
+        }
+        return result;
+    }
+
     addLists(datas:any[]){
         datas.forEach(async(data)=>{
             const subinfo:any = await this.getPostInfos(data.place_name);
             data.r_count = subinfo.count;
-            data.rating = subinfo.sum/subinfo.count; //☆찍기
+            data.rating = this.createStar(subinfo.sum/subinfo.count); //☆찍기
+            //console.log(data.rating);
             this.lists.push(data);
         })
     }
