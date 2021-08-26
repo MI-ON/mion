@@ -34,3 +34,43 @@
     margin-right: 1.5vw;
     cursor: pointer;
 }
+
+.menu{
+    background-color: #5caafa;
+    right: 1vw;
+    top: 5vw;
+    text-align: center;
+    width: 10vw;
+    height: 5em;
+    box-shadow: 0px 4px 6px #434547;
+    border: solid 1px #5496d8;
+    border-radius: 1vw;
+    display:none;
+    position: absolute;
+}
+
+.profile .menu{
+    color: white;
+    z-index: 5;
+    display: block;
+    p:nth-child(1){
+        padding-top: 0.7em;
+        padding-bottom: 0.5vw;
+        border-bottom:solid 1px #627381;
+    }
+    p:nth-child(1):hover{
+        cursor:default;
+        border-radius: 1vw 1vw 0 0;
+        background-color: #549ae0;
+    }
+    p:nth-child(2){
+        padding-top: 0.7em;
+    }
+    p:nth-child(2):hover{
+        cursor:default;
+        padding-top: 0.7em;
+        padding-bottom: 0.5vw;
+        background-color: #549ae0;
+        border-radius: 0 0 1vw 1vw;
+    }
+}
