@@ -4,6 +4,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 @Component({})
 export default class ReviewComponent extends Vue{
 
+    
     id:number|null= null;
     place_name:string|null =null;
     address_name:string|null =null;

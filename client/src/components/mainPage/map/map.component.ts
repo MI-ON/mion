@@ -1,5 +1,6 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
+import WriteReivewComponent from "../selectbar/writereview/writereview.component.vue";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
@@ -17,7 +18,7 @@ declare global {
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
-  updateMessage() {
+  updateKeyword() {
     const options = {
       location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
       radius: 1500,
@@ -29,6 +30,7 @@ export default class MapComponent extends Vue {
   marker: any = "";
   map: any = "";
   keyword: string = "";
+  store_name:string="";
 
   fragment: any = "";
   infowindow: any = "";
@@ -51,12 +53,13 @@ export default class MapComponent extends Vue {
     this.openMap();
   }
 
-  public showWriteReview(place_name:string){
-    console.log("클릭",place_name);
+  public showWriteReview(name:string){
     this.isSearchPlace = false;
     this.isReview = false;
     this.isVote = false;
+    
     this.isWriteReview = true;
+    this.store_name = name;
   }
 
   public eventFromSearchplace(keyword: string) {
@@ -87,8 +90,6 @@ export default class MapComponent extends Vue {
   }
 
   public openMap() {
-    console.log("openMap()");
-
     // 마커를 클릭하면 장소명을 표출할 인포윈도우
     this.infowindow = new window.kakao.maps.CustomOverlay({ zIndex: 1 });
 
@@ -105,15 +106,16 @@ export default class MapComponent extends Vue {
     this.ps.keywordSearch("삼성역 맛집", this.placesSearchCB);
   }
 
-
-
   // 장소검색이 완료됐을 때 호출되는 콜백함수
   public placesSearchCB(data: any[], status: number, pagination: number) {
-    if (status === window.kakao.maps.services.Status.OK) {
+    data = data.filter((d) => d.category_group_code === "FD6");
+    if (data.length === 0) {
+      // 검색어가 음식점이 아닌 다른 장소를 입력할 경우
+      location.reload();
+    } else if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
       this.displayPlaces(data);
-      console.log(data);
       // 페이지 번호 표출
       this.displayPagination(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
@@ -127,8 +129,6 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
-    console.log("displayPlaces");
-    console.log(places);
     this.searchResultData = Object.assign({}, this.searchResultData, places);
 
     this.fragment = document.createDocumentFragment();
@@ -140,7 +140,6 @@ export default class MapComponent extends Vue {
     this.removeMarker();
 
     for (let i = 0; i < places.length; i++) {
-      console.log(places[i]);
       // 마커를 생성하고 지도에 표시
       const placePosition = new window.kakao.maps.LatLng(
           places[i].y,

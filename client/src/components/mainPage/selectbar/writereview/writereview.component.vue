@@ -1,5 +1,5 @@
 <template>
-  <div class="review-lists" style="margin-left:2vw;">
+<div class="review-lists" >
  <div class="button-div">
   <button><img src="@/assets/upsize.png" alt="button"></button>
   </div>
@@ -36,7 +36,6 @@
           v-if="this.$store.state.userToken"
           :src="$store.getters.getUserImageUrl"/>
         <div class="count_people">+{{this.ate_people}}</div>
-        <button><img src="../../../../assets/DetaileButton.png" alt="자세히 보기 버튼"></button>
     </div>
     <div class="write_container">
     <div class="write_review">
@@ -45,12 +44,12 @@
         background-color="indigo lighten-3"
         color="indigo"
         large></v-rating>
-        <input
+        <textarea
                 type="text"
                 v-model="reviewKeyword"
                 id="review-keyword"
                 size="15"
-                placeholder="후기를 작성해주세요."/>
+                placeholder="후기를 작성해주세요."></textarea>
       <button><img src="../../../../assets/wirtereview.png" alt="리뷰 작성 버튼"/></button>
     </div>
     <div class="store_rating">
@@ -69,6 +68,7 @@
               v-model="rating"
               icon-label="custom icon label text {0} of {1}"></v-rating> {{this.rating_num}}
           <span>{{this.review_commend}}</span>
+          <p>{{this.name}}</p>
     </div>
     <div class="review_view">
       <img
@@ -80,6 +80,7 @@
               v-model="rating"
               icon-label="custom icon label text {0} of {1}"></v-rating> {{this.rating_num}}
           <span>{{this.review_commend}}</span>
+          <p>{{this.name}}</p>
     </div>
     </div>
   </div>

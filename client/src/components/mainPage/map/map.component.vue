@@ -22,7 +22,10 @@
         v-on:searchplace-keyword="eventFromSearchplace"/>
       <ReviewListComponent v-else-if="isReview" @displayPlaces="displayPlaces" @showWriteReview="showWriteReview"/>  
       <VoteComponent v-else-if="isVote" />
-      <WriteReviewComponent v-else-if="isWriteReview" ></WriteReviewComponent>
+      <WriteReviewComponent v-else-if="isWriteReview" :store_name=store_name ></WriteReviewComponent>
+     
+
+
 
     </div>
     
