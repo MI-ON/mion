@@ -28,6 +28,7 @@ const routes: Array<RouteConfig> = [
     name: "MemberPage",
     component: MemberComponent,
   },
+
 ];
 
 const router = new VueRouter({

@@ -1,49 +1,31 @@
+
 /*코드 정리 필요*/
 .review-lists{
     border-radius: 0.6vw;
     height: 100%;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-}
-.review-lists::-webkit-scrollbar{
-    display: none;
-    width: 0 !important;
-}
-
-.button-div{
     width: 100%;
-    display: flex;
-    flex-direction: row-reverse;
-   
-    button{
-        margin: 0.5vw;
-        background-color: transparent;
-        border: none;
-    }
-    img{
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
-    }
-}
-.write_list{
-    height: 1000px;
     overflow-y: scroll;
     -ms-overflow-style: none;
-    padding-top:2vw;
-    width: 95%;
-    border-radius: 0.6vw;
-    padding-top: 2vw;
-    background-color: white;
+
+    .write_list{
+        height: 730px;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        width: 95%;
+        border-radius: 15px;
+        background-color: white;
+        margin: 0 auto;
     .store_title{
         font-weight: bold;
         border-radius: 0.6vw;
-        padding: 5%;
+        width: 380px;
         height: 2.5em;
         text-align: center;
+        line-height: 2.5em;
         font-size: 2.1em;
         color: white;
-        margin: 1vw 0.8vw 1vw 0.8vw;
+        margin: 0 auto;
+        margin-top: 10px;
         background-color: #5caafa;
     }
     .store_comment{
@@ -127,6 +109,7 @@
             border: none;
             color: #666666;
             background-color:transparent;
+            
         }
         textarea:focus{
             display: block;
@@ -199,6 +182,29 @@
         }
     }
 }
+}
+.review-lists::-webkit-scrollbar{
+    display: none;
+    width: 0 !important;
+}
+
+.button-div{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+   
+    button{
+        margin: 0.5vw;
+        background-color: transparent;
+        border: none;
+    }
+    img{
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+    }
+}
+
 .review-lists .write_list::-webkit-scrollbar{
     display: none;
     width: 0 !important;

@@ -10,6 +10,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+
 const apolloClient = new ApolloClient({
   uri: process.env.VUE_APP_GRAPHQL_API_ENDPOINT,
 });
