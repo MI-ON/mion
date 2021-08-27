@@ -17,15 +17,64 @@ export default class WriteReivewComponent extends Vue{
     
 
     created(){
-        console.log(this.store_name);
         this.getDatas();
+         
+    }
+
+    writeReview(){
+       
+        //text
+        let textArea:any = document.querySelector('#review-keyword');
+        textArea = textArea.value;
+
+        //rating
+        let rating:any = document.querySelector('.b-rating-value');
+        rating = rating.innerHTML;
+
+        if(textArea.length !==0 && rating.length !==0){
+            console.log(textArea);
+            console.log(Number(rating));
+            this.addPost(textArea,rating)
+        }else{
+            alert("내용을 입력해주세요");
+            console.log("비어있습니다");
+        }
+    }
+
+    async addPost(content:string, rating:string){
+        
+        const respose = await this.$apollo.mutate({
+            mutation: gql`
+            mutation( $store_name:String!,$category_name:String! ,$email:String! ,$content:String! ,$rating:Float!){
+                add_post(
+                    store_name: $store_name, 
+                    category_name:$category_name,
+                    email:$email, 
+                    content:$content, 
+                    rating:$rating) 
+               
+            }
+            ` ,
+            variables:{
+                store_name:this.store.place_name,
+                category_name:this.store.category_name,
+                email:"kny030303khs@gamil.com",
+                content:content,
+                rating:Number(rating)
+            }
+        });
+        console.log(respose);
+        if(!respose.data.add_post){
+            alert("방문하지 않으셨습니다.");
+        }else{
+            alert("추가되었습니다.");
+        }
         
     }
+
+
     createStar(rating:number){
-        let result = '⭐️'.repeat( Math.floor(rating));
-        if(rating%1 == 0.5){
-            result+='☆';
-        }
+        const result = '⭐️'.repeat( Math.floor(rating));
         return result;
     }
 
@@ -64,7 +113,6 @@ export default class WriteReivewComponent extends Vue{
             `,
             variables:{
                 keyword:this.store_name,
-                name:this.store_name
             }
         });
         
@@ -73,9 +121,9 @@ export default class WriteReivewComponent extends Vue{
         this.count = respose.data.get_subinfo.count;
         this.rating =  respose.data.get_subinfo.sum / this.count;
         this.stars = this.createStar( this.rating );
-
+        console.log(this.store);
         this.findUsers(respose.data.get_posts);
-        this.isLoading = false;
+        
     }
 
     async findUsers(get_posts:any){
@@ -99,5 +147,7 @@ export default class WriteReivewComponent extends Vue{
             this.posts[i].image_url = data.image_url;
             console.log(this.posts[i]);
         }
+        this.isLoading = false;
     }
+    
 }

@@ -31,17 +31,16 @@
                 size="15"
                 placeholder="후기를 작성해주세요.">
         </textarea>
-        <button><img src="../../../../assets/wirtereview.png" alt="리뷰 작성 버튼"/></button>
+        <button @click="writeReview"><img src="../../../../assets/wirtereview.png" alt="리뷰 작성 버튼"/></button>
     </div>
     <div class="store_rating">
         <span class="store_rating">전체  {{this.count}}  | </span>
         {{this.stars}}
         {{this.rating}}.0
     </div>
- 
+   
     <div class="review_view" v-for="(post) in posts" v-bind:key="post.id" > 
       <img class="profile_img" style="margin-left: 1vw;" :src= "post.image_url" />
-    
       {{post.rating}}.0
       <span>{{post.content}}</span>
       <p>{{post.email}}</p>
