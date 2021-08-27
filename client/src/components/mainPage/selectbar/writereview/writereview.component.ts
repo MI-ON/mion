@@ -11,6 +11,9 @@ export default class WriteReivewComponent extends Vue{
     rating:number = 0;
     stars:String = "";
     isLoading = true;
+
+    maxText = 200;
+    currentText = 0;
     
 
     created(){

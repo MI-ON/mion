@@ -14,7 +14,7 @@
       <span>{{this.store.phone}}</span>
     </div>
    <div class="review_profile">
-     <!--임의로 프로필 이미지를 여러개 깔아둠-->
+     <!-- 5개까지 표시 후 숫자 표시 만들어야함-->
       <img v-for="(post) in posts" v-bind:key="post.id"
           class="profile_img" :src="post.image_url"/>
         <!-- <div class="count_people">+{{this.ate_people}}</div> -->
@@ -23,27 +23,26 @@
     <div class="write_review">
         <div class="mb-2">
           <b-form-rating v-model="value" :locale="locale" show-value precision="1" class="mb-2" size='lg'></b-form-rating>
+          {{this.currentText}}/{{this.maxText}}
         </div>
         <textarea
                 type="text"
                 id="review-keyword"
                 size="15"
-                placeholder="후기를 작성해주세요."></textarea>
-      <button><img src="../../../../assets/wirtereview.png" alt="리뷰 작성 버튼"/></button>
+                placeholder="후기를 작성해주세요.">
+        </textarea>
+        <button><img src="../../../../assets/wirtereview.png" alt="리뷰 작성 버튼"/></button>
     </div>
     <div class="store_rating">
         <span class="store_rating">전체  {{this.count}}  | </span>
         {{this.stars}}
-        {{this.rating}}
+        {{this.rating}}.0
     </div>
  
     <div class="review_view" v-for="(post) in posts" v-bind:key="post.id" > 
       <img class="profile_img" style="margin-left: 1vw;" :src= "post.image_url" />
-      <!-- <v-rating
-          v-model="rating"
-          icon-label="custom icon label text {0} of {1}">
-      </v-rating>  -->
-      {{post.rating}}
+    
+      {{post.rating}}.0
       <span>{{post.content}}</span>
       <p>{{post.email}}</p>
       <p>{{post.full_name}}</p>
