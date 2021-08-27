@@ -5,21 +5,25 @@ export default class WriteReivewComponent extends Vue{
 
     @Prop() protected store_name!:string;
 
-    name:string="jackie";
-    title:string='크라이치즈버거 삼성역점';
-    address1:string='서울 강남구 테헤란로 616';
-    address2:string='서울 강남구 대치동 996-17';
-    tel:string='02-566-6244';
-    review_count:number=2;
-    review_rating:string='★★★★★';
-    review_cont:number=3;
-    rating_num:number=4.5;
-    ate_people:number=8-5;
-    review_commend:string="맛있어요~~ 다음에 한번 더 오고 싶어요!맛있어요~~ 다음에 한번 더 오고 싶어요!맛있어요~~ 다음에 한번 더 오고 싶어요!맛있어요~~ 다음에 한번 더 오고 싶어요!"
+    posts:any = [1,2,3];
+    store:any;
+    count:number=0;
+    rating:number = 0;
+    stars:String = "";
+    isLoading = true;
+    
 
-    mounted(){
+    created(){
         console.log(this.store_name);
         this.getDatas();
+        
+    }
+    createStar(rating:number){
+        let result = '⭐️'.repeat( Math.floor(rating));
+        if(rating%1 == 0.5){
+            result+='☆';
+        }
+        return result;
     }
 
     async getDatas(){
@@ -60,26 +64,37 @@ export default class WriteReivewComponent extends Vue{
                 name:this.store_name
             }
         });
-        console.log(respose);
-        return respose;
         
+        this.store = respose.data.get_stores[0];
+        this.posts = respose.data.get_posts;
+        this.count = respose.data.get_subinfo.count;
+        this.rating =  respose.data.get_subinfo.sum / this.count;
+        this.stars = this.createStar( this.rating );
+
+        this.findUsers(respose.data.get_posts);
+        this.isLoading = false;
     }
 
-    //post 가져오기
-    async getPosts(keyword:string|null){
-        const respose = await this.$apollo.query({
-            query: gql`
-            query($keyword: String!) {
-                get_posts(keyword: $keyword) {
-                    store_name
+    async findUsers(get_posts:any){
+        for(let i=0; i<get_posts.length; i++){
+            const respose = await this.$apollo.query({
+                query: gql`
+                query($email:String!){
+                    get_user_by_email(email: $email) {
+                        full_name,
+                        image_url,
+                        email
+                    }
                 }
-            }
-            `,
-            variables:{
-                keyword:keyword
-            }
-        });
-
-        return respose.data.get_posts.map((data:any)=>data.store_name);    
+                `,
+                variables:{
+                    email:get_posts[i].email
+                }
+            });
+            const data = respose.data.get_user_by_email;
+            this.posts[i].full_name = data.full_name;
+            this.posts[i].image_url = data.image_url;
+            console.log(this.posts[i]);
+        }
     }
 }
