@@ -60,9 +60,10 @@
             font-weight: 700;
         }
         hr{
+            margin-top: 5px;
             border: 1px solid #A8D3FF;
             width: 350px;
-            display: inline-block;
+            
         }
         .sub{
             padding: 3px 0px 3px;
@@ -76,6 +77,7 @@
                 font-size: 13px;
             }
             .review{
+                padding-top: 2px;
                 display: inline-block;
             }
             .rating {

@@ -55,7 +55,7 @@
     display: block;
     p:nth-child(1){
         padding-top: 0.7em;
-        padding-bottom: 0.5vw;
+        // padding-bottom: 0.5vw;
         border-bottom:solid 1px #627381;
     }
     p:nth-child(1):hover{
@@ -64,11 +64,10 @@
         background-color: #549ae0;
     }
     p:nth-child(2){
-        padding-top: 0.7em;
+        padding-bottom: 1vw;
     }
     p:nth-child(2):hover{
         cursor:default;
-        padding-top: 0.7em;
         padding-bottom: 0.5vw;
         background-color: #549ae0;
         border-radius: 0 0 1vw 1vw;

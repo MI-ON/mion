@@ -15,35 +15,15 @@
     </div>
    <div class="review_profile">
      <!--임의로 프로필 이미지를 여러개 깔아둠-->
-      <img
-          class="profile_img"
-          v-if="this.$store.state.userToken"
-          :src="$store.getters.getUserImageUrl"/>
-        <img
-          class="profile_img"
-          v-if="this.$store.state.userToken"
-          :src="$store.getters.getUserImageUrl"/>
-        <img
-          class="profile_img"
-          v-if="this.$store.state.userToken"
-          :src="$store.getters.getUserImageUrl"/>
-        <img
-          class="profile_img"
-          v-if="this.$store.state.userToken"
-          :src="$store.getters.getUserImageUrl"/>
-        <img
-          class="profile_img"
-          v-if="this.$store.state.userToken"
-          :src="$store.getters.getUserImageUrl"/>
+      <img v-for="(post) in posts" v-bind:key="post.id"
+          class="profile_img" :src="post.image_url"/>
         <!-- <div class="count_people">+{{this.ate_people}}</div> -->
     </div>
     <div class="write_container">
     <div class="write_review">
-      <!-- <v-rating
-        v-model="rating"
-        background-color="indigo lighten-3"
-        color="indigo"
-        large></v-rating> -->
+        <div class="mb-2">
+          <b-form-rating v-model="value" :locale="locale" show-value precision="1" class="mb-2" size='lg'></b-form-rating>
+        </div>
         <textarea
                 type="text"
                 id="review-keyword"
@@ -76,9 +56,11 @@
 
 <script>
   export default {
-    data: () => ({
-      rating: 4,
-    }),
+    data() {
+      return {
+        value: null
+      }
+    }
   }
 </script>
 <script lang="ts" src="./writereview.component.ts"></script>
