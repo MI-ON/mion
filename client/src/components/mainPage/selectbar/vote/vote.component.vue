@@ -6,7 +6,6 @@
         v-bind:key="index"
         v-bind:votedPlaceData="item"
       />
-      <!-- <VotedPlaceItemComponent votedPlaceData /> -->
     </div>
 
     <div id="pagination"></div>

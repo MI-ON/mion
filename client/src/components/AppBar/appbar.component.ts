@@ -19,4 +19,8 @@ export default class AppBarComponent extends Vue {
         router.push({ path: '/login' });
         location.reload();
     }
+    onClickRedirect():void{
+        router.push({ path: '/' })
+        location.reload();
+    }
 }

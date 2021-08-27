@@ -5,28 +5,29 @@ import VotedPlaceItemComponent from "../votedplaceitem/votedplaceitem.component.
 
 @Component({ components: { VotedPlaceItemComponent } })
 export default class VoteComponent extends Vue {
+  votedPlaceData: any = "";
   mounted() {
-    let votedPlaceData: any = async (store_name: string): Promise<string> => {
-      const response = await this.$apollo.query({
-        query: gql`
-          query($store_name: String!) {
-            get_stores(store_name: $store_name) {
-              id
-              place_name
-              address_name
-              road_address_name
-              phone
-              place_url
-            }
+    this.getVotedStores();
+  }
+
+  async getVotedStores() {
+    const response = await this.$apollo.query({
+      query: gql`
+        query {
+          get_voted_stores {
+            id
+            place_name
+            address_name
+            road_address_name
+            phone
+            place_url
           }
-        `,
-        variables: {
-          store_name: store_name,
-        },
-      });
-      votedPlaceData = Object.assign({}, await response.data.data.get_stores);
-      return votedPlaceData;
-    };
+        }
+      `,
+    });
+    this.votedPlaceData = await response.data.get_voted_stores;
+    console.log(this.votedPlaceData[0]);
+    return this.votedPlaceData[0];
   }
 
   static async votedUserProfileContent(store_name: string): Promise<string> {
