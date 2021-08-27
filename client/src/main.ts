@@ -6,6 +6,9 @@ import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 const apolloClient = new ApolloClient({
   uri: process.env.VUE_APP_GRAPHQL_API_ENDPOINT,
@@ -16,6 +19,7 @@ const apolloProvider = new VueApollo({
 Vue.config.productionTip = false;
 Vue.use(VueApollo);
 Vue.use(Vuetify);
+Vue.use(BootstrapVue);
 
 new Vue({
   apolloProvider,
