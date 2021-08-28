@@ -17,15 +17,17 @@
       </div>
     </div>
 
-    <div id="placesList">
-      <PlaceItemComponent
-        v-for="(item, index) in searchResult"
-        v-bind:key="index"
-        v-bind:searchResult="item"
-      />
-    </div>
+    <div id="listComponent">
+      <div id="placesList">
+        <PlaceItemComponent
+          v-for="(item, index) in searchResult"
+          v-bind:key="index"
+          v-bind:searchResult="item"
+        />
+      </div>
 
-    <div id="pagination"></div>
+      <div id="pagination"></div>
+    </div>
   </div>
 </template>
 
