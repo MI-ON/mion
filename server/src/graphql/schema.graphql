@@ -55,6 +55,7 @@ type Query {
   get_store(store_names: [String]!): [Store]!
   get_posts(keyword: String!): [Post]!
   get_subinfo(name: String!): SubInfo!
+  get_voted_stores: [Store]
 }
 
 type Mutation {
