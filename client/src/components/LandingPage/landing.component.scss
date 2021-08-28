@@ -1,0 +1,77 @@
+#landingPageComponent {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  height: 91vh;
+  background-color: #5caafa;
+}
+
+#landingPageLeftComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -4vh;
+  padding-left: 4.5vw;
+}
+
+#landingPageTitleTextComponent {
+  margin-bottom: 4vh;
+  font-size: 3.4em;
+  font-weight: 800;
+}
+
+#landingPageBodyTextComponent {
+  margin-bottom: 6vh;
+  font-size: 1.5em;
+  letter-spacing: 0.08em;
+  word-spacing: 0.02em;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+#landingPageButtonComponent {
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: row;
+
+  button {
+    width: 45vw;
+    max-width: 280px;
+    height: 7vh;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+  :nth-child(1) {
+    background-color: #1568be;
+    color: #5caafa;
+    margin-right: 2vw;
+  }
+  :nth-child(1):active {
+    border: 3px solid #1568be;
+    background-color: #5caafa;
+    color: #1568be;
+  }
+  :nth-child(2) {
+    border: 3px solid #1568be;
+    background-color: #5caafa;
+    color: #1568be;
+  }
+  :nth-child(2):active {
+    background-color: #1568be;
+    color: #5caafa;
+    margin-right: 2vw;
+  }
+}
+
+#landingPageRightComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -4vh;
+
+  img {
+    height: 48vh;
+  }
+}
