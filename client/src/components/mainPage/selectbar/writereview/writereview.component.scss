@@ -137,7 +137,7 @@
         }
         button{
             border:none;
-            border-radius: 0 0.8vw 0.8vw 0;
+            border-radius: 0 0.8em 0.8em 0;
             background-color: #5caafa; 
             width: 17%;
             height: 100%;
@@ -213,11 +213,10 @@
 
 .button-div{
     width: 100%;
-    display: flex;
     flex-direction: row-reverse;
    
     button{
-        margin: 0.5vw;
+        margin: 1vw;
         background-color: transparent;
         border: none;
     }
