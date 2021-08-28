@@ -48,7 +48,6 @@ export default class ReviewComponent extends Vue{
     }
 
     async getStoresData(names:string[]){
-        //console.log("이름들:",names);
         try{
             const respose = await this.$apollo.query({
                 query: gql`
@@ -73,6 +72,7 @@ export default class ReviewComponent extends Vue{
                     store_names:names
                 }
             });
+            
             this.isSearch = true;
             return respose.data.get_store;
         }catch{
@@ -122,8 +122,10 @@ export default class ReviewComponent extends Vue{
         for(let i=0; i<lists.length; i++){
             lists[i].remove();
         }
+        
         const store_names = await this.getPosts(this.reviewKeyword);
         const datas = await this.getStoresData(store_names);
+       
         this.addLists(datas);
         this.$emit('displayPlaces',datas);
     }

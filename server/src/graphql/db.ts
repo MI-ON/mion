@@ -79,33 +79,28 @@ export const getStores = async (
   }
 };
 
-export const getStore = async (
-  store_names: string[]
-): Promise<object[] | boolean> => {
-  let result = await Promise.all(
-    store_names.map(async (store_name) => {
-      const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
-      const encode_url: string = encodeURI(API_URL);
-      const config = {
-        headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
-      };
-      const store: any = await axios.get(encode_url, config);
-      return store.data.documents[0];
-    })
-  );
+export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
 
-  result = result.filter(
-    (arr, index, callback) =>
-      index ===
-      callback.findIndex((store) => store.place_name === arr.place_name)
-  );
-
+  const result:object[] = [];
+  console.log(store_names);
+  for(let i=0; i<store_names.length; i++){
+    const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_names[i]}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
+    const encode_url: string = encodeURI(API_URL);
+    const config = {
+      headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+    };
+    const store: any = await axios.get(encode_url, config);
+    const v = store.data.documents[0];
+    console.log(v);
+    result.push(v);
+  }
+  console.log(result);
   if (result.length > 0) {
     return result;
   } else {
     return false;
-  }
-};
+  }  
+}
 
 export const addCheckIn = async (storeName: string, email: string) => {
   const createdAt = getCreatedAt();

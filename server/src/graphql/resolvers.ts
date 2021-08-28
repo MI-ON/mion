@@ -20,7 +20,7 @@ const resolvers = {
     get_stores: (_: any, { keyword }: any) => getStores(keyword),
     get_voted_users_by_store_name: (_: any, { store_name }: any) =>
       getVotedUsersByStoreName(store_name),
-    get_store: (_: any, { keyword }: any) => getStore(keyword),
+    get_store: (_: any, { store_names }: any) => getStore(store_names),
     get_posts: (_: any, { keyword }: any) => getPosts(keyword),
     get_voted_stores: (_: any) => getVotedStores(),
     get_subinfo: (_: any, { name }: any) => getSubInfo(name),
