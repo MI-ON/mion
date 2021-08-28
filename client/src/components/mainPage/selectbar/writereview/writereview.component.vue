@@ -21,10 +21,8 @@
     </div>
     <div class="write_container">
     <div class="write_review">
-        <div class="mb-2">
           <b-form-rating v-model="value" :locale="locale" show-value precision="1" class="mb-2" size='lg'></b-form-rating>
-          {{this.currentText}}/{{this.maxText}}
-        </div>
+          <spa class="textCount">{{this.currentText}}/{{this.maxText}}</spa>
         <textarea
                 type="text"
                 id="review-keyword"
@@ -40,16 +38,14 @@
     </div>
  
     <div class="review_view" v-for="(post) in posts" v-bind:key="post.id" > 
-      <img class="profile_img" style="margin-left: 1vw;" :src= "post.image_url" />
-    
-      {{post.rating}}.0
-      <span>{{post.content}}</span>
-      <p>{{post.email}}</p>
-      <p>{{post.full_name}}</p>
-      <p>{{post.created_at}}</p>
+        <img class="profile_img" :src= "post.image_url" />
+        <span class="content">{{post.rating}}.0 <br> {{post.content}}</span>
+        <p>{{post.full_name}}&nbsp;&nbsp;{{post.email}}</p>
+        <p class="date">{{post.created_at}}</p>
+    </div> 
+      <!-- review_view end -->
     </div>
     </div>
-  </div>
   </div>
 </template>
 
