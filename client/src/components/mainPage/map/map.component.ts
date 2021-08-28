@@ -1,8 +1,10 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import InfoWindowContent from "../infowindow/info-window-content";
+import WriteReivewComponent from "../selectbar/writereview/writereview.component.vue";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
+import WriteReviewComponent from "../selectbar/writereview/writereview.component.vue"     
 
 declare global {
   interface Window {
@@ -12,11 +14,11 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
+  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent, WriteReviewComponent},
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
-  updateMessage() {
+  updateKeyword() {
     const options = {
       location: new window.kakao.maps.LatLng(37.5102134, 127.0539186),
       radius: 1500,
@@ -28,6 +30,7 @@ export default class MapComponent extends Vue {
   marker: any = "";
   map: any = "";
   keyword: string = "";
+  store_name:string="";
 
   fragment: any = "";
   infowindow: any = "";
@@ -37,6 +40,7 @@ export default class MapComponent extends Vue {
 
   isSearchPlace: boolean = true;
   isReview: boolean = false;
+  isWriteReview:boolean = false;
   isVote: boolean = false;
   isMenu: boolean = true;
   clickBtns: NodeListOf<HTMLParagraphElement> | null = null;
@@ -47,6 +51,15 @@ export default class MapComponent extends Vue {
   searchResultData: any = "";
   mounted() {
     this.openMap();
+  }
+
+  public showWriteReview(name:string){
+    this.isSearchPlace = false;
+    this.isReview = false;
+    this.isVote = false;
+    
+    this.isWriteReview = true;
+    this.store_name = name;
   }
 
   public eventFromSearchplace(keyword: string) {
@@ -77,8 +90,6 @@ export default class MapComponent extends Vue {
   }
 
   public openMap() {
-    console.log("openMap()");
-
     // 마커를 클릭하면 장소명을 표출할 인포윈도우
     this.infowindow = new window.kakao.maps.CustomOverlay({ zIndex: 1 });
 
@@ -105,7 +116,6 @@ export default class MapComponent extends Vue {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
       this.displayPlaces(data);
-      console.log(data);
       // 페이지 번호 표출
       this.displayPagination(pagination);
     } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
@@ -119,8 +129,6 @@ export default class MapComponent extends Vue {
 
   // 검색 결과 목록과 마커를 표출하는 함수
   public displayPlaces(places: any) {
-    console.log("displayPlaces");
-    console.log(places);
     this.searchResultData = Object.assign({}, this.searchResultData, places);
 
     this.fragment = document.createDocumentFragment();
@@ -132,7 +140,6 @@ export default class MapComponent extends Vue {
     this.removeMarker();
 
     for (let i = 0; i < places.length; i++) {
-      console.log(places[i]);
       // 마커를 생성하고 지도에 표시
       const placePosition = new window.kakao.maps.LatLng(
           places[i].y,

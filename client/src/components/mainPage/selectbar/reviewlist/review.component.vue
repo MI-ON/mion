@@ -19,7 +19,7 @@
             </div>
 
             <div id="list-div">
-              <div class="list" v-for="(list) in lists" v-bind:key="list.id" @click="clickList">
+              <div class="list" v-for="(list) in lists" v-bind:key="list.place_name" @click="clickReview($event,list.place_name)">
                 <div class="list-center">
                   <span class="title">{{list.place_name}}</span>
                   <div class="sub">
@@ -27,7 +27,7 @@
                     <span class="address2">{{list.road_address_name}}</span>
                     <span class="tel">{{list.phone}}</span>
                     <hr>
-                    <span class="review">리뷰 {{list.r_count}} | ☆☆☆☆</span>
+                    <span class="review">리뷰 {{list.r_count}} | <p class="rating">{{list.rating}}</p></span>
                   </div>
                 </div>
               </div>

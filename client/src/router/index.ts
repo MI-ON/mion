@@ -33,7 +33,7 @@ const routes: Array<RouteConfig> = [
     path: "/about",
     name: "AboutPage",
     component: AboutComponent,
-  },
+  }
 ];
 
 const router = new VueRouter({

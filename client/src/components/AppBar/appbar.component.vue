@@ -7,17 +7,14 @@
             height="55"
             v-on:click="this.onClickRedirect"
         />
-        <span class="app-logo-text" v-on:click="this.onClickRedirect"
-            >MI:ON</span
-        >
-        <v-avater>
+        <span class="app-logo-text" v-on:click="this.onClickRedirect">MI:ON</span>
+         <button>
             <img
                 class="user-profile-image"
                 v-if="this.$store.state.userToken"
                 :src="$store.getters.getUserImageUrl"
                 width="50"
                 height="50"
-                v-on:click="this.onSignOut"
             />
             <img
                 v-show="!this.$store.state.userToken"
@@ -25,9 +22,12 @@
                 :src="defaultProfile"
                 width="50"
                 height="50"
-                v-on:click="this.onSignOn"
-            />
-        </v-avater>
+                v-on:click="this.onSignOn"/>
+             <div class="menu">
+            <p v-on:click="this.onSignOut">로그아웃</p>
+            <p v-on:click="this.onMemberPage">프로필 수정</p>
+            </div>
+        </button>
     </div>
 </template>
 
