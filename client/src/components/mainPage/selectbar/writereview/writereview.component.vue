@@ -37,13 +37,14 @@
         {{this.stars}}
         {{this.rating}}.0
     </div>
-   
-      <div class="review_view" v-for="(post) in posts" v-bind:key="post.id" >
+   <div class="review_view">
+      <div v-for="(post) in posts" v-bind:key="post.id" >
           <img class="profile_img" :src= "post.image_url" />
           <span class="content">{{post.rating}}.0 {{post.star}} <br> {{post.content}}</span>
           <p>{{post.full_name}}&nbsp;&nbsp;{{post.email}}</p>
           <p class="date">{{post.created_at}}</p>
       </div> 
+    </div>
     </div>
     </div>
   </div>
