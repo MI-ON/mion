@@ -10,8 +10,10 @@ export default class WriteReivewComponent extends Vue{
     count:number=0;
     rating:number = 0;
     stars:String = "";
-    isLoading = true;
-
+    isLoading:boolean = true;
+    isMaxPosts:boolean = false;
+    showImg:any = [];
+    countPost:number = 0;
     maxText = 200;
     currentText = 0;
     
@@ -63,7 +65,7 @@ export default class WriteReivewComponent extends Vue{
                 rating:Number(rating)
             }
         });
-        console.log(respose);
+        
         if(!respose.data.add_post){
             alert("방문하지 않으셨습니다.");
         }else{
@@ -117,15 +119,28 @@ export default class WriteReivewComponent extends Vue{
         });
         
         this.store = respose.data.get_stores[0];
-        this.posts = respose.data.get_posts;
+        this.posts = respose.data.get_posts
         this.count = respose.data.get_subinfo.count;
         this.rating =  respose.data.get_subinfo.sum / this.count;
         this.stars = this.createStar( this.rating );
-        console.log(this.store);
         this.findUsers(respose.data.get_posts);
         
     }
 
+    maxImg(posts:any) {
+        for(let i=0; i<this.posts.length; i++){
+            if(i>5){
+                this.isMaxPosts = true;
+                this.countPost = posts.length - 5;
+                break;
+            }else{
+                this.showImg.push(this.posts[i].image_url);
+            }
+            
+        }    
+        this.isLoading = false;
+    }
+  
     async findUsers(get_posts:any){
         for(let i=0; i<get_posts.length; i++){
             const respose = await this.$apollo.query({
@@ -145,9 +160,9 @@ export default class WriteReivewComponent extends Vue{
             const data = respose.data.get_user_by_email;
             this.posts[i].full_name = data.full_name;
             this.posts[i].image_url = data.image_url;
-            console.log(this.posts[i]);
         }
-        this.isLoading = false;
+        this.maxImg(this.posts);
+      
     }
     
 }

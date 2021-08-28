@@ -14,10 +14,9 @@
       <span>{{this.store.phone}}</span>
     </div>
    <div class="review_profile">
-     <!-- 5개까지 표시 후 숫자 표시 만들어야함-->
-      <img v-for="(post) in posts" v-bind:key="post.id"
-          class="profile_img" :src="post.image_url"/>
-        <!-- <div class="count_people">+{{this.ate_people}}</div> -->
+      <img v-for="(img) in showImg" v-bind:key="img"
+          class="profile_img" :src="img"/>
+        <div v-if="isMaxPosts" class="count_people">+{{this.countPost}}</div>
     </div>
     <div class="write_container">
     <div class="write_review">
