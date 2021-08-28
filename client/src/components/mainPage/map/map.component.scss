@@ -4,7 +4,7 @@ $side-menu-width: 420px;
 #map {
   z-index: 1;
   width: 100%;
-  height: 100vh;
+  height: 91vh;
 }
 
 .map_wrap {
@@ -41,7 +41,7 @@ $side-menu-width: 420px;
   left: 0;
   bottom: 0;
   width: $side-menu-width;
-  height: 90vh;
+  height: 91vh;
 
   background: #ececec;
   z-index: 1;
@@ -88,15 +88,15 @@ $side-menu-width: 420px;
   }
 }
 
-#placesList {
+#listComponent {
   padding: 0 10px 0 10px;
-  height: 700px;
+  height: 590px;
   overflow-y: scroll;
   -ms-overflow-style: none;
 }
 
 #pagination {
-  margin: 10px auto;
+  margin: 0 auto;
   text-align: center;
 
   a {
