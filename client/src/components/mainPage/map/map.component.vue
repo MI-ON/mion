@@ -34,6 +34,14 @@
           :store_name="store_name"
         ></WriteReviewComponent>
       </div>
+      <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">
+        <div class="react"></div>
+        <div class="tri-close"></div>
+      </button>
+      <button v-else id="side-menu-open" @click="sideMenuState">
+        <div class="react"></div>
+        <div class="tri-open"></div>
+      </button>
     </div>
   </div>
 </template>
