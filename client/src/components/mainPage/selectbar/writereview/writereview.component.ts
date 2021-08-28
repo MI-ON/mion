@@ -1,31 +1,94 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { gql } from 'apollo-boost';
+import jwt_decode from "jwt-decode";
 @Component({})
 export default class WriteReivewComponent extends Vue{
 
     @Prop() protected store_name!:string;
-
+    
     posts:any = [1,2,3];
     store:any;
     count:number=0;
     rating:number = 0;
     stars:String = "";
-    isLoading = true;
-
+    isLoading:boolean = true;
+    isMaxPosts:boolean = false;
+    showImg:any = [];
+    countPost:number = 0;
     maxText = 200;
     currentText = 0;
     
 
     created(){
-        console.log(this.store_name);
         this.getDatas();
+    }
+
+    clickGotoList(){
+        this.$emit('isReview')
+    }
+
+    checkMaxText(){
+        const textArea:any = document.querySelector('#review-keyword');
+        let text = textArea.value;
+        text = text.substring(0,200);
+        this.currentText=text.length;
+        textArea.value = text;
+       
+    }
+
+    writeReview(){
+        //text
+        let textArea:any = document.querySelector('#review-keyword');
+        textArea = textArea.value;
+
+        //rating
+        let rating:any = document.querySelector('.b-rating-value');
+        rating = rating.innerHTML;
+
+        if(textArea.length !==0 && rating.length !==0){
+            this.addPost(textArea,rating)
+        }else{
+            alert("내용을 입력해주세요");
+            console.log("비어있습니다");
+        }
+    }
+
+    async addPost(content:string, rating:string){
+        const userJWToken = this.$store.state.userToken;
+        const userTokenDecoded: { email: string } = jwt_decode(userJWToken);
+      
+        const respose = await this.$apollo.mutate({
+            mutation: gql`
+            mutation( $store_name:String!,$category_name:String! ,$email:String! ,$content:String! ,$rating:Float!){
+                add_post(
+                    store_name: $store_name, 
+                    category_name:$category_name,
+                    email:$email, 
+                    content:$content, 
+                    rating:$rating) 
+               
+            }
+            ` ,
+            variables:{
+                store_name:this.store.place_name,
+                category_name:this.store.category_name,
+                email:userTokenDecoded.email,
+                content:content,
+                rating:Number(rating)
+            }
+        });
+        
+        if(!respose.data.add_post){
+            alert("방문하지 않으셨습니다.");
+        }else{
+            alert("추가되었습니다.");
+        }
         
     }
+
+
     createStar(rating:number){
-        let result = '⭐️'.repeat( Math.floor(rating));
-        if(rating%1 == 0.5){
-            result+='☆';
-        }
+        const result = '⭐️'.repeat( Math.floor(rating));
         return result;
     }
 
@@ -64,20 +127,32 @@ export default class WriteReivewComponent extends Vue{
             `,
             variables:{
                 keyword:this.store_name,
-                name:this.store_name
             }
         });
         
         this.store = respose.data.get_stores[0];
-        this.posts = respose.data.get_posts;
+        this.posts = respose.data.get_posts
         this.count = respose.data.get_subinfo.count;
         this.rating =  respose.data.get_subinfo.sum / this.count;
         this.stars = this.createStar( this.rating );
-
         this.findUsers(respose.data.get_posts);
-        this.isLoading = false;
+        
     }
 
+    maxImg(posts:any) {
+        for(let i=0; i<this.posts.length; i++){
+            if(i>5){
+                this.isMaxPosts = true;
+                this.countPost = posts.length - 5;
+                break;
+            }else{
+                this.showImg.push(this.posts[i].image_url);
+            }
+            
+        }    
+        this.isLoading = false;
+    }
+  
     async findUsers(get_posts:any){
         for(let i=0; i<get_posts.length; i++){
             const respose = await this.$apollo.query({
@@ -97,7 +172,11 @@ export default class WriteReivewComponent extends Vue{
             const data = respose.data.get_user_by_email;
             this.posts[i].full_name = data.full_name;
             this.posts[i].image_url = data.image_url;
-            console.log(this.posts[i]);
+            this.posts[i].star = this.createStar(this.posts[i].rating);
         }
+        this.maxImg(this.posts);
+      
     }
+    
 }
+
