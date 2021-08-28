@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="placesList">
+    <div id="vote-place-list">
       <VotedPlaceItemComponent
         v-for="(item, index) in votedPlaceData"
         v-bind:key="index"

@@ -1,7 +1,15 @@
+#vote-place-list {
+  padding: 0 10px 0 10px;
+  height: 750px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
 #voted-place-item-container {
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
+  margin: 10px;
+  margin-top: 15px;
   padding: 15px;
 
   background-color: white;
