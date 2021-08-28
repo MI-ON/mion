@@ -23,6 +23,7 @@
           <b-form-rating v-model="value" :locale="locale" show-value precision="1" class="mb-2" size='lg'></b-form-rating>
           <spa class="textCount">{{this.currentText}}/{{this.maxText}}</spa>
         <textarea
+                @keyup="checkMaxText"
                 type="text"
                 id="review-keyword"
                 size="15"
@@ -38,7 +39,7 @@
    
       <div class="review_view" v-for="(post) in posts" v-bind:key="post.id" >
           <img class="profile_img" :src= "post.image_url" />
-          <span class="content">{{post.rating}}.0 <br> {{post.content}}</span>
+          <span class="content">{{post.rating}}.0 {{post.star}} <br> {{post.content}}</span>
           <p>{{post.full_name}}&nbsp;&nbsp;{{post.email}}</p>
           <p class="date">{{post.created_at}}</p>
       </div> 

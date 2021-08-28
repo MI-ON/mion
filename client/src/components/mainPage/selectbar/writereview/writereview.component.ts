@@ -21,7 +21,16 @@ export default class WriteReivewComponent extends Vue{
 
     created(){
         this.getDatas();
-         
+    }
+
+   
+    checkMaxText(){
+        const textArea:any = document.querySelector('#review-keyword');
+        let text = textArea.value;
+        text = text.substring(0,200);
+        this.currentText=text.length;
+        textArea.value = text;
+       
     }
 
     writeReview(){
@@ -160,6 +169,7 @@ export default class WriteReivewComponent extends Vue{
             const data = respose.data.get_user_by_email;
             this.posts[i].full_name = data.full_name;
             this.posts[i].image_url = data.image_url;
+            this.posts[i].star = this.createStar(this.posts[i].rating);
         }
         this.maxImg(this.posts);
       
