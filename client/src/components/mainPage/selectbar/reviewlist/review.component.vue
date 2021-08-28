@@ -14,7 +14,7 @@
             </form>
         </div>
         <div class="explain" v-if="!isSearch">
-          <img src="@/assets/LandingPage/landing.gif" alt="검색어를 입력해주세요">
+          <img src="@/assets/mainPage/reviewList_background.jpg" alt="검색어를 입력해주세요">
         </div>
         <div id="review-lists" v-else>
             <div id="button-div">
