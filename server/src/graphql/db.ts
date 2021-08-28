@@ -79,27 +79,33 @@ export const getStores = async (
   }
 };
 
-export const getStore = async(store_names:string[]):Promise<object[]|boolean>=>{
+export const getStore = async (
+  store_names: string[]
+): Promise<object[] | boolean> => {
+  let result = await Promise.all(
+    store_names.map(async (store_name) => {
+      const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_name}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
+      const encode_url: string = encodeURI(API_URL);
+      const config = {
+        headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
+      };
+      const store: any = await axios.get(encode_url, config);
+      return store.data.documents[0];
+    })
+  );
 
-  const result:object[] = [];
-  for(let i=0; i<store_names.length; i++){
-    const API_URL: string = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${store_names[i]}&x=127.0539186&y=37.5102134&radius=1500&page=1&size=1`;
-    const encode_url: string = encodeURI(API_URL);
-    const config = {
-      headers: { Authorization: "KakaoAK 09ac1344a889f2bc246f8f42f147b6e1" },
-    };
-    const store: any = await axios.get(encode_url, config);
-    const v = store.data.documents[0];
-    result.push(v);
-  }
+  result = result.filter(
+    (arr, index, callback) =>
+      index ===
+      callback.findIndex((store) => store.place_name === arr.place_name)
+  );
 
   if (result.length > 0) {
     return result;
   } else {
     return false;
-  }  
-}
-
+  }
+};
 
 export const addCheckIn = async (storeName: string, email: string) => {
   const createdAt = getCreatedAt();
@@ -142,13 +148,7 @@ export const addFullName = async (
   return User.findOne({ full_name: full_name });
 };
 
-export const getVotedStores = async () => {
-  const createdAt = getCreatedAt();
-  return CheckIN.find({ created_at: createdAt });
-};
-
 export const getPosts = async (keyword: string): Promise<Post[]> => {
-
   return Post.find({
     where: [
       { store_name: Equal(`${keyword}`) },
@@ -156,6 +156,17 @@ export const getPosts = async (keyword: string): Promise<Post[]> => {
       { category_name: Like(`%${keyword}%`) },
     ],
   });
+};
+
+export const getVotedStores = async () => {
+  const createdAt = getCreatedAt();
+  const votedStores = await CheckIN.find({ created_at: createdAt });
+  const votedStoresNameList: string[] = votedStores.map(
+    (store) => store.store_name
+  );
+  const votedStoresData = await getStore(votedStoresNameList);
+
+  return votedStoresData;
 };
 
 export const addPost = async (
@@ -217,14 +228,12 @@ export const updatePost = async (
   }
 };
 
-export const getSubInfo = async(name:string) =>{
-  const count =  await Post.CountByName(name);
-  const sum:any = await Post.SumByName(name);
+export const getSubInfo = async (name: string) => {
+  const count = await Post.CountByName(name);
+  const sum: any = await Post.SumByName(name);
 
   return {
     count,
-    sum:Number(sum.sum)
-  }
-}
-
-
+    sum: Number(sum.sum),
+  };
+};
