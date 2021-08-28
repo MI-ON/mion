@@ -120,7 +120,7 @@
         .mb-2{
             color:gray;
             float: left;
-            width: 12em;
+            width: 60%;
             border-radius: 1vw;
             border:none;
             margin: 0;
@@ -134,14 +134,6 @@
             -moz-box-shadow: none;
             -webkit-box-shadow: none;
         }
-        .textCount{
-            color:gray;
-            width: 2.5em;
-            height: 3em;
-            margin-top: 1.2em;
-            float: left;
-            display: flex;
-        }
         button{
             border:none;
             border-radius: 0 0.8vw 0.8vw 0;
@@ -149,9 +141,19 @@
             width: 17%;
             height: 100%;
             display: flex;
-            float: right;
             border-color: transparent;
             color: #FFFFFF;
+            img{
+                margin:3em 0 1em 0.5em;
+            }
+        }
+        .textCount{
+            color:gray;
+            width: 2.5em;
+            height: 3em;
+            margin: 1.2em 0 0 10%;
+            float: left;
+            display: flex;
         }
     }
     .store_rating{
