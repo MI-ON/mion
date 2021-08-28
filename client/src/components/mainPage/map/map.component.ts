@@ -3,6 +3,7 @@ import InfoWindowContent from "../infowindow/info-window-content";
 import ReviewListComponent from "../selectbar/reviewlist/review.component.vue";
 import SearchPlaceComponent from "../selectbar/searchplace/searchplace.component.vue";
 import VoteComponent from "../selectbar/vote/vote.component.vue";
+import AlertComponent from "../../Alert/alert.component.vue";
 
 declare global {
   interface Window {
@@ -12,7 +13,12 @@ declare global {
 }
 
 @Component({
-  components: { SearchPlaceComponent, ReviewListComponent, VoteComponent },
+  components: {
+    SearchPlaceComponent,
+    ReviewListComponent,
+    VoteComponent,
+    AlertComponent,
+  },
 })
 export default class MapComponent extends Vue {
   @Watch("keyword")
@@ -45,6 +51,7 @@ export default class MapComponent extends Vue {
   clickMapMarker = require("../../../assets/mainPage/click-marker.png");
 
   searchResultData: any = "";
+  alertMessage: String = "";
   mounted() {
     this.openMap();
   }
@@ -98,7 +105,10 @@ export default class MapComponent extends Vue {
     data = data.filter((d) => d.category_group_code === "FD6");
     if (data.length === 0) {
       // 검색어가 음식점이 아닌 다른 장소를 입력할 경우
-      location.reload();
+      this.alertMessage = "음식점이 아닌 장소를 입력하셨습니다.";
+      setTimeout(() => {
+        location.reload();
+      }, 4000);
     } else if (status === window.kakao.maps.services.Status.OK) {
       // 정상적으로 검색이 완료됐으면
       // 검색 목록과 마커 표출
