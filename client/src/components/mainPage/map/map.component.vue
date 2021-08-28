@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="map_wrap">
     <AlertComponent v-bind:alertMessage="alertMessage" />
     <div class="map_wrap">
       <div id="map" class="map-close" v-if="isMenu"></div>
@@ -32,6 +32,7 @@
         <WriteReviewComponent
           v-else-if="isWriteReview"
           :store_name="store_name"
+          @isReview="showReview"
         ></WriteReviewComponent>
       </div>
       <button v-if="isMenu" id="side-menu-close" @click="sideMenuState">

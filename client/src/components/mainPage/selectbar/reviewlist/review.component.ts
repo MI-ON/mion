@@ -13,8 +13,9 @@ export default class ReviewComponent extends Vue{
     r_count:number|null =null;
     rating:number|null = null; 
     reviewKeyword:string|null =null;
-    
     lists:object[] = [];
+
+    isSearch:boolean = false;
 
     mounted(){
         
@@ -48,31 +49,36 @@ export default class ReviewComponent extends Vue{
 
     async getStoresData(names:string[]){
         //console.log("이름들:",names);
-
-        const respose = await this.$apollo.query({
-            query: gql`
-            query($store_names:[String]!){
-                get_store(store_names:$store_names) {
-                    address_name,
-                    category_group_code,
-                    category_group_name,
-                    category_name,
-                    id,
-                    phone,
-                    place_name,
-                    place_url,
-                    road_address_name,
-                    x,
-                    y
-
+        try{
+            const respose = await this.$apollo.query({
+                query: gql`
+                query($store_names:[String]!){
+                    get_store(store_names:$store_names) {
+                        address_name,
+                        category_group_code,
+                        category_group_name,
+                        category_name,
+                        id,
+                        phone,
+                        place_name,
+                        place_url,
+                        road_address_name,
+                        x,
+                        y
+    
+                    }
                 }
-            }
-            `,
-            variables:{
-                store_names:names
-            }
-        });
-        return respose.data.get_store;
+                `,
+                variables:{
+                    store_names:names
+                }
+            });
+            this.isSearch = true;
+            return respose.data.get_store;
+        }catch{
+            alert("관련 리뷰가 존재하지 않습니다.");
+        }
+        
         
     }
 
@@ -112,6 +118,10 @@ export default class ReviewComponent extends Vue{
     }
 
     async rkewordClick(){
+        const lists = document.querySelectorAll(".list");
+        for(let i=0; i<lists.length; i++){
+            lists[i].remove();
+        }
         const store_names = await this.getPosts(this.reviewKeyword);
         const datas = await this.getStoresData(store_names);
         this.addLists(datas);
