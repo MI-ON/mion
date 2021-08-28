@@ -5,7 +5,6 @@
         <img src="../../assets/Alert/info.png" />
       </div>
       <div>
-        검색 결과가 없습니다.
         {{ alertMessage }}
       </div>
       <div>
