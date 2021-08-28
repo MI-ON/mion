@@ -14,11 +14,14 @@
         <a>리뷰보기</a>
 
         <div id="voted-image-container">
-          <!-- google Img로 수정 -->
-          <img src="../../../../assets/AppBar/default-profile.png" />
-          <img src="../../../../assets/AppBar/default-profile.png" />
-          <img src="../../../../assets/AppBar/default-profile.png" />
-          <img src="../../../../assets/AppBar/default-profile.png" />
+          <img
+            :key="i"
+            v-for="(user, i) in userImageList.slice(0, 3)"
+            :src="user.image_url"
+          />
+          <span v-if="userImageList.length >= 4"
+            >+{{ userImageList.length - 3 }}</span
+          >
         </div>
       </v-flex>
     </v-layout>
