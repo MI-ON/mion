@@ -14,7 +14,7 @@
         <button type="button" v-on:click="onClickStartedBtn">
           Getting Started
         </button>
-        <button type="button">
+        <button type="button" v-on:click="onClickAboutBtn">
           About MION
         </button>
       </div>

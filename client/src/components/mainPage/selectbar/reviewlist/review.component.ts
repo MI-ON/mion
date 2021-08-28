@@ -4,6 +4,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 @Component({})
 export default class ReviewComponent extends Vue{
 
+    
     id:number|null= null;
     place_name:string|null =null;
     address_name:string|null =null;
@@ -93,11 +94,19 @@ export default class ReviewComponent extends Vue{
         return respose.data.get_subinfo;
     }
 
+    createStar(rating:number){
+        let result = '★'.repeat( Math.floor(rating));
+        if(rating%1 == 0.5){
+            result+='☆';
+        }
+        return result;
+    }
+
     addLists(datas:any[]){
         datas.forEach(async(data)=>{
             const subinfo:any = await this.getPostInfos(data.place_name);
             data.r_count = subinfo.count;
-            data.rating = subinfo.sum/subinfo.count; //☆찍기
+            data.rating = this.createStar(subinfo.sum/subinfo.count);
             this.lists.push(data);
         })
     }
@@ -109,7 +118,7 @@ export default class ReviewComponent extends Vue{
         this.$emit('displayPlaces',datas);
     }
 
-    clickList(){
-
+    clickReview(event:any,key:string){
+        this.$emit('showWriteReview',key);
     }
 }

@@ -10,11 +10,13 @@
   "dependencies": {
     "apollo-boost": "^0.4.9",
     "axios": "^0.21.1",
+    "bootstrap": "^5.1.0",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "graphql": "^15.5.1",
     "jwt-decode": "^3.1.2",
     "load-script-once": "^2.0.1",
-    "vue": "^2.6.11",
+    "vue": "^2.6.14",
     "vue-apollo": "^3.0.7",
     "vue-class-component": "^7.2.3",
     "vue-daum-map": "^1.1.0",
@@ -41,6 +43,7 @@
     "sass-loader": "^10.2.0",
     "typescript": "~4.1.5",
     "vue-cli-plugin-vuetify": "~2.4.2",
+    "vue-star-rating": "^1.7.0",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

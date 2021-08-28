@@ -23,4 +23,7 @@ export default class AppBarComponent extends Vue {
         router.push({ path: '/' })
         location.reload();
     }
+    onMemberPage():void{
+        router.push({ path: '/member' });
+    }
 }

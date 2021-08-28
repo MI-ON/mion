@@ -2,6 +2,7 @@ import { LoginComponent } from "@/components/LoginPage";
 import { LandingComponent } from "@/components/LandingPage";
 import { MapComponent } from "@/components/mainPage/map";
 import { MemberComponent } from "@/components/memberPage";
+import { AboutComponent } from "@/components/AboutPage";
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
@@ -28,6 +29,11 @@ const routes: Array<RouteConfig> = [
     name: "MemberPage",
     component: MemberComponent,
   },
+  {
+    path: "/about",
+    name: "AboutPage",
+    component: AboutComponent,
+  }
 ];
 
 const router = new VueRouter({
