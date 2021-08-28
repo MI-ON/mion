@@ -1,10 +1,11 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { gql } from 'apollo-boost';
+import jwt_decode from "jwt-decode";
 @Component({})
 export default class WriteReivewComponent extends Vue{
 
     @Prop() protected store_name!:string;
-
+    
     posts:any = [1,2,3];
     store:any;
     count:number=0;
@@ -24,7 +25,6 @@ export default class WriteReivewComponent extends Vue{
     }
 
     writeReview(){
-       
         //text
         let textArea:any = document.querySelector('#review-keyword');
         textArea = textArea.value;
@@ -34,8 +34,6 @@ export default class WriteReivewComponent extends Vue{
         rating = rating.innerHTML;
 
         if(textArea.length !==0 && rating.length !==0){
-            console.log(textArea);
-            console.log(Number(rating));
             this.addPost(textArea,rating)
         }else{
             alert("내용을 입력해주세요");
@@ -44,7 +42,9 @@ export default class WriteReivewComponent extends Vue{
     }
 
     async addPost(content:string, rating:string){
-        
+        const userJWToken = this.$store.state.userToken;
+        const userTokenDecoded: { email: string } = jwt_decode(userJWToken);
+      
         const respose = await this.$apollo.mutate({
             mutation: gql`
             mutation( $store_name:String!,$category_name:String! ,$email:String! ,$content:String! ,$rating:Float!){
@@ -60,7 +60,7 @@ export default class WriteReivewComponent extends Vue{
             variables:{
                 store_name:this.store.place_name,
                 category_name:this.store.category_name,
-                email:"kny030303khs@gamil.com",
+                email:userTokenDecoded.email,
                 content:content,
                 rating:Number(rating)
             }
@@ -166,3 +166,4 @@ export default class WriteReivewComponent extends Vue{
     }
     
 }
+

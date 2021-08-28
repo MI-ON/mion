@@ -41,7 +41,7 @@
     top: 5vw;
     text-align: center;
     width: 10vw;
-    height: 5em;
+    height: 5.3em;
     box-shadow: 0px 4px 6px #434547;
     border: solid 1px #5496d8;
     border-radius: 1vw;
@@ -49,26 +49,27 @@
     position: absolute;
 }
 
-.profile .menu{
+button:focus .menu{
     color: white;
     z-index: 5;
     display: block;
     p:nth-child(1){
-        padding-top: 0.7em;
-        // padding-bottom: 0.5vw;
+        margin: 0;
+        padding: 0.6em 0 0.5em 0;
         border-bottom:solid 1px #627381;
     }
     p:nth-child(1):hover{
-        cursor:default;
+        cursor:pointer;
         border-radius: 1vw 1vw 0 0;
         background-color: #549ae0;
     }
     p:nth-child(2){
-        padding-bottom: 1vw;
+        margin: 0;
+        padding: 0.5em 0 0.5em 0;
+
     }
     p:nth-child(2):hover{
-        cursor:default;
-        padding-bottom: 0.5vw;
+        cursor:pointer;
         background-color: #549ae0;
         border-radius: 0 0 1vw 1vw;
     }
