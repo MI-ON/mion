@@ -53,6 +53,13 @@ export default class MapComponent extends Vue {
     this.openMap();
   }
 
+  showReview(){
+    this.isSearchPlace = false;
+    this.isReview = true;
+    this.isVote = false;
+    this.isWriteReview = false;
+  }
+
   public showWriteReview(name:string){
     this.isSearchPlace = false;
     this.isReview = false;

@@ -23,7 +23,10 @@ export default class WriteReivewComponent extends Vue{
         this.getDatas();
     }
 
-   
+    clickGotoList(){
+        this.$emit('isReview')
+    }
+
     checkMaxText(){
         const textArea:any = document.querySelector('#review-keyword');
         let text = textArea.value;

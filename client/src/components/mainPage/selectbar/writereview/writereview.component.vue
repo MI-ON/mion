@@ -1,8 +1,8 @@
 <template>
 <div class="review-lists" v-if="!isLoading">
 
- <div class="button-div">
-  <button><img src="@/assets/backList_btn.png" alt="button"></button>
+  <div class="button-div" @click="clickGotoList">
+    <button><img src="@/assets/backList_btn.png" alt="button"></button>
   </div>
   <div class="write_list">
     <div class="store_title">
