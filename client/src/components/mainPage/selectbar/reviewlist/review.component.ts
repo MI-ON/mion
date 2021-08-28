@@ -13,8 +13,9 @@ export default class ReviewComponent extends Vue{
     r_count:number|null =null;
     rating:number|null = null; 
     reviewKeyword:string|null =null;
-    
     lists:object[] = [];
+
+    isSearch:boolean = false;
 
     mounted(){
         
@@ -72,6 +73,7 @@ export default class ReviewComponent extends Vue{
                     store_names:names
                 }
             });
+            this.isSearch = true;
             return respose.data.get_store;
         }catch{
             alert("관련 리뷰가 존재하지 않습니다.");
