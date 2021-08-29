@@ -125,6 +125,7 @@ $side-menu-width: 420px;
     color: white;
     width: 125px;
     height: 33px;
+    transition: all 500ms linear;
   }
   .style1-btn {
     background-color: #1e7cdc;
@@ -144,6 +145,7 @@ $side-menu-width: 420px;
   border: none;
 
   top: calc(50% + 130px / 2);
+  filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 %tri {
