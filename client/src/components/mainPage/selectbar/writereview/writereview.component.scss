@@ -201,10 +201,17 @@
         }
         .date{
             float: right;
-            margin-right: 4em;
+            margin-right: 5em;
+        }
+    }
+    @media (max-width:648px) {
+        .review_view .date{
+            float: right;
+            margin-right: 6em;
         }
     }
 }
+
 }
 .review-lists::-webkit-scrollbar{
     display: none;

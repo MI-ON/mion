@@ -47,7 +47,7 @@ export default class InfoWindowContent {
           }
         }`,
       });
-      location.reload();
+      alert(`${place_name}에 투표되었습니다!`);
     });
     voteBtn.innerHTML = `<img src='${require("../../../assets/vote-icon.png")}' />`;
 
