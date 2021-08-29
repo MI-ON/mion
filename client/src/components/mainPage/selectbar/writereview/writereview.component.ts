@@ -175,7 +175,7 @@ export default class WriteReivewComponent extends Vue{
             this.posts[i].star = this.createStar(this.posts[i].rating);
         }
         this.maxImg(this.posts);
-      
+        console.log(this.posts);
     }
     
 }

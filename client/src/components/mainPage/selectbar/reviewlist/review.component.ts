@@ -124,7 +124,9 @@ export default class ReviewComponent extends Vue{
         }
         
         const store_names = await this.getPosts(this.reviewKeyword);
-        const datas = await this.getStoresData(store_names);
+        const set_store_names = new Set(store_names);
+        const s_names:any[] = [...set_store_names];
+        const datas = await this.getStoresData(s_names);
        
         this.addLists(datas);
         this.$emit('displayPlaces',datas);
