@@ -26,5 +26,6 @@ export default class PlaceItemComponent extends Vue {
         email: userTokenDecoded.email,
       },
     });
+    alert(`${this.searchResult.place_name}에 투표되었습니다!`);
   }
 }
