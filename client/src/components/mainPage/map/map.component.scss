@@ -4,7 +4,7 @@ $side-menu-width: 420px;
 #map {
   z-index: 1;
   width: 100%;
-  height: 100vh;
+  height: 91vh;
 }
 
 .map_wrap {
@@ -41,7 +41,7 @@ $side-menu-width: 420px;
   left: 0;
   bottom: 0;
   width: $side-menu-width;
-  height: 90vh;
+  height: 91vh;
 
   background: #ececec;
   z-index: 1;
@@ -76,6 +76,7 @@ $side-menu-width: 420px;
     }
 
     button {
+      padding-left: 18px;
       background: none;
       border: none;
       cursor: pointer;
@@ -87,7 +88,7 @@ $side-menu-width: 420px;
   }
 }
 
-#placesList {
+#listComponent {
   padding: 0 10px 0 10px;
   height: 700px;
   overflow-y: scroll;
@@ -95,7 +96,7 @@ $side-menu-width: 420px;
 }
 
 #pagination {
-  margin: 10px auto;
+  margin: 0 auto;
   text-align: center;
 
   a {
@@ -124,6 +125,7 @@ $side-menu-width: 420px;
     color: white;
     width: 125px;
     height: 33px;
+    transition: all 500ms linear;
   }
   .style1-btn {
     background-color: #1e7cdc;
@@ -143,11 +145,12 @@ $side-menu-width: 420px;
   border: none;
 
   top: calc(50% + 130px / 2);
+  filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 %tri {
   position: relative;
-  top: -65px-12px;
+  top: -63px;
   right: 0px;
   width: 0px;
   height: 0px;

@@ -7,10 +7,11 @@ import {
   addFullName,
   getStore,
   getPosts,
+  getVotedStores,
   addPost,
   deletePost,
   updatePost,
-  getSubInfo
+  getSubInfo,
 } from "./db";
 
 const resolvers = {
@@ -21,7 +22,8 @@ const resolvers = {
       getVotedUsersByStoreName(store_name),
     get_store: (_: any, { store_names }: any) => getStore(store_names),
     get_posts: (_: any, { keyword }: any) => getPosts(keyword),
-    get_subinfo:(_:any,{name}:any) =>getSubInfo(name)
+    get_voted_stores: (_: any) => getVotedStores(),
+    get_subinfo: (_: any, { name }: any) => getSubInfo(name),
   },
   Mutation: {
     add_user: (_: any, { email, full_name, image_url }: any) =>
@@ -37,7 +39,6 @@ const resolvers = {
     delete_post: (_: any, { id }: any) => deletePost(id),
     update_post: (_: any, { id, content, rating }) => {
       updatePost(id, content, rating);
-
     },
   },
 };

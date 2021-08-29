@@ -4,6 +4,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 @Component({})
 export default class ReviewComponent extends Vue{
 
+    
     id:number|null= null;
     place_name:string|null =null;
     address_name:string|null =null;
@@ -12,8 +13,9 @@ export default class ReviewComponent extends Vue{
     r_count:number|null =null;
     rating:number|null = null; 
     reviewKeyword:string|null =null;
-    
     lists:object[] = [];
+
+    isSearch:boolean = false;
 
     mounted(){
         
@@ -46,32 +48,37 @@ export default class ReviewComponent extends Vue{
     }
 
     async getStoresData(names:string[]){
-        //console.log("이름들:",names);
-
-        const respose = await this.$apollo.query({
-            query: gql`
-            query($store_names:[String]!){
-                get_store(store_names:$store_names) {
-                    address_name,
-                    category_group_code,
-                    category_group_name,
-                    category_name,
-                    id,
-                    phone,
-                    place_name,
-                    place_url,
-                    road_address_name,
-                    x,
-                    y
-
+        try{
+            const respose = await this.$apollo.query({
+                query: gql`
+                query($store_names:[String]!){
+                    get_store(store_names:$store_names) {
+                        address_name,
+                        category_group_code,
+                        category_group_name,
+                        category_name,
+                        id,
+                        phone,
+                        place_name,
+                        place_url,
+                        road_address_name,
+                        x,
+                        y
+    
+                    }
                 }
-            }
-            `,
-            variables:{
-                store_names:names
-            }
-        });
-        return respose.data.get_store;
+                `,
+                variables:{
+                    store_names:names
+                }
+            });
+            
+            this.isSearch = true;
+            return respose.data.get_store;
+        }catch{
+            alert("관련 리뷰가 존재하지 않습니다.");
+        }
+        
         
     }
 
@@ -93,23 +100,39 @@ export default class ReviewComponent extends Vue{
         return respose.data.get_subinfo;
     }
 
+    createStar(rating:number){
+        let result = '★'.repeat( Math.floor(rating));
+        if(rating%1 == 0.5){
+            result+='☆';
+        }
+        return result;
+    }
+
     addLists(datas:any[]){
         datas.forEach(async(data)=>{
             const subinfo:any = await this.getPostInfos(data.place_name);
             data.r_count = subinfo.count;
-            data.rating = subinfo.sum/subinfo.count; //☆찍기
+            data.rating = this.createStar(subinfo.sum/subinfo.count);
             this.lists.push(data);
         })
     }
 
     async rkewordClick(){
+        const lists = document.querySelectorAll(".list");
+        for(let i=0; i<lists.length; i++){
+            lists[i].remove();
+        }
+        
         const store_names = await this.getPosts(this.reviewKeyword);
-        const datas = await this.getStoresData(store_names);
+        const set_store_names = new Set(store_names);
+        const s_names:any[] = [...set_store_names];
+        const datas = await this.getStoresData(s_names);
+       
         this.addLists(datas);
         this.$emit('displayPlaces',datas);
     }
 
-    clickList(){
-
+    clickReview(event:any,key:string){
+        this.$emit('showWriteReview',key);
     }
 }

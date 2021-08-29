@@ -13,13 +13,16 @@
               </button>
             </form>
         </div>
-        <div id="review-lists">
+        <div class="explain" v-if="!isSearch">
+          <img src="@/assets/mainPage/reviewList_background.jpg" alt="검색어를 입력해주세요">
+        </div>
+        <div id="review-lists" v-else>
             <div id="button-div">
               <button><img src="@/assets/upsize.png" alt="button"></button>
             </div>
 
             <div id="list-div">
-              <div class="list" v-for="(list) in lists" v-bind:key="list.id" @click="clickList">
+              <div class="list" v-for="(list) in lists" v-bind:key="list.place_name" @click="clickReview($event,list.place_name)">
                 <div class="list-center">
                   <span class="title">{{list.place_name}}</span>
                   <div class="sub">
@@ -27,7 +30,7 @@
                     <span class="address2">{{list.road_address_name}}</span>
                     <span class="tel">{{list.phone}}</span>
                     <hr>
-                    <span class="review">리뷰 {{list.r_count}} | ☆☆☆☆</span>
+                    <span class="review">리뷰 {{list.r_count}} | <p class="rating">{{list.rating}}</p></span>
                   </div>
                 </div>
               </div>
