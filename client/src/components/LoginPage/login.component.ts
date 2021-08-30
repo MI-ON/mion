@@ -17,7 +17,8 @@ export default class LoginComponent extends Vue {
 
       window.google.accounts.id.initialize({
         client_id:
-          "607676472574-toht3fposdjn2ab2tbhaoh5i67vnlmet.apps.googleusercontent.com",
+          // "607676472574-toht3fposdjn2ab2tbhaoh5i67vnlmet.apps.googleusercontent.com",
+          "29521309298-4bjljc2mdur0p64pmrkkc2s1te4f3q31.apps.googleusercontent.com",
         callback: this.handleCredentialResponse,
         ux_mode: "popup",
         auto_select: true,
