@@ -2,26 +2,20 @@
   <div>
     <div id="voted-place-item-container">
       <div id="marker-image-container">
-        <img src="../../../../assets/mainPage/click-marker.png" />
+        <img src="/img/mainPage/click-marker.png" />
       </div>
 
       <div id="voted-place-info-container" colum>
-        <div>{{ votedPlaceData.place_name }}</div>
-        <div>{{ votedPlaceData.address_name }}</div>
-        <div>{{ votedPlaceData.road_address_name }}</div>
+        <div>{{ votedPlaceData.placeName }}</div>
+        <div>{{ votedPlaceData.addressName }}</div>
+        <div>{{ votedPlaceData.roadAddressName }}</div>
         <span>{{ votedPlaceData.phone }}</span>
-        <a v-bind:href="votedPlaceData.place_url">상세정보 |</a>
+        <a :href="votedPlaceData.placeUrl">상세정보 |</a>
         <a>리뷰보기</a>
 
         <div id="voted-image-container">
-          <img
-            :key="i"
-            v-for="(user, i) in userImageList.slice(0, 3)"
-            :src="user.image_url"
-          />
-          <span v-if="userImageList.length >= 4"
-            >+{{ userImageList.length - 3 }}</span
-          >
+          <img v-for="(user, i) in userAvatarUrl.slice(0, 3)" :key="i" :src="user.avatarUrl" />
+          <span v-if="userAvatarUrl.length >= 4">+{{ userAvatarUrl.length - 3 }}</span>
         </div>
       </div>
     </div>

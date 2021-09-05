@@ -1,33 +1,23 @@
 <template>
   <div class="map_wrap">
-    <AlertComponent v-bind:alertMessage="alertMessage" />
+    <AlertComponent :alert-message="alertMessage" />
     <div class="map_wrap">
-      <div id="map" class="map-close" v-if="isMenu"></div>
-      <div id="map" class="map-open" v-else></div>
+      <div v-if="isMenu" id="map" class="map-close"></div>
+      <div v-else id="map" class="map-open"></div>
 
-      <div id="menu_wrap" class="bg_white" v-if="isMenu">
+      <div v-if="isMenu" id="menu_wrap" class="bg_white">
         <div id="select-bar">
-          <button id="search-btn" class="style1-btn on" @click="clickSelectbar">
-            주변 음식점 검색
-          </button>
-          <button id="review-btn" class="style1-btn" @click="clickSelectbar">
-            리뷰 보기
-          </button>
-          <button id="vote-btn" class="style1-btn" @click="clickSelectbar">
-            투표
-          </button>
+          <button id="search-btn" class="style1-btn on" @click="clickSelectbar">주변 음식점 검색</button>
+          <button id="review-btn" class="style1-btn" @click="clickSelectbar">리뷰 보기</button>
+          <button id="vote-btn" class="style1-btn" @click="clickSelectbar">투표</button>
         </div>
         <!-- 3개 컴포넌트-->
         <SearchPlaceComponent
           v-if="isSearchPlace"
-          v-bind:searchResult="searchResultData"
-          v-on:searchplace-keyword="eventFromSearchplace"
+          :search-result="searchResultData"
+          @searchplace-keyword="eventFromSearchplace"
         />
-        <ReviewListComponent
-          v-else-if="isReview"
-          @displayPlaces="displayPlaces"
-          @showWriteReview="showWriteReview"
-        />
+        <ReviewListComponent v-else-if="isReview" @displayPlaces="displayPlaces" @showWriteReview="showWriteReview" />
         <VoteComponent v-else-if="isVote" />
         <WriteReviewComponent
           v-else-if="isWriteReview"

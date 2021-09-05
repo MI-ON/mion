@@ -1,11 +1,7 @@
 <template>
   <div>
     <div id="vote-place-list">
-      <VotedPlaceItemComponent
-        v-for="(item, index) in votedPlaceData"
-        v-bind:key="index"
-        v-bind:votedPlaceData="item"
-      />
+      <VotedPlaceItemComponent v-for="(item, index) in votedPlaceData" :key="index" :voted-place-data="item" />
     </div>
 
     <div id="pagination"></div>

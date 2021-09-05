@@ -1,20 +1,16 @@
 <template>
   <div id="member">
     <div class="member-wrapper">
-      <span class="profile-text">프로필 변경</span><br />
-      <img
-        class="member-profile"
-        v-if="this.$store.state.userToken"
-        :src="$store.getters.getUserImageUrl"
-      /><br />
+      <span class="profile-text">프로필 변경</span><br>
+      <img v-if="$store.state.userToken" class="member-profile" :src="$store.getters.getUserImageUrl" /><br />
 
       <form>
         <span class="fullname-text">이름</span>
         <input
-          v-if="this.$store.state.userToken"
+          v-if="$store.state.userToken"
+          v-model="inputName"
           type="text"
           class="fullname-input-box"
-          v-model="inputName"
           :placeholder="fullName"
         /><br />
         <button class="change-fullname-btn" type="submit" @click="addFullName">
