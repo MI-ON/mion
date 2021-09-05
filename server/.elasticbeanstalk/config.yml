@@ -1,0 +1,19 @@
+branch-defaults:
+  default:
+    environment: Mion-API
+environment-defaults:
+  Mion-API:
+    branch: null
+    repository: null
+global:
+  application_name: mion
+  default_ec2_keyname: hpms-dev
+  default_platform: Node.js 14 running on 64bit Amazon Linux 2
+  default_region: ap-northeast-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: dev
+  sc: null
+  workspace_type: Application
