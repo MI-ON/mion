@@ -1,0 +1,23 @@
+{
+  "moduleNameMapper": {
+    "@/(.*)": "<rootDir>/src/$1",
+    "@graphql/*": "<rootDir>/src/graphql/$1",
+    "@modules/*": "<rootDir>/src/modules/$1",
+    "@repositories/*": "<rootDir>/src/repositories/$1",
+    "@entities/*": "<rootDir>/src/entities/$1"
+  },
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "./",
+  "testRegex": ".spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "coverageDirectory": "./coverage",
+  "testEnvironment": "node",
+  "silent": false,
+  "testTimeout": 10000
+}
