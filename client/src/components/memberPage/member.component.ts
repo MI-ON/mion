@@ -3,48 +3,48 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class MemberComponent extends Vue {
-    userEmail: string = this.$store.getters.getUserByEmail;
-    fullName: string = '';
-    inputName: string = '';
+  public userEmail = this.$store.getters.getUserByEmail;
+  public fullName = '';
+  public inputName = '';
 
-    mounted() {
-        this.getUserFullName();
-    }
-    async getUserFullName() {
-        this.fullName = await this.getUserByEmail(this.userEmail);
-    }
-    async getUserByEmail(userEmail: String) {
-        const response = await this.$apollo.query({
-            query: gql`
-                query($email: String!) {
-                    get_user_by_email(email: $email) {
-                        full_name
-                    }
-                }
-            `,
-            variables: {
-                email: userEmail
-            }
-        });
-        return response.data.get_user_by_email.full_name;
-    }
+  mounted(): void {
+    this.getUserFullName();
+  }
+  async getUserFullName(): Promise<void> {
+    this.fullName = await this.getUserByEmail(this.userEmail);
+  }
+  async getUserByEmail(userEmail: string): Promise<string> {
+    const response = await this.$apollo.query({
+      query: gql`
+        query ($email: String!) {
+          getUserByEmail(email: $email) {
+            fullName
+          }
+        }
+      `,
+      variables: {
+        email: userEmail,
+      },
+    });
+    return response.data.getUserByEmail.fullName;
+  }
 
-    async addFullName() {
-        await this.$apollo.mutate({
-            mutation: gql`
-                mutation($email: String!, $full_name: String!) {
-                    add_full_name(email: $email, full_name: $full_name) {
-                        email
-                        full_name
-                    }
-                }
-            `,
-            variables: {
-                email: this.userEmail,
-                full_name: this.inputName
-            }
-        });
+  async addFullName(): Promise<void> {
+    await this.$apollo.mutate({
+      mutation: gql`
+        mutation ($email: String!, $fullName: String!) {
+          add_fullName(email: $email, fullName: $fullName) {
+            email
+            fullName
+          }
+        }
+      `,
+      variables: {
+        email: this.userEmail,
+        fullName: this.inputName,
+      },
+    });
 
-        this.fullName = this.inputName;
-    }
+    this.fullName = this.inputName;
+  }
 }

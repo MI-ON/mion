@@ -1,29 +1,25 @@
-import router from '@/router';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class AppBarComponent extends Vue {
-    data() {
-        return {
-            defaultProfile: require('../../assets/AppBar/default-profile.png')
-        };
-    }
-    onSignOut(): void {
-        this.$store.commit('LOGOUT');
-        location.reload();
-    }
-    onClickRouteRoot(): void {
-        router.push({ path: '/' });
-    }
-    onSignOn(): void {
-        router.push({ path: '/login' });
-        location.reload();
-    }
-    onClickRedirect():void{
-        router.push({ path: '/' })
-        location.reload();
-    }
-    onMemberPage():void{
-        router.push({ path: '/member' });
-    }
+  public defaultProfile = '/img/default-profile.png';
+
+  onSignOut(): void {
+    this.$store.commit('LOGOUT');
+    location.reload();
+  }
+  onClickRouteRoot(): void {
+    this.$router.push({ path: '/' });
+  }
+  onSignOn(): void {
+    this.$router.push({ path: '/login' });
+    location.reload();
+  }
+  onClickRedirect(): void {
+    this.$router.push({ path: '/' });
+    location.reload();
+  }
+  onMemberPage(): void {
+    this.$router.push({ path: '/member' });
+  }
 }

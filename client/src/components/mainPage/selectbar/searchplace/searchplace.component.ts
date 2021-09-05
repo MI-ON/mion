@@ -1,15 +1,16 @@
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import PlaceItemComponent from "../../placeitem/placeitem.component.vue";
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import PlaceItemComponent from '../../placeitem/placeitem.component.vue';
 
 @Component({ components: { PlaceItemComponent } })
 export default class SearchPlaceComponent extends Vue {
-  @Prop(Object) protected searchResult!: Object;
-  @Watch("searchResult")
-  updateSearchResult() {}
-  keyword: string = "";
+  @Prop({ default: () => ({}) }) protected searchResult!: Record<string, unknown>;
+  @Watch('searchResult')
+  updateSearchResult(): void {}
 
-  public searchPlaces(e: Event) {
+  keyword: string = '';
+
+  public searchPlaces(e: Event): void {
     e.preventDefault();
-    this.$emit("searchplace-keyword", this.keyword);
+    this.$emit('searchplace-keyword', this.keyword);
   }
 }

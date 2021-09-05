@@ -9,14 +9,14 @@
     "plugin:prettier/recommended",
     "plugin:vue/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:jest/recommended",
     "@vue/prettier",
     "@vue/prettier/@typescript-eslint",
     "@vue/typescript/recommended"
   ],
-  "plugins": ["@typescript-eslint", "jest"],
-  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parser": "vue-eslint-parser",
   "parserOptions": {
+    "parser": "@typescript-eslint/parser",
     "ecmaVersion": 2020
   },
   "rules": {
@@ -28,6 +28,7 @@
     "max-len": ["warn", 120],
     "no-trailing-spaces": "error",
     "@typescript-eslint/semi": ["error", "always"],
+    "@typescript-eslint/indent": ["warn", 2],
     "@typescript-eslint/naming-convention": [
       "warn",
       {
@@ -38,7 +39,11 @@
         "selector": "interface",
         "format": ["PascalCase"],
         "prefix": ["I"],
-        "leadingUnderscore": "allow"
+        "leadingUnderscore": "allow",
+        "filter": {
+          "regex": "^(Window)$",
+          "match": false
+        }
       }
     ],
     "@typescript-eslint/no-empty-function": ["warn"],
@@ -56,6 +61,18 @@
     ],
     "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": false }],
     "@typescript-eslint/no-inferrable-types": ["off"],
-    "jest/no-test-callback": ["off"]
+    "vue/html-indent": "warn",
+    "vue/html-closing-bracket-spacing": "warn",
+    "vue/html-closing-bracket-newline": "warn",
+    "vue/max-attributes-per-line": [
+      "warn",
+      {
+        "singleline": 5,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": false
+        }
+      }
+    ]
   }
 }

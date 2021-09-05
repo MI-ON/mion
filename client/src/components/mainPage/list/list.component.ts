@@ -1,9 +1,8 @@
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class ListComponent extends Vue{
-
-    zoomIn():void{
-        console.log("zoom in");
-    }
+export default class ListComponent extends Vue {
+  zoomIn(): void {
+    console.log('zoom in');
+  }
 }

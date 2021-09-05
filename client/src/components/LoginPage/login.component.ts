@@ -1,51 +1,45 @@
-import { gql } from "apollo-boost";
-import axios from "axios";
-import { Component, Vue } from "vue-property-decorator";
-import jwt_decode from "jwt-decode";
-
+import { gql } from 'apollo-boost';
+import axios from 'axios';
+import { Component, Vue } from 'vue-property-decorator';
+import jwt_decode from 'jwt-decode';
+import { IUserObjectType, IUserProfile, CredentialResponse, GoogleAccounts } from '@/types';
 declare global {
   interface Window {
-    google: any;
+    google: {
+      accounts: GoogleAccounts;
+    };
   }
 }
 
 @Component({})
 export default class LoginComponent extends Vue {
-  mounted() {
-    window.onload = () => {
-      const loginBtn = document.querySelector(".loginBtn");
-
+  mounted(): void {
+    window.onload = (): void => {
+      const loginBtn = document.querySelector('.loginBtn') as HTMLElement;
+      console.log(process.env);
       window.google.accounts.id.initialize({
-        client_id:
-          // "607676472574-toht3fposdjn2ab2tbhaoh5i67vnlmet.apps.googleusercontent.com",
-          "29521309298-4bjljc2mdur0p64pmrkkc2s1te4f3q31.apps.googleusercontent.com",
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID || '',
         callback: this.handleCredentialResponse,
-        ux_mode: "popup",
+        ux_mode: 'popup',
         auto_select: true,
       });
       window.google.accounts.id.prompt();
       window.google.accounts.id.renderButton(loginBtn, {
-        theme: "outline",
-        size: "large",
-        width: "400",
+        theme: 'outline',
+        size: 'large',
+        width: '400',
       });
     };
   }
 
-  async handleCredentialResponse(response: any) {
-    interface UserProfile {
-      email: string;
-      name: string;
-      picture: string;
-    }
-
-    const userJWToken = response.credential;
-    const userTokenDecoded: UserProfile = jwt_decode(userJWToken);
+  async handleCredentialResponse(response: CredentialResponse): Promise<void> {
+    const userJWToken = response.credential || '';
+    const userTokenDecoded: IUserProfile = jwt_decode(userJWToken);
 
     const userData = {
       email: userTokenDecoded.email,
       name: userTokenDecoded.name,
-      imageUrl: userTokenDecoded.picture,
+      avatarUrl: userTokenDecoded.picture,
     };
 
     const isMember = (await this.memberCheck(userData.email)) ? true : false;
@@ -53,16 +47,16 @@ export default class LoginComponent extends Vue {
     if (!isMember) {
       await this.register(userData);
     }
-    this.$store.commit("SET_USER_TOKEN", userJWToken);
-    this.$router.push("/map");
+    this.$store.commit('SET_USER_TOKEN', userJWToken);
+    this.$router.push('/map');
   }
 
-  async memberCheck(userEmail: string) {
-    const response = await this.$apollo.query({
+  async memberCheck(userEmail: string): Promise<IUserObjectType> {
+    const response = await this.$apollo.query<{ getUserByEmail: IUserObjectType }>({
       query: gql`
-        query($email: String!) {
-          get_user_by_email(email: $email) {
-            full_name
+        query ($email: String!) {
+          getUserByEmail(email: $email) {
+            fullName
           }
         }
       `,
@@ -70,23 +64,23 @@ export default class LoginComponent extends Vue {
         email: userEmail,
       },
     });
-    return response.data.get_user_by_email;
+    return response.data.getUserByEmail;
   }
-  async register(userData: { email: string; name: string; imageUrl: string }) {
+  async register(userData: { email: string; name: string; avatarUrl: string }): Promise<void> {
     await this.$apollo.mutate({
       mutation: gql`
-        mutation($email: String!, $name: String!, $imageUrl: String!) {
-          add_user(email: $email, full_name: $name, image_url: $imageUrl) {
+        mutation ($email: String!, $name: String!, $avatarUrl: String!) {
+          addUser(email: $email, fullName: $name, avatarUrl: $avatarUrl) {
             email
-            full_name
-            image_url
+            fullName
+            avatarUrl
           }
         }
       `,
       variables: {
         email: userData.email,
         name: userData.name,
-        imageUrl: userData.imageUrl,
+        avatarUrl: userData.avatarUrl,
       },
     });
   }
